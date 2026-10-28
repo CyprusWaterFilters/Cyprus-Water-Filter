@@ -1,0 +1,227 @@
+/* Layout sizes follow available space; content can grow with enlarged text. */
+:root {
+  --page-gutter: clamp(1.125rem, 5vw, 6rem);
+  --content-inset: max(var(--page-gutter), calc((100% - 90rem) / 2));
+}
+
+html { scroll-padding-top: 2rem; }
+body { min-width: 0; }
+img { display: block; max-width: 100%; }
+button, a { overflow-wrap: anywhere; }
+main, section, .range-panel, .range-tabs, .product-card,
+.section-heading > *, .range-intro > *, .how > *, .faq > *,
+.step > div, .product-info > div { min-width: 0; }
+h1, h2, h3, p, summary, .message-preview { overflow-wrap: anywhere; }
+.section, footer { padding-inline: var(--content-inset); }
+.section { padding-block: clamp(3.5rem, 7vw, 6.75rem); }
+.header {
+  height: auto;
+  min-height: 5.5rem;
+  gap: 1.5rem;
+  padding: 1rem var(--content-inset);
+}
+.nav { gap: clamp(1rem, 2vw, 2rem); }
+.nav a { display: inline-flex; align-items: center; min-height: 2.75rem; }
+.nav-cta { flex-shrink: 0; min-height: 2.75rem; }
+.wordmark { font-size: 1.8rem; max-width: 100%; }
+.hero {
+  height: auto;
+  min-height: clamp(40rem, calc(100svh - 7.5rem), 58rem);
+  max-height: none;
+  display: grid;
+  align-items: center;
+}
+.hero-content {
+  width: 100%;
+  padding: clamp(4rem, 7vw, 7rem) var(--content-inset) 7rem;
+  pointer-events: none;
+}
+.hero-content > * { max-width: 47%; pointer-events: auto; }
+.hero h1 { font-size: clamp(3.6rem, 6.8vw, 7.5rem); }
+.hero-copy { max-width: min(47%, 22rem); font-size: 1.125rem; }
+.hero .eyebrow { flex-wrap: wrap; }
+.hero-note { align-items: flex-start; line-height: 1.7; font-size: .875rem; }
+.hero-note svg { margin-top: .25rem; }
+.hero-bottom { left: var(--content-inset); }
+.hero-caption { right: var(--content-inset); max-width: 40%; }
+.button { max-width: 100%; min-height: 3rem; gap: clamp(.75rem, 2vw, 1.875rem); white-space: normal; text-align: center; }
+.benefit-strip { flex-wrap: wrap; padding-inline: var(--content-inset); }
+.benefit-strip > span { flex: 1 1 15rem; justify-content: center; line-height: 1.6; }
+.moments { gap: clamp(1.5rem, 4vw, 4rem); }
+.moments > div { padding-inline: 0; min-width: 0; }
+.section-heading { gap: 2rem; flex-wrap: wrap; }
+.section-heading > p { flex-shrink: 0; }
+.range-list { max-width: 100%; }
+.range-trigger { min-width: 0; min-height: 2.75rem; }
+.range-intro { flex-wrap: wrap; gap: 1rem 2rem; }
+.range-intro > div { flex: 1 1 30rem; }
+.range-feature { white-space: normal; flex: 0 1 auto; line-height: 1.5; }
+.product-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: clamp(1.25rem, 2vw, 2rem);
+}
+.product-visual {
+  height: auto;
+  aspect-ratio: 4 / 5;
+  min-height: 20rem;
+  display: grid;
+  place-items: center;
+}
+.product-visual img {
+  position: absolute;
+  inset: 0;
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+.lilac .product-visual { background: #c4e7fa; }
+.lilac .product-visual img { object-fit: cover; }
+.product-kicker { left: 1rem; top: 1.25rem; max-width: calc(100% - 5rem); }
+.type-product { padding: 4rem 1rem 2.5rem; text-align: center; width: 100%; }
+.type-product strong { font-size: clamp(2.25rem, 4vw, 3rem); }
+.type-product b { font-size: clamp(4.5rem, 8vw, 7rem); }
+.type-product > span:last-child { overflow-wrap: anywhere; }
+.product-info { gap: 1rem; }
+.product-info h3 { font-size: 1.6rem; }
+.product-info span { line-height: 1.6; }
+.product-arrow { flex-shrink: 0; width: 2.75rem; height: 2.75rem; }
+.filter-enquiry-wrap { margin-top: .375rem; }
+.filter-whatsapp-cta { display: flex; align-items: center; gap: .75rem; width: 100%; min-height: 3.5rem; padding: .5rem .625rem .5rem 1.25rem; border: 1px solid #14364d; border-radius: 2rem; background: #14364d; color: white; text-align: left; transition: background .2s, border-color .2s; }
+.filter-whatsapp-icon { width: 1.25rem; height: 1.25rem; color: #bde7dc; }
+.filter-whatsapp-copy { flex: 1; min-width: 0; font-size: .9375rem; font-weight: 500; letter-spacing: -.015em; line-height: 1.5; }
+.filter-whatsapp-arrow { display: grid; place-items: center; width: 2.375rem; height: 2.375rem; flex-shrink: 0; border-radius: 50%; background: #ffffff12; border: 1px solid #ffffff26; transition: background .2s; }
+.filter-whatsapp-note { margin-top: .625rem; padding-inline: .25rem; color: #637786; font-size: .75rem; line-height: 1.6; text-align: center; }
+.filter-whatsapp-cta:focus-visible { outline: 3px solid #123bc5; outline-offset: 4px; }
+@media (hover: hover) { .filter-whatsapp-cta:hover { background: #214b66; border-color: #214b66; } .filter-whatsapp-cta:hover .filter-whatsapp-arrow { background: #ffffff24; } }
+@media (prefers-reduced-motion: reduce) { .filter-whatsapp-cta, .filter-whatsapp-arrow { transition: none; } }
+.collection-foot { flex-wrap: wrap; text-align: center; line-height: 1.6; }
+.text-link { min-height: 2.75rem; }
+.how { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 5rem); }
+.how .button { max-width: 100%; }
+.faq { grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: clamp(2rem, 5vw, 4.5rem); padding-top: 1rem; }
+.step { gap: clamp(1rem, 2vw, 1.75rem); }
+.step > span { flex-shrink: 0; }
+.questions summary { min-height: 3rem; line-height: 1.5; }
+.questions details p { padding-right: 0; }
+.footer-top, .footer-bottom { flex-wrap: wrap; }
+footer { padding-bottom: calc(5.5rem + env(safe-area-inset-bottom, 0px)); }
+.footer-top > a:last-child, .footer-bottom button { min-height: 2.75rem; }
+.footer-bottom { align-items: center; }
+.floating-chat {
+  bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+  right: max(1rem, env(safe-area-inset-right, 0px));
+}
+.enquiry-dialog {
+  width: calc(100% - 2rem) !important;
+  max-width: 30rem !important;
+  max-height: calc(100vh - 2rem);
+  max-height: calc(100dvh - 2rem - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: clamp(1.25rem, 5vw, 2.125rem) !important;
+  gap: 1rem !important;
+  scroll-padding: 1.25rem;
+}
+.enquiry-dialog > [data-slot='dialog-close'] { min-width: 2.75rem; min-height: 2.75rem; }
+.dialog-title { padding-right: 1.5rem; font-size: clamp(1.5rem, 4vw, 1.8125rem) !important; }
+.message-preview { min-width: 0; padding: 1rem; }
+
+/* Switch navigation before its links start competing with the wordmark. */
+@media (max-width: 64rem) {
+  .header { min-height: 4.5rem; padding-block: .75rem; }
+  .nav-cta { margin-left: auto; }
+  .mobile-menu { display: inline-flex; align-items: center; justify-content: center; width: 2.75rem; min-height: 2.75rem; background: none; border: 0; flex-shrink: 0; }
+  .nav { display: none; position: absolute; top: 100%; left: 0; right: 0; padding: 1rem var(--content-inset) 1.5rem; background: white; border-top: 1px solid #e0e9ed; box-shadow: 0 15px 25px #112d4510; max-height: calc(100dvh - 8rem); overflow-y: auto; }
+  .nav.open { display: flex; flex-direction: column; gap: .5rem; align-items: stretch; font-size: 1rem; }
+  .hero h1 { font-size: clamp(3.5rem, 7.3vw, 5rem); }
+  .hero-content > * { max-width: 54%; }
+  .hero-copy { max-width: min(54%, 21rem); }
+  .hero-image { object-position: 60% center; }
+  .hero-bottom > span:first-child { display: none; }
+  .moments { gap: 1.5rem; }
+  .how, .faq { grid-template-columns: minmax(0, 1fr); gap: 2.5rem; }
+  .how-copy, .step p { max-width: 38rem; }
+  .how h2, .faq h2 { font-size: clamp(2.5rem, 5vw, 3.8rem); }
+  .faq h2 br { display: none; }
+}
+
+/* Keep copy and imagery in normal flow on small screens and at high zoom. */
+@media (max-width: 48rem) {
+  .hero { min-height: 0; grid-template-columns: minmax(0, 1fr); align-items: start; background: #d4e8f5; }
+  .hero-content { grid-row: 1; padding: 3rem var(--content-inset) 2rem; }
+  .hero-content > * { max-width: 100%; }
+  .hero h1 { font-size: clamp(2.75rem, 9.5vw, 4.5rem); }
+  .hero-copy { max-width: 26rem; font-size: 1rem; margin-top: 1.25rem; }
+  .hero .eyebrow { margin-bottom: 1.25rem; font-size: .75rem; letter-spacing: .09em; }
+  .hero .button { margin-top: 1.5rem; }
+  .hero-note { margin-top: 1rem; max-width: 26rem; }
+  .hero-image { position: relative; grid-row: 2; width: 100%; height: auto; aspect-ratio: 16 / 11; min-height: 18rem; object-fit: cover; object-position: 75% center; animation: none; }
+  .hero-shade { display: none; }
+  .hero-caption { bottom: 1.25rem; right: var(--page-gutter); max-width: calc(100% - 6rem); text-align: right; }
+  .hero-caption span { font-size: .75rem; }
+  .hero-caption strong { font-size: 1.25rem; }
+  .hero-bottom { bottom: 1.25rem; }
+  .benefit-strip { flex-direction: column; gap: 1.125rem; padding-block: 1.5rem; }
+  .benefit-strip > span { flex-basis: auto; justify-content: flex-start; font-size: .875rem; }
+  h2 { font-size: clamp(2.25rem, 6.5vw, 3.25rem); }
+  .intro-copy { font-size: 1rem; }
+  .moments { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; margin-top: 2.5rem; text-align: left; }
+  .moments > div { position: relative; padding-left: 3.125rem; }
+  .moments svg { position: absolute; left: 0; top: 0; width: 1.75rem; height: 1.75rem; }
+  .range-tabs { margin-top: 1.5rem; }
+  .range-list { width: 100% !important; display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .125rem !important; }
+  .range-trigger { padding: .75rem .375rem !important; font-size: .875rem !important; flex-wrap: wrap; column-gap: .25rem !important; row-gap: .125rem !important; }
+  .range-trigger span { font-size: .75rem; }
+  .range-intro { margin-top: 1.5rem; }
+  .product-grid {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: min(82%, 22rem);
+    gap: 1rem;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: var(--page-gutter);
+    margin-inline: calc(-1 * var(--page-gutter));
+    padding: .375rem var(--page-gutter) 1rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .product-grid::-webkit-scrollbar { display: none; width: 0; height: 0; }
+  .product-grid:focus-visible { outline: 2px solid #497ff8; outline-offset: -2px; }
+  .product-card { scroll-snap-align: start; }
+  .product-visual { min-height: 19rem; }
+  .collection-foot { gap: .5rem; margin-top: 2rem; }
+  .statement, .contact { padding: 3.5rem var(--content-inset); }
+  .statement h2 { font-size: clamp(2.5rem, 8vw, 3.75rem); }
+  .statement > p:not(.eyebrow) { font-size: 1rem; }
+  .contact h2 { font-size: clamp(2.25rem, 7vw, 3.5rem); }
+  .how .button, .contact .button { gap: .625rem; padding: 1rem; font-size: .875rem; }
+  .footer-top { align-items: flex-start; flex-direction: column; gap: 1rem; }
+  .footer-bottom { column-gap: 1.5rem; row-gap: .75rem; }
+}
+
+@media (max-width: 36rem) {
+  .nav-cta { display: none; }
+  .mobile-menu { margin-left: auto; }
+  .announcement { text-align: center; font-size: .75rem; line-height: 1.5; }
+  .header { gap: .75rem; }
+  .wordmark { font-size: 1.5625rem; }
+  .range-trigger span { display: none; }
+  .product-visual { aspect-ratio: 4 / 5; min-height: 20rem; }
+  .product-info { padding-top: 1rem; }
+  .collection-foot { flex-direction: column; }
+  .button { padding: 1rem 1.25rem; font-size: .875rem; }
+  .how .button, .contact .button { width: 100%; }
+  .how .button > svg:last-child, .contact .button > svg:last-child { display: none; }
+  .enquiry-dialog .button { gap: .75rem; }
+}
+
+@media (max-height: 32rem) and (min-width: 48.001rem) {
+  .hero { min-height: 34rem; }
+  .hero-content { padding-top: 3rem; padding-bottom: 5rem; }
+}
+
+@media (hover: none) {
+  .button:hover, .product-card:hover img, .floating-chat:hover { transform: none; }
+}

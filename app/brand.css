@@ -1,0 +1,4 @@
+.wordmark { gap: .5rem; flex-shrink: 0; }
+.wordmark > .wordmark-name { display: flex; flex-direction: column; gap: .05em; align-self: center; margin: 0; font-size: 1.25rem; line-height: 1.08; letter-spacing: -.045em; color: inherit; }
+.wordmark-name > span { display: block; }
+@media (max-width: 22rem) { .header .wordmark > .wordmark-name { font-size: 1.1rem; } }

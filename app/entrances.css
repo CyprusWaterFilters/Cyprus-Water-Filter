@@ -1,0 +1,9 @@
+@media (prefers-reduced-motion: no-preference) {
+  [data-entrance] {
+    transition: opacity var(--entrance-duration, 650ms) cubic-bezier(.22, 1, .36, 1) var(--entrance-delay, 0ms), translate var(--entrance-duration, 650ms) cubic-bezier(.22, 1, .36, 1) var(--entrance-delay, 0ms);
+  }
+  [data-entrance='pending'] { opacity: 0; translate: 0 18px; }
+  [data-entrance='visible'] { opacity: 1; translate: 0 0; }
+  [data-entrance]:focus-within { opacity: 1; translate: 0 0; transition: none; }
+}
+@media print { [data-entrance] { opacity: 1 !important; translate: none !important; } }

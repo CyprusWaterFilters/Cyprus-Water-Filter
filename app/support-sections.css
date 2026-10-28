@@ -1,0 +1,96 @@
+.support-eyebrow { display: flex; align-items: center; gap: .625rem; font-size: .75rem; font-weight: 550; letter-spacing: .1em; line-height: 1.6; }
+.local-help { padding: clamp(3.5rem, 7vw, 7rem) var(--content-inset); }
+.local-help-panel { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); background: #123bc5; color: white; border-radius: 2rem; overflow: hidden; padding: clamp(1.5rem, 4vw, 4rem); gap: 3rem clamp(2rem, 5vw, 5rem); }
+.local-help-story { padding-top: .75rem; min-width: 0; }
+.local-help-story .support-eyebrow { color: #d2e2ff; }
+.local-help-story .support-eyebrow > span { width: .375rem; height: .375rem; border-radius: 50%; background: #b7d9ff; flex-shrink: 0; }
+.local-help h2 { margin-top: 2rem; font-size: clamp(2.5rem, 4.4vw, 4.5rem); letter-spacing: -.06em; line-height: 1.08; }
+.local-help h2 em { color: #b8dbff; }
+.local-help-copy { margin-top: 1.75rem; font-size: 1.0625rem; line-height: 1.75; color: #e0eaff; }
+.local-help-cta { display: inline-flex; align-items: center; justify-content: center; gap: .75rem; min-height: 3.5rem; max-width: 100%; margin-top: 2rem; padding: 1rem 1.25rem; border: 1px solid white; border-radius: 3rem; background: white; color: #123ac3; font-size: .9375rem; font-weight: 550; transition: transform .2s, box-shadow .2s; }
+.local-help-note { display: flex; align-items: flex-start; gap: .5rem; margin-top: 1.125rem; color: #d7e5ff; font-size: .75rem; line-height: 1.7; }
+.local-help-note svg { margin-top: .15rem; }
+.conversation-start { align-self: center; background: #edf5ff; color: #112d45; border-radius: 1.5rem; padding: clamp(1.5rem, 3vw, 2.5rem); box-shadow: 0 18px 40px -25px #061a7190; min-width: 0; }
+.conversation-symbol { display: flex; align-items: center; justify-content: space-between; gap: 1rem; color: #2457d2; }
+.conversation-symbol > span { font-size: .75rem; letter-spacing: .11em; font-weight: 550; }
+.conversation-start h3 { font-weight: 450; font-size: clamp(2.5rem, 3.5vw, 3.5rem); letter-spacing: -.06em; line-height: 1.03; margin-top: 2rem; }
+.conversation-start > p { color: #536d83; line-height: 1.6; margin-top: 1rem; font-size: 1rem; }
+.conversation-options { display: grid; gap: .75rem; margin-top: 1.75rem; }
+.conversation-options button { width: 100%; min-height: 4rem; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: .875rem; padding: 1rem; text-align: left; background: #fff; border: 1px solid #d5e3f3; border-radius: .875rem; font-size: .9375rem; line-height: 1.5; transition: border-color .2s, transform .2s, box-shadow .2s; }
+.conversation-number { font-size: .75rem; color: #6b87a0; }
+.conversation-options button > svg { color: #2457d2; }
+.conversation-start .conversation-caption { font-size: .75rem; line-height: 1.5; margin-top: 1.125rem; }
+.local-help-path { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; list-style: none; padding: 1.75rem 0 0; margin: 0; border-top: 1px solid #ffffff33; }
+.local-help-path li { display: flex; gap: .75rem; align-items: center; font-size: .875rem; color: #e3ecff; line-height: 1.6; }
+.local-help-path li > span { font-size: .75rem; display: grid; place-items: center; width: 1.875rem; height: 1.875rem; flex-shrink: 0; border: 1px solid #ffffff45; border-radius: 50%; color: #bcd9ff; }
+.water-faq { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.25fr); gap: clamp(2.5rem, 6vw, 7rem); padding: 1rem var(--content-inset) clamp(4rem, 7vw, 7rem); align-items: start; }
+.water-faq-intro { position: sticky; top: 2rem; padding-top: 1rem; }
+.water-faq .support-eyebrow { color: #5c7388; }
+.water-faq h2 { font-size: clamp(2.5rem, 4.1vw, 4.2rem); margin-top: 1.5rem; line-height: 1.06; }
+.water-faq h2 em { color: #2055d7; }
+.water-faq-intro > p:not(.support-eyebrow) { margin-top: 1.5rem; font-size: 1rem; line-height: 1.8; color: #5c7182; }
+.water-faq-help { display: flex; align-items: center; gap: 1rem; padding: 1.25rem; margin-top: 2.5rem; border-radius: 1.125rem; background: #f0f6fc; }
+.water-faq-help-icon { display: grid; place-items: center; width: 2.875rem; height: 2.875rem; flex-shrink: 0; background: white; color: #2457d2; border-radius: 50%; }
+.water-faq-help h3 { font-size: .875rem; font-weight: 500; line-height: 1.5; }
+.water-faq-help button { display: inline-flex; align-items: center; gap: .5rem; min-height: 2.75rem; background: none; border: 0; padding: .25rem 0; font-size: .875rem; font-weight: 550; color: #2457d2; text-align: left; }
+.water-faq-list { gap: .875rem; min-width: 0; }
+.water-faq-card { border: 1px solid #e0e8f1 !important; border-radius: 1.25rem; background: #fafcfe; overflow: hidden; transition: background .2s, border-color .2s, box-shadow .2s; }
+.water-faq-card[data-open] { background: #edf4ff; border-color: #b6cdf8 !important; box-shadow: 0 10px 28px -24px #2357b2; }
+.water-faq-trigger { align-items: center !important; gap: 1rem; width: 100%; padding: 1.5rem !important; border-radius: 1.25rem !important; color: #183c56; text-decoration: none !important; }
+.water-faq-number { flex-shrink: 0; display: grid; place-items: center; width: 2.375rem; height: 2.375rem; border: 1px solid #d7e4f1; border-radius: 50%; background: white; color: #55758f; font-size: .75rem; font-weight: 500; }
+.water-faq-card[data-open] .water-faq-number { background: #2156df; color: white; border-color: #2156df; }
+.water-faq-question { display: grid; gap: .5rem; min-width: 0; flex: 1; }
+.water-faq-question > span:first-child { color: #58758c; font-size: .75rem; letter-spacing: .09em; line-height: 1.5; font-weight: 550; }
+.water-faq-question > span:last-child { font-size: 1.125rem; font-weight: 500; letter-spacing: -.025em; line-height: 1.45; }
+.water-faq-trigger [data-slot='accordion-trigger-icon'] { margin: .125rem 0 0 !important; }
+.water-faq-answer { padding: 0 1.5rem 1.5rem 4.875rem !important; height: auto !important; color: #506c81; font-size: 1rem; line-height: 1.8; }
+.water-faq-answer p { margin: 0; }
+.water-faq-answer button { display: inline-flex; align-items: center; gap: .75rem; min-height: 2.75rem; background: none; border: 0; padding: .5rem 0; margin-top: .75rem; font-size: .875rem; font-weight: 550; color: #2457d2; text-align: left; }
+@media (hover: hover) {
+  .conversation-options button:hover { transform: translateX(3px); border-color: #83a7e8; box-shadow: 0 6px 15px -12px #204fb5; }
+  .local-help-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 25px -12px #061a71; }
+  .water-faq-trigger:hover { background: #e9f2ff; }
+  .water-faq-help button:hover, .water-faq-answer button:hover { text-decoration: underline; text-underline-offset: .2em; }
+}
+@media (max-width: 64rem) {
+  .local-help-panel { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+  .local-help-story { padding: .5rem; }
+  .local-help h2 { font-size: clamp(2.6rem, 6vw, 4.4rem); }
+  .local-help h2 em br { display: none; }
+  .conversation-start { padding: 2rem; }
+  .conversation-start h3 br, .conversation-start > p br { display: none; }
+  .conversation-start h3 { margin-top: 1.5rem; }
+  .water-faq { grid-template-columns: minmax(0, 1fr); gap: 2.25rem; }
+  .water-faq-intro { position: static; }
+  .water-faq-help { max-width: 28rem; margin-top: 1.5rem; }
+}
+@media (max-width: 36rem) {
+  .local-help { padding-inline: .75rem; padding-block: 3.5rem; }
+  .local-help-panel { border-radius: 1.5rem; padding: 1.25rem; gap: 1.75rem; }
+  .local-help-story { padding: .5rem .25rem 0; }
+  .support-eyebrow { font-size: .75rem; letter-spacing: .065em; }
+  .local-help h2 { margin-top: 1.5rem; font-size: clamp(2.5rem, 9.5vw, 3.2rem); }
+  .local-help-copy { font-size: 1rem; margin-top: 1.25rem; }
+  .local-help-cta { width: 100%; gap: .625rem; padding: 1rem .75rem; font-size: .875rem; }
+  .local-help-cta > svg:last-child { display: none; }
+  .local-help-note { font-size: .75rem; }
+  .conversation-start { padding: 1.25rem; border-radius: 1rem; }
+  .conversation-symbol { gap: .75rem; }
+  .conversation-symbol > span { font-size: .75rem; letter-spacing: .04em; }
+  .conversation-start h3 { font-size: 2.5rem; }
+  .conversation-options button { gap: .625rem; padding: .875rem .75rem; font-size: .875rem; }
+  .local-help-path { grid-template-columns: minmax(0, 1fr); gap: 1rem; padding-top: 1.5rem; }
+  .water-faq { padding-top: 0; }
+  .water-faq h2 { font-size: clamp(2.5rem, 9.5vw, 3.2rem); }
+  .water-faq-intro > p br { display: none; }
+  .water-faq-help { padding: 1rem; gap: .75rem; }
+  .water-faq-trigger { padding: 1.25rem 1rem !important; gap: .75rem; }
+  .water-faq-number { width: 2rem; height: 2rem; }
+  .water-faq-question > span:first-child { font-size: .75rem; letter-spacing: .035em; }
+  .water-faq-question > span:last-child { font-size: 1rem; }
+  .water-faq-answer { padding: 0 1rem 1.25rem !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .local-help *, .water-faq * { transition: none !important; animation: none !important; }
+}
+
