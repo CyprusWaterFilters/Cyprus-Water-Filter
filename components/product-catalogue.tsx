@@ -1,4 +1,5 @@
 'use client';
+import { FloatingWhatsAppButton } from '@/components/floating-whatsapp';
 
 import { useEffect, useState } from 'react';
 import { ArrowUpRight, ArrowRight, Search, X, Droplets, SlidersHorizontal, MessageCircle, Check } from 'lucide-react';
@@ -74,7 +75,7 @@ export function ProductCatalogue() {
       <section className="catalogue-help" id="catalogue-help"><div><p className="eyebrow">{t('COMMERCIAL CAPABILITY. THE RIGHT HOME FIT.')}</p><h2>{t('Your water. Your home.')}<br/><em>{t('Your system.')}</em></h2><p>{t('Tell us about your water, available space and current setup. We’ll translate the commercial specifications into a clear residential recommendation.')}</p><button className="button white" onClick={() => enquire(t('choosing a commercial-grade water filter for my home'))}><MessageCircle size={20}/>{t('Match my home')}<ArrowUpRight size={18}/></button></div><div className="catalogue-range-guide">{ranges.map(range => <div key={range.name}><span>{range.name}</span><p>{t(range.purpose)}</p></div>)}<p className="catalogue-fit-note">{t('We’ll confirm price, compatibility and fitting options before you decide.')}</p></div></section>
     </main>
     <SiteFooter onEnquire={enquire}/>
-    <button className="floating-chat" aria-label={t('Contact us on WhatsApp')} onClick={() => enquire(t('a water filter for my home'))}><MessageCircle size={25}/></button>
+    <FloatingWhatsAppButton onClick={() => enquire(t('a water filter for my home'))}/>
     <Dialog open={detail !== null} onOpenChange={open => { if (!open) setDetail(null); }}><DialogContent className="catalogue-detail-dialog">{detail && <>
       <ProductVisual product={detail} eager/>
       <div className="catalogue-detail-copy"><p className="eyebrow">{detail.name} · {t('Series')}</p><DialogTitle className="catalogue-detail-title">{detail.model}</DialogTitle><DialogDescription className="catalogue-detail-description">{t(detail.description)}</DialogDescription>

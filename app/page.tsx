@@ -1,4 +1,5 @@
 'use client';
+import { FloatingWhatsAppButton } from '@/components/floating-whatsapp';
 import { useLanguage } from '@/components/language-provider';
 
 
@@ -70,7 +71,7 @@ export default function Home() {
         <section className="contact"><p className="eyebrow">{t("A COMMERCIAL STANDARD FOR YOUR HOME.")}</p><h2>{t("Commercial grade.")}<br/>{t("Chosen for")} <em>{t("your home.")}</em></h2><button className="button white" onClick={() => enquire(t("a commercial-grade water filter for my home"))}><MessageCircle size={21}/> {t("Find my system on WhatsApp")} <ArrowUpRight size={20}/></button><p>{t("Tell us about your home. We’ll help match the right system.")}</p></section>
       </main>
       <SiteFooter onEnquire={enquire}/>
-      <button className="floating-chat" aria-label={t("Contact us on WhatsApp")} onClick={() => enquire(t("a water filter for my home"))}><MessageCircle size={25}/></button>
+      <FloatingWhatsAppButton onClick={() => enquire(t("a water filter for my home"))}/>
       <EnquiryDialog key={selection ?? "closed"} selection={selection} onClose={() => setSelection(null)}/>
     </>
   );
