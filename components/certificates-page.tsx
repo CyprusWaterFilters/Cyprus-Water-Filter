@@ -1,4 +1,5 @@
 'use client';
+import { FloatingWhatsAppButton } from '@/components/floating-whatsapp';
 
 import { useState } from 'react';
 import { ArrowUpRight, Check, ExternalLink, FileCheck2, MessageCircle, ShieldCheck } from 'lucide-react';
@@ -60,7 +61,7 @@ export function CertificatesPage() {
       </section>
     </main>
     <SiteFooter onEnquire={enquire}/>
-    <button className="floating-chat" aria-label={t('Contact us on WhatsApp')} onClick={() => enquire(t('the certification for a specific water filter'))}><MessageCircle size={25}/></button>
+    <FloatingWhatsAppButton onClick={() => enquire(t('the certification for a specific water filter'))}/>
     <EnquiryDialog key={selection ?? 'closed'} selection={selection} onClose={() => setSelection(null)}/>
   </>;
 }
