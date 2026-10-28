@@ -29,7 +29,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'Homewater | Commercial-grade water filtration for your home',
   description: 'Explore commercial-grade FX, HF2 and HF2-S water filtration systems selected and fitted for residential use.',
-  robots: { index: false, follow: false },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({
