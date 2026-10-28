@@ -1,0 +1,142 @@
+/* A single photographic composition, art-directed separately for narrow screens. */
+.water-hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: center;
+  min-height: clamp(42rem, calc(100svh - 9.5rem), 58rem);
+  margin: 0 clamp(.75rem, 1.25vw, 1.5rem) 1rem;
+  overflow: hidden;
+  border-radius: clamp(1.5rem, 2.5vw, 2.75rem);
+  background: #d1e9f8;
+  box-shadow: 0 16px 50px -35px #225f8b55;
+}
+.water-hero-scene, .water-hero-wash { position: absolute; inset: 0; z-index: -1; }
+.water-hero-scene img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 65% center;
+  animation: water-scene-reveal 1.4s cubic-bezier(.2,.7,.2,1) both;
+}
+.water-hero-wash {
+  background: linear-gradient(90deg, #d6edfbc9 0%, #d6edfb99 32%, #d6edfb12 61%, transparent 76%);
+  pointer-events: none;
+}
+.water-hero-content {
+  width: 57%;
+  max-width: 54rem;
+  padding: clamp(3rem, 5vw, 5rem) 0 8rem clamp(2rem, 5.5vw, 8rem);
+  color: #102e46;
+}
+.water-hero-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: .625rem;
+  margin-bottom: 1.75rem;
+  padding: .625rem .875rem;
+  border: 1px solid #ffffff91;
+  border-radius: 2rem;
+  background: #ffffff52;
+  backdrop-filter: blur(10px);
+  font-size: .75rem;
+  font-weight: 550;
+  line-height: 1.4;
+  letter-spacing: .095em;
+}
+.water-hero-kicker > span { width: .375rem; height: .375rem; border-radius: 50%; background: #1854e6; flex-shrink: 0; }
+.water-hero h1 { margin: 0; font-size: clamp(3.8rem, 7.6vw, 8rem); font-weight: 450; letter-spacing: -.075em; line-height: .99; }
+.water-hero h1 > span { display: block; }
+.water-hero h1 em { color: #1554e9; letter-spacing: -.065em; }
+.water-hero-copy { max-width: 26rem; margin-top: 1.75rem; color: #294b62; font-size: 1.125rem; line-height: 1.75; letter-spacing: -.018em; }
+.water-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+  min-height: 4rem;
+  max-width: 100%;
+  margin-top: 2rem;
+  padding: .5rem .5rem .5rem 1.75rem;
+  border: 1px solid #3168f5;
+  border-radius: 4rem;
+  background: #1754e8;
+  color: white;
+  font-size: 1rem;
+  font-weight: 550;
+  box-shadow: 0 10px 28px -12px #174bea80, inset 0 1px 0 #ffffff35;
+  transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+}
+.water-hero-cta-icon { display: grid; place-items: center; width: 3rem; height: 3rem; flex-shrink: 0; border-radius: 50%; background: white; color: #1754e8; }
+.water-hero-cta-icon svg { transition: transform .25s ease; }
+.water-hero-reassurance { display: flex; align-items: center; gap: .5rem; margin-top: 1.125rem; color: #305369; font-size: .8125rem; line-height: 1.6; }
+.water-hero-reassurance svg { flex-shrink: 0; }
+.water-hero-discover { position: absolute; bottom: 2.25rem; left: clamp(2rem, 5.5vw, 8rem); display: inline-flex; align-items: center; gap: .875rem; color: #20445b; font-size: .75rem; line-height: 1.6; }
+.water-hero-discover strong { font-weight: 500; }
+.water-hero-discover-icon { width: 2.875rem; height: 2.875rem; border: 1px solid #42657b66; border-radius: 50%; display: grid; place-items: center; }
+.water-hero-kicker, .water-hero h1, .water-hero-copy, .water-hero-cta, .water-hero-reassurance { animation: water-copy-reveal .8s cubic-bezier(.2,.7,.2,1) both; }
+.water-hero h1 { animation-delay: .08s; }
+.water-hero-copy { animation-delay: .16s; }
+.water-hero-cta { animation-delay: .24s; }
+.water-hero-reassurance { animation-delay: .3s; }
+
+@media (hover: hover) {
+  .water-hero-cta:hover { transform: translateY(-3px); background: #1246cf; box-shadow: 0 16px 32px -13px #174bea90; }
+  .water-hero-cta:hover svg { transform: translate(2px, -2px); }
+}
+@media (min-width: 110rem) {
+  .water-hero-content { margin-left: max(0px, calc((100vw - 110rem) / 2)); }
+  .water-hero-discover { left: max(8rem, calc((100vw - 94rem) / 2)); }
+}
+@media (max-width: 70rem) and (min-width: 56.001rem) {
+  .water-hero { min-height: 40rem; }
+  .water-hero-content { width: 59%; padding-left: 2.5rem; }
+  .water-hero h1 { font-size: clamp(3.5rem, 7.2vw, 5rem); }
+  .water-hero-kicker { font-size: .75rem; letter-spacing: .07em; }
+  .water-hero-copy { font-size: 1rem; }
+  .water-hero-discover { left: 2.5rem; }
+}
+@media (max-width: 56rem) {
+  .water-hero {
+    min-height: 54rem;
+    align-items: start;
+    margin: 0 .75rem 1rem;
+    border-radius: 1.75rem;
+  }
+  .water-hero-scene img { object-position: center bottom; }
+  .water-hero-wash { background: linear-gradient(180deg, #e6f4fd70 0%, #e6f4fd36 32%, transparent 55%); }
+  .water-hero-content {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 2.5rem 1.5rem 25rem;
+    text-align: center;
+  }
+  .water-hero-kicker { margin-bottom: 1.5rem; padding: .625rem .75rem; font-size: .75rem; letter-spacing: .065em; }
+  .water-hero h1 { font-size: clamp(3rem, 11.5vw, 4.75rem); letter-spacing: -.075em; line-height: 1.02; }
+  .water-hero-copy { max-width: 23rem; margin: 1.25rem auto 0; font-size: 1rem; line-height: 1.65; }
+  .water-hero-cta { width: min(100%, 20rem); min-height: 3.625rem; margin-top: 1.5rem; padding-left: 1.5rem; gap: 1rem; font-size: .9375rem; text-align: left; }
+  .water-hero-cta-icon { width: 2.625rem; height: 2.625rem; }
+  .water-hero-reassurance { justify-content: center; margin-top: .875rem; font-size: .75rem; }
+  .water-hero-discover { display: none; }
+}
+@media (max-width: 36rem) {
+  .water-hero { min-height: 48rem; border-radius: 1.5rem; }
+  .water-hero-content { padding: 2rem 1.125rem 24rem; }
+  .water-hero h1 { font-size: clamp(2.7rem, 12.7vw, 4rem); }
+  .water-hero-kicker { margin-bottom: 1.25rem; font-size: .75rem; letter-spacing: .06em; }
+  .water-hero-copy { max-width: 19rem; font-size: .9375rem; }
+  .water-hero-copy-break { display: none; }
+}
+@media (max-width: 22rem) {
+  .water-hero-content { padding-inline: 1rem; }
+  .water-hero h1 { font-size: 2.625rem; }
+  .water-hero-kicker { gap: .375rem; padding-inline: .625rem; }
+}
+@keyframes water-copy-reveal { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes water-scene-reveal { from { transform: scale(1.035); } to { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) {
+  .water-hero *, .water-hero-scene img { animation: none; transition: none; }
+}
+

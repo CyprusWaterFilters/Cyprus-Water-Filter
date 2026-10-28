@@ -1,0 +1,38 @@
+.language-switcher { position: relative; display: inline-flex; flex-shrink: 0; align-items: center; justify-content: center; gap: .375rem; height: 2.75rem; min-width: 4.875rem; padding: .5rem .625rem; border: 1px solid #dbe6ed; border-radius: 2rem; color: #16374d; background: #f5f9fc; font-size: .75rem; font-weight: 500; }
+.language-switcher { cursor: pointer; transition: background 200ms, border-color 200ms; }
+.language-switcher[data-popup-open] { background: #e9f2fb; border-color: #b4cbe0; }
+.language-switcher:focus-visible { outline: 2px solid #497ff8; outline-offset: 3px; }
+.language-chevron { transition: transform 250ms cubic-bezier(.22, 1, .36, 1); }
+.language-switcher[data-popup-open] .language-chevron { transform: rotate(180deg); }
+.language-menu { width: 14.5rem !important; max-width: calc(100vw - 2rem); padding: .625rem !important; border: 1px solid #d9e5ef; border-radius: 1.25rem !important; background: #fbfdff !important; color: #16374d; box-shadow: 0 20px 50px -18px #173e5b40, 0 4px 12px -8px #173e5b20 !important; transform-origin: var(--transform-origin); }
+.language-menu-label { padding: .5rem .75rem .75rem !important; font-size: .75rem !important; font-weight: 500; color: #627e92; letter-spacing: .055em; }
+.language-option { min-height: 3.25rem; gap: .75rem !important; padding: .625rem 2.25rem .625rem .625rem !important; border-radius: .875rem !important; cursor: pointer !important; transition: background 160ms ease; }
+.language-option + .language-option { margin-top: .25rem; }
+.language-option[data-checked] { background: #eaf2fe; color: #174fc8; }
+.language-option[data-highlighted] { background: #e5eff8; }
+.language-code { width: 2rem; height: 2rem; display: grid; place-items: center; flex-shrink: 0; border: 1px solid #dce7ef; border-radius: 50%; background: white; color: #688296; font-size: .625rem; font-weight: 500; letter-spacing: .04em; }
+.language-option[data-checked] .language-code { background: #1955df; color: white; border-color: #1955df; }
+.language-name { font-size: .9375rem; font-weight: 450; }
+.language-name:lang(el) { font-family: var(--font-greek-sans), Arial, sans-serif; }
+.language-option [data-slot='dropdown-menu-radio-item-indicator'] { right: .75rem; color: #1955df; }
+.language-menu[data-open] { animation: language-menu-enter 240ms cubic-bezier(.22, 1, .36, 1) both !important; }
+.language-menu[data-closed] { animation: language-menu-exit 140ms ease-in both !important; }
+@keyframes language-menu-enter { from { opacity: 0; transform: translateY(-6px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes language-menu-exit { to { opacity: 0; transform: translateY(-4px) scale(.98); } }
+@media (prefers-reduced-motion: reduce) { .language-menu, .language-chevron, .language-switcher, .language-option { animation: none !important; transition: none !important; } }
+html:lang(el) body { font-family: var(--font-greek-sans), var(--font-geist-sans), Arial, sans-serif; }
+html:lang(el) { --font-sans: var(--font-greek-sans); }
+html:not(:lang(en)) .water-hero h1 { font-size: clamp(3rem, 5.6vw, 6.25rem); letter-spacing: -.055em; line-height: 1.08; }
+html:not(:lang(en)) h2, html:not(:lang(en)) h3 { letter-spacing: -.04em; }
+html:not(:lang(en)) em { letter-spacing: -.035em; }
+html:not(:lang(en)) .local-help h2 { font-size: clamp(2.2rem, 3.6vw, 3.75rem); }
+html:not(:lang(en)) .filter-whatsapp-copy { font-size: .875rem; }
+html:not(:lang(en)) .water-hero-kicker { letter-spacing: .025em; }
+.wordmark { font-family: var(--font-geist-sans), Arial, sans-serif; }
+@media (min-width: 64.001rem) { .header { gap: 1.25rem; } .header .nav { gap: clamp(.875rem, 1.5vw, 1.75rem); } }
+@media (max-width: 80rem) and (min-width: 64.001rem) { .header .nav-cta { display: none; } }
+@media (max-width: 90rem) and (min-width: 64.001rem) { html:not(:lang(en)) .header .nav-cta { display: none; } }
+@media (max-width: 64rem) { .language-switcher { margin-left: auto; } .header .mobile-menu { margin-left: 0; } .header .nav-cta { display: none; } }
+@media (max-width: 56rem) { html:not(:lang(en)) .water-hero h1 { font-size: clamp(2.5rem, 8.7vw, 4.5rem); } }
+@media (max-width: 36rem) { .header { gap: .625rem; } .language-switcher { min-width: 4.5rem; padding-inline: .5rem; } html:not(:lang(en)) .water-hero h1 { font-size: clamp(2.15rem, 8.5vw, 3rem); } html:not(:lang(en)) .water-hero-reassurance { align-items: flex-start; } html:not(:lang(en)) .local-help h2 { font-size: clamp(2rem, 8.5vw, 3rem); } }
+@media (max-width: 22rem) { .header .wordmark { font-size: 1.35rem; gap: .1875rem; } .header .wordmark svg { width: 1.5rem; } }
