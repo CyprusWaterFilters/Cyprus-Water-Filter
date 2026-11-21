@@ -46,7 +46,37 @@
   letter-spacing: .095em;
 }
 .water-hero-kicker > span { width: .375rem; height: .375rem; border-radius: 50%; background: #1854e6; flex-shrink: 0; }
-.water-hero h1 { margin: 0; font-size: clamp(3.8rem, 7.6vw, 8rem); font-weight: 450; letter-spacing: -.075em; line-height: .99; }
+.water-hero h1 {
+  margin: 0;
+  color: #205879;
+  font-size: clamp(3.8rem, 7.6vw, 8rem);
+  font-weight: 760;
+  letter-spacing: -.065em;
+  line-height: 1.04;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+@supports ((background-clip: text) or (-webkit-background-clip: text)) {
+  .water-hero h1 {
+    background-image: linear-gradient(180deg,
+      #f7fdff 3%, #d7f3ff 9%, #153751 15%, #4f8cac 24%,
+      #315d7c 40%, #437a9c 53%, #669eb9 67%, #2c5675 83%,
+      #193f5d 91%, #bce5f5 97%);
+    background-size: 100% 1.04em;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-stroke: .012em #153e5c;
+    filter: drop-shadow(0 -1px 0 #faffff)
+      drop-shadow(1px 1px 0 #d6f5ff)
+      drop-shadow(-1px 0 0 #90c7e2)
+      drop-shadow(0 3px 2px #13395399)
+      drop-shadow(0 6px 8px #1e4d6c40);
+  }
+}
+@media (forced-colors: active) {
+  .water-hero h1 { color: CanvasText; background: none; -webkit-text-stroke: 0; filter: none; }
+}
 .water-hero-subtitle { margin-top: .875rem; color: #294b62; font-size: clamp(1.125rem, 2.4vw, 1.75rem); line-height: 1.3; font-weight: 500; }
 .water-hero-subtitle em { color: #1554e9; letter-spacing: -.065em; }
 .water-hero-copy { max-width: 26rem; margin-top: 1.75rem; color: #294b62; font-size: 1.125rem; line-height: 1.75; letter-spacing: -.018em; }
