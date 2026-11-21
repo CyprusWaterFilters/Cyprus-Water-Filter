@@ -37,9 +37,9 @@ html:not(:lang(en)) .water-hero-kicker { letter-spacing: .025em; }
 @media (max-width: 36rem) { .header { gap: .625rem; } .language-switcher { min-width: 4.5rem; padding-inline: .5rem; } html:not(:lang(en)) .water-hero h1 { font-size: clamp(2.15rem, 8.5vw, 3rem); } html:not(:lang(en)) .water-hero-reassurance { align-items: flex-start; } html:not(:lang(en)) .local-help h2 { font-size: clamp(2rem, 8.5vw, 3rem); } }
 @media (max-width: 22rem) { .header .wordmark { font-size: 1.35rem; gap: .1875rem; } .header .wordmark svg { width: 1.5rem; } }
 
-html:lang(he) body, .language-name:lang(he) { font-family: Arial, sans-serif; }
-html:lang(he) :is(h1, h2, h3, em) { letter-spacing: normal; }
-html:lang(he) .wordmark { direction: ltr; }
-html:lang(he) .water-hero { direction: ltr; }
-html:lang(he) .water-hero-content, html:lang(he) .water-hero-discover { direction: rtl; }
-html:lang(he) .water-hero-cta { text-align: start; }
+html:is(:lang(he), :lang(ar)) body, .language-name:is(:lang(he), :lang(ar)) { font-family: Arial, sans-serif; }
+html:is(:lang(he), :lang(ar)) :is(h1, h2, h3, em) { letter-spacing: normal; }
+html:is(:lang(he), :lang(ar)) .wordmark { direction: ltr; }
+html:is(:lang(he), :lang(ar)) .water-hero { direction: ltr; }
+html:is(:lang(he), :lang(ar)) .water-hero-content, html:is(:lang(he), :lang(ar)) .water-hero-discover { direction: rtl; }
+html:is(:lang(he), :lang(ar)) .water-hero-cta { text-align: start; }

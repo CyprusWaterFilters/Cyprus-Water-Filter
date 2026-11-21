@@ -23,7 +23,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   }, []);
   useEffect(() => {
     document.documentElement.lang = language;
-    document.documentElement.dir = language === 'he' ? 'rtl' : 'ltr';
+    document.documentElement.dir = language === 'he' || language === 'ar' ? 'rtl' : 'ltr';
     const pathname = window.location.pathname.replace(/\/$/, '');
     const productsPage = pathname === '/products';
     const certificatesPage = pathname === '/certificates';
@@ -44,7 +44,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
 export function LanguageSwitcher() {
   const { language, setLanguage, t } = useLanguage();
-  const languages = [{ code: 'en', name: 'English' }, { code: 'el', name: 'Ελληνικά' }, { code: 'ru', name: 'Русский' }, { code: 'he', name: 'עברית' }];
+  const languages = [{ code: 'en', name: 'English' }, { code: 'el', name: 'Ελληνικά' }, { code: 'ru', name: 'Русский' }, { code: 'he', name: 'עברית' }, { code: 'ar', name: 'العربية' }];
   return <DropdownMenu modal={false}>
     <DropdownMenuTrigger className="language-switcher" aria-label={`${t('Language')}: ${languages.find(item => item.code === language)?.name}`}>
       <Globe2 size={16} aria-hidden="true"/>

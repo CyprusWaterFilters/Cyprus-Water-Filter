@@ -8,10 +8,10 @@ new Function('require', 'module', 'exports', compiled)(() => dictionary, moduleO
 const { translate, isLanguage } = moduleObject.exports;
 const placeholders = text => [...text.matchAll(/\{\w+\}/g)].map(match => match[0]).sort();
 for (const [source, entries] of Object.entries(dictionary)) {
-  assert.equal(entries.length, 3, source);
+  assert.equal(entries.length, 4, source);
   entries.forEach(value => { assert.ok(value.trim(), source); assert.deepEqual(placeholders(value), placeholders(source), source); });
 }
-for (const language of ['en', 'el', 'ru', 'he']) {
+for (const language of ['en', 'el', 'ru', 'he', 'ar']) {
   assert.ok(isLanguage(language));
   for (const model of ['FX-10', 'FX-15', 'FX-17', 'HF2-10', 'HF2-15', 'HF2-17', 'HF2-10S', 'HF2-15S', 'HF2-17S']) {
     const text = translate(language, "Hello! I'm interested in the {model} water filter. Could you tell me the price, availability and whether it is suitable for my home?", { model });
@@ -33,4 +33,4 @@ for (const file of ['app/page.tsx', 'components/support-sections.tsx', 'componen
   }
   visit(ast);
 }
-console.log(`Verified ${Object.keys(dictionary).length} translated entries, all rendered copy and 36 product enquiry messages.`);
+console.log(`Verified ${Object.keys(dictionary).length} translated entries, all rendered copy and 45 product enquiry messages.`);
