@@ -20,7 +20,7 @@ const threeStagePlusVariants = [
 
 function ProductVisual({ product, eager = false }: { product: Product; eager?: boolean }) {
   const { t } = useLanguage();
-  if (product.size === null) return <div className="catalogue-visual platinum-wasser"><img src={product.image} alt={t(product.model)} width={700} height={700} loading={eager ? 'eager' : 'lazy'}/></div>;
+  if (product.size === null) return <div className="catalogue-visual platinum-wasser"><img src={product.image} alt={t(product.model)} width={1121} height={1403} loading={eager ? 'eager' : 'lazy'}/></div>;
   return <div className={`catalogue-visual ${product.tone}`}>
     <span className="catalogue-range-tag">{product.name}</span><span className="catalogue-size-tag">{product.size}″</span>
     {productImage(product.name, product.size) ? <img src={productImage(product.name, product.size)} alt={t('FLUUX {model} water filter cartridge', { model: product.model })} width={1122} height={1402} loading={eager ? 'eager' : 'lazy'}/> : <div className="catalogue-type-product"><span>FLUUX</span><strong>{product.name}</strong><span>{product.size} {t('inches')}</span><p>{t(product.purpose)}</p></div>}
@@ -91,7 +91,15 @@ fx && <dl className="catalogue-detail-specs">
       </>}
     </dl>;
   }
+  function renderProductCard(product: Product, index: number) {
+    return <article className="catalogue-card" key={product.model}>
+            <button className="catalogue-visual-button" onClick={() => setDetail(product)} aria-label={t('View details for {model}', { model: product.model })}><ProductVisual product={product} eager={index < 3}/></button>
+            <div className="catalogue-card-copy"><div className="catalogue-card-heading"><h3>{product.size === null ? t(product.model) : product.model}</h3><button onClick={() => setDetail(product)} aria-label={t('View details for {model}', { model: product.model })}><ArrowUpRight size={19}/></button></div><p className="catalogue-card-purpose">{t(product.purpose)}</p><div className="catalogue-card-spec"><Droplets size={15}/><span>{t(product.detail)}</span></div><button className="catalogue-details-link" onClick={() => setDetail(product)}>{t('View details')}<ArrowRight size={15}/></button>{product.name === 'FX' && product.size !== null && renderFxSpecifications(fxSpecifications[product.size])}{product.name === 'HF2' && product.size !== null && renderHf2Specifications(product.size)}{product.name === 'HF2-S' && product.size !== null && renderHf2sSpecifications(product.size)}<ProductEnquiry model={product.model} onEnquire={enquire}/></div>
+          </article>;
+  }
   const visible = filterProducts(filters);
+  const cartridges = visible.filter(product => product.size !== null);
+  const reverseOsmosisSystems = visible.filter(product => product.size === null);
   const active = filters.range !== 'all' || filters.size !== 'all' || filters.query !== '';
   return <>
     <ScrollEntrances/>
@@ -124,12 +132,7 @@ fx && <dl className="catalogue-detail-specs">
             </div>
           </section>
         }
-        <div className="catalogue-grid">
-          {visible.map((product, index) => <article className="catalogue-card" key={product.model}>
-            <button className="catalogue-visual-button" onClick={() => setDetail(product)} aria-label={t('View details for {model}', { model: product.model })}><ProductVisual product={product} eager={index < 3}/></button>
-            <div className="catalogue-card-copy"><div className="catalogue-card-heading"><h3>{product.size === null ? t(product.model) : product.model}</h3><button onClick={() => setDetail(product)} aria-label={t('View details for {model}', { model: product.model })}><ArrowUpRight size={19}/></button></div><p className="catalogue-card-purpose">{t(product.purpose)}</p><div className="catalogue-card-spec"><Droplets size={15}/><span>{t(product.detail)}</span></div><button className="catalogue-details-link" onClick={() => setDetail(product)}>{t('View details')}<ArrowRight size={15}/></button>{product.name === 'FX' && product.size !== null && renderFxSpecifications(fxSpecifications[product.size])}{product.name === 'HF2' && product.size !== null && renderHf2Specifications(product.size)}{product.name === 'HF2-S' && product.size !== null && renderHf2sSpecifications(product.size)}<ProductEnquiry model={product.model} onEnquire={enquire}/></div>
-          </article>)}
-        </div>
+        {cartridges.length > 0 && <div className="catalogue-grid">{cartridges.map(renderProductCard)}</div>}
         {visible.length === 0 && <div className="catalogue-empty"><Search size={28}/><h3>{t('No filters found')}</h3><p>{t('Try another model or clear your filters to see the full collection.')}</p><button className="button primary" onClick={() => updateFilters(defaultFilters)}>{t('View all filters')}<ArrowRight size={18}/></button></div>}
       </section>
       <section className="catalogue-browser" id="three-stage-plus" aria-labelledby="three-stage-plus-title">
@@ -168,6 +171,14 @@ fx && <dl className="catalogue-detail-specs">
           ))}
         </div>
       </section>
+      {reverseOsmosisSystems.length > 0 && (
+        <section className="catalogue-browser" id="reverse-osmosis" aria-labelledby="reverse-osmosis-title">
+          <div className="catalogue-browser-heading">
+            <h2 id="reverse-osmosis-title">{t('Reverse osmosis water filters')}</h2>
+          </div>
+          <div className="catalogue-grid">{reverseOsmosisSystems.map(renderProductCard)}</div>
+        </section>
+      )}
       <section className="catalogue-help" id="catalogue-help"><div><p className="eyebrow">{t('COMMERCIAL CAPABILITY. THE RIGHT HOME FIT.')}</p><h2>{t('Your water. Your home.')}<br/><em>{t('Your system.')}</em></h2><p>{t('Tell us about your water, available space and current setup. We’ll translate the commercial specifications into a clear residential recommendation.')}</p><button className="button white" onClick={() => enquire(t('choosing a commercial-grade water filter for my home'))}><MessageCircle size={20}/>{t('Match my home')}<ArrowUpRight size={18}/></button></div><div className="catalogue-range-guide">{ranges.map(range => <div key={range.name}><span>{range.name}</span><p>{t(range.purpose)}</p></div>)}<p className="catalogue-fit-note">{t('We’ll confirm price, compatibility and fitting options before you decide.')}</p></div></section>
     </main>
     <SiteFooter onEnquire={enquire}/>
