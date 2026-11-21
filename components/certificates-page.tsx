@@ -1,19 +1,17 @@
 'use client';
 import { FloatingWhatsAppButton } from '@/components/floating-whatsapp';
+import { enquiryMessage, enquiryUrl } from '@/lib/business';
 
-import { useState } from 'react';
 import { ArrowUpRight, Check, ExternalLink, FileCheck2, MessageCircle, ShieldCheck } from 'lucide-react';
 import { useLanguage } from './language-provider';
 import { SiteHeader } from './site-header';
 import { SiteFooter } from './site-footer';
-import { EnquiryDialog } from './enquiry-dialog';
 import { ScrollEntrances } from './scroll-entrances';
 import { certificateArchive, featuredCertificates } from '@/lib/certificates';
 
 export function CertificatesPage() {
   const { t, language } = useLanguage();
-  const [selection, setSelection] = useState<string | null>(null);
-  const enquire = (subject: string) => setSelection(subject);
+  const enquire = (subject: string) => window.location.assign(enquiryUrl(t(enquiryMessage, { subject: t(subject) })));
   return <>
     <ScrollEntrances/>
     <SiteHeader onEnquire={enquire} certificatesPage/>
@@ -62,6 +60,5 @@ export function CertificatesPage() {
     </main>
     <SiteFooter onEnquire={enquire}/>
     <FloatingWhatsAppButton onClick={() => enquire(t('the certification for a specific water filter'))}/>
-    <EnquiryDialog key={selection ?? 'closed'} selection={selection} onClose={() => setSelection(null)}/>
   </>;
 }
