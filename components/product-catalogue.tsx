@@ -126,6 +126,23 @@ fx && <dl className="catalogue-detail-specs">
         </div>
         {visible.length === 0 && <div className="catalogue-empty"><Search size={28}/><h3>{t('No filters found')}</h3><p>{t('Try another model or clear your filters to see the full collection.')}</p><button className="button primary" onClick={() => updateFilters(defaultFilters)}>{t('View all filters')}<ArrowRight size={18}/></button></div>}
       </section>
+      <section className="catalogue-browser" id="three-stage-plus" aria-labelledby="three-stage-plus-title">
+        <div className="catalogue-browser-heading">
+          <h2 id="three-stage-plus-title">{t('Three Stage Plus Filters')}</h2>
+        </div>
+        <div className="catalogue-grid">
+          {[1, 2].map(variant => (
+            <article className="catalogue-card" key={variant}>
+              <div className="catalogue-visual platinum-wasser">
+                <img src="/images/three-stage-plus.svg" alt="" width={850} height={850} loading="lazy"/>
+              </div>
+              <div className="catalogue-card-copy">
+                <div className="catalogue-card-heading"><h3>{`Three Stage Plus ${variant}`}</h3></div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
       <section className="catalogue-help" id="catalogue-help"><div><p className="eyebrow">{t('COMMERCIAL CAPABILITY. THE RIGHT HOME FIT.')}</p><h2>{t('Your water. Your home.')}<br/><em>{t('Your system.')}</em></h2><p>{t('Tell us about your water, available space and current setup. We’ll translate the commercial specifications into a clear residential recommendation.')}</p><button className="button white" onClick={() => enquire(t('choosing a commercial-grade water filter for my home'))}><MessageCircle size={20}/>{t('Match my home')}<ArrowUpRight size={18}/></button></div><div className="catalogue-range-guide">{ranges.map(range => <div key={range.name}><span>{range.name}</span><p>{t(range.purpose)}</p></div>)}<p className="catalogue-fit-note">{t('We’ll confirm price, compatibility and fitting options before you decide.')}</p></div></section>
     </main>
     <SiteFooter onEnquire={enquire}/>
