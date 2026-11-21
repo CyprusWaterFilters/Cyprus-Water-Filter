@@ -6,7 +6,7 @@ export const ranges = [
 export const modelName = (range: string, size: number) => range === 'HF2-S' ? `HF2-${size}S` : `${range}-${size}`;
 export const productImage = (range: string, size: number) => {
   if (![10, 15, 17].includes(size)) return undefined;
-  if (range === 'FX') return `/images/fx-${size}.png`;
+  if (range === 'FX') return `/images/fx-${size}-with-head.webp`;
   if (range === 'HF2-S') return `/images/hf2-s-${size}.png`;
   return undefined;
 };
