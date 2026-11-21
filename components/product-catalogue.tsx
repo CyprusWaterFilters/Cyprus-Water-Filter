@@ -85,6 +85,7 @@ export function ProductCatalogue() {
         <dl className="catalogue-detail-specs"><div><dt>{t('Filtration')}</dt><dd>{t(detail.detail)}</dd></div><div><dt>{t('Everyday use')}</dt><dd>{t(detail.purpose)}</dd></div></dl>
         {fx && <dl className="catalogue-detail-specs">
           <div><dt>{t('Rated capacity')}</dt><dd>{t('{value} L', { value: number.format(fx.capacity) })}</dd></div>
+          <div><dt>{t('Filtration media and performance')}</dt><dd>{t('Coconut-based activated carbon block reduces chlorine taste and odour. A sediment layer captures suspended particles before ultrafiltration.')} {t('The manufacturer’s performance sheet lists reduction claims for specific substances under test conditions.')}</dd></div>
           <div><dt>{t('Rated flow')}</dt><dd>{t('{value} L/min', { value: number.format(fx.flow) })}</dd></div>
           <div><dt>{t('Replacement cartridge')}</dt><dd><bdi>{fx.cartridge}</bdi></dd></div>
           <div><dt>{t('Operating pressure')}</dt><dd><bdi>{'30–125 psi'}</bdi></dd></div>
