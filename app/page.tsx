@@ -55,8 +55,8 @@ export default function Home() {
             {ranges.map(range => <TabsContent key={range.name} value={range.name} className="range-panel">
               <div className="range-intro"><div><h3>{t(range.label)}</h3><p>{t(range.description)}</p></div><span className="range-feature"><Droplets size={17}/>{t(range.detail)}</span></div>
               <div className="product-grid" role="region" aria-label={t('{range} filters', { range: range.name })} tabIndex={0}>{[10,15,17].map((size,index) => <article className={`product-card ${range.tone}`} key={size}>
-                <div className="product-visual"><span className="product-kicker">{range.name} {t("COLLECTION")}</span><span className="size-tag">{size}″</span>
-                  {productImage(range.name, size) ? <img src={productImage(range.name, size)} alt={t('FLUUX {model} water filter cartridge', { model: modelName(range.name, size) })} loading="lazy" width="1122" height="1402"/> : <div className="type-product"><span>FLUUX</span><strong>{range.name}</strong><b>{size}<small>{t("inches")}</small></b><span>{t(range.purpose)}</span></div>}
+                <div className={`product-visual ${range.name === 'HF2' && productImage(range.name, size) ? 'hf2-label-visual' : ''}`}><span className="product-kicker">{range.name} {t("COLLECTION")}</span><span className="size-tag">{size}″</span>
+                  {productImage(range.name, size) ? <img src={productImage(range.name, size)} alt={t(range.name === 'HF2' ? 'FLUUX {model} cartridge label' : 'FLUUX {model} water filter cartridge', { model: modelName(range.name, size) })} loading="lazy" width="1122" height="1402"/> : <div className="type-product"><span>FLUUX</span><strong>{range.name}</strong><b>{size}<small>{t("inches")}</small></b><span>{t(range.purpose)}</span></div>}
                   <span className="visual-index">0{index + 1}</span>
                 </div>
                 <div className="product-info"><div><h3>{modelName(range.name,size)}</h3><span>{t('{size}-inch filter · {range} series', { size, range: range.name })}</span></div></div>
