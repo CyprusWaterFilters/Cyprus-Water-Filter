@@ -1,9 +1,9 @@
 'use client';
 import { FloatingWhatsAppButton } from '@/components/floating-whatsapp';
+import { enquiryMessage, enquiryUrl } from '@/lib/business';
 import { useLanguage } from '@/components/language-provider';
 
 
-import { useState } from 'react';
 import { ArrowUpRight, ArrowRight, ArrowDown, Droplets, GlassWater, Leaf, MessageCircle, Check, Coffee, CookingPot } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { SupportSections } from '@/components/support-sections';
@@ -11,15 +11,13 @@ import { ProductEnquiry } from '@/components/product-enquiry';
 import { ranges, modelName, productImage } from '@/lib/products';
 import { SiteHeader } from '@/components/site-header';
 import { SiteFooter } from '@/components/site-footer';
-import { EnquiryDialog } from '@/components/enquiry-dialog';
 import { ScrollEntrances } from '@/components/scroll-entrances';
 import { CertificateTrust } from '@/components/certificate-trust';
 
 
 export default function Home() {
   const { t, language } = useLanguage();
-  const [selection, setSelection] = useState<string | null>(null);
-  function enquire(product: string) { setSelection(product); }
+  function enquire(product: string) { window.location.assign(enquiryUrl(t(enquiryMessage, { subject: t(product) }))); }
   return (
     <>
       <ScrollEntrances/>
@@ -33,7 +31,8 @@ export default function Home() {
           <div className="water-hero-wash" aria-hidden="true"/>
           <div className="water-hero-content">
             <p className="water-hero-kicker"><span aria-hidden="true"/> {t("COMMERCIAL-GRADE WATER, AT HOME.")}</p>
-            <h1 id="hero-title"><span>{t("Commercial filtration.")}</span><span>{t("Made for")} <em>{t("home.")}</em></span></h1>
+            <h1 id="hero-title">{t("Water Filter System")}</h1>
+            <p className="water-hero-subtitle">{t("Commercial filtration.")} {t("Made for")} <em>{t("home.")}</em></p>
             <p className="water-hero-copy">{t("Built for demanding settings.")}<br className="water-hero-copy-break"/> {t("Professionally matched to everyday life at home and businesses")}</p>
             <a className="water-hero-cta" href="#collection"><span>{t("Explore the systems")}</span><span className="water-hero-cta-icon" aria-hidden="true"><ArrowUpRight size={23}/></span></a>
             <p className="water-hero-reassurance"><Check size={15} aria-hidden="true"/> {t("Commercial-grade systems. Local guidance.")}</p>
@@ -72,7 +71,6 @@ export default function Home() {
       </main>
       <SiteFooter onEnquire={enquire}/>
       <FloatingWhatsAppButton onClick={() => enquire(t("a water filter for my home"))}/>
-      <EnquiryDialog key={selection ?? "closed"} selection={selection} onClose={() => setSelection(null)}/>
     </>
   );
 }

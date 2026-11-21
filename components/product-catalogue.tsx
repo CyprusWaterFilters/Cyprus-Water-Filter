@@ -1,5 +1,6 @@
 'use client';
 import { FloatingWhatsAppButton } from '@/components/floating-whatsapp';
+import { enquiryMessage, enquiryUrl } from '@/lib/business';
 
 import { useEffect, useState } from 'react';
 import { ArrowUpRight, ArrowRight, Search, X, Droplets, SlidersHorizontal, MessageCircle, Check } from 'lucide-react';
@@ -7,7 +8,6 @@ import { useLanguage } from './language-provider';
 import { SiteHeader } from './site-header';
 import { SiteFooter } from './site-footer';
 import { ProductEnquiry } from './product-enquiry';
-import { EnquiryDialog } from './enquiry-dialog';
 import { ScrollEntrances } from './scroll-entrances';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from './ui/dialog';
 import { ranges, catalogueRanges, platinumWasser, sizes, products, productImage, type Product } from '@/lib/products';
@@ -25,7 +25,6 @@ function ProductVisual({ product, eager = false }: { product: Product; eager?: b
 export function ProductCatalogue() {
   const { t, language } = useLanguage();
   const [filters, setFilters] = useState<CatalogueFilters>(defaultFilters);
-  const [selection, setSelection] = useState<string | null>(null);
   const [detail, setDetail] = useState<Product | null>(null);
   useEffect(() => {
     const read = () => setFilters(readFilters(new URLSearchParams(window.location.search)));
@@ -41,7 +40,7 @@ export function ProductCatalogue() {
     }
     window.history.replaceState({}, '', url);
   }
-  function enquire(subject: string) { setDetail(null); setSelection(subject); }
+  function enquire(subject: string) { setDetail(null); window.location.assign(enquiryUrl(t(enquiryMessage, { subject: t(subject) }))); }
   const visible = filterProducts(filters);
   const active = filters.range !== 'all' || filters.size !== 'all' || filters.query !== '';
   return <>
@@ -93,6 +92,5 @@ export function ProductCatalogue() {
         <ProductEnquiry model={detail.model} onEnquire={enquire}/>
       </div>
     </>}</DialogContent></Dialog>
-    <EnquiryDialog key={selection ?? 'closed'} selection={selection} onClose={() => setSelection(null)}/>
   </>;
 }
