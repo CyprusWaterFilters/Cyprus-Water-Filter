@@ -10,7 +10,7 @@ import { SiteFooter } from './site-footer';
 import { ProductEnquiry } from './product-enquiry';
 import { ScrollEntrances } from './scroll-entrances';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from './ui/dialog';
-import { ranges, catalogueRanges, platinumWasser, sizes, products, productImage, type Product } from '@/lib/products';
+import { ranges, catalogueRanges, platinumWasser, sizes, products, productImage, fxSpecifications, type Product } from '@/lib/products';
 import { defaultFilters, isStandaloneRange, readFilters, filterProducts, type CatalogueFilters } from '@/lib/catalogue';
 
 function ProductVisual({ product, eager = false }: { product: Product; eager?: boolean }) {
@@ -41,6 +41,22 @@ export function ProductCatalogue() {
     window.history.replaceState({}, '', url);
   }
   function enquire(subject: string) { setDetail(null); window.location.assign(enquiryUrl(t(enquiryMessage, { subject: t(subject) }))); }
+  const fx = detail?.name === 'FX' && detail.size !== null ? fxSpecifications[detail.size] : undefined;
+  const number = new Intl.NumberFormat(language);
+  function renderFxSpecifications(fx: (typeof fxSpecifications)[number]) {
+    return (
+fx && <dl className="catalogue-detail-specs">
+          <div><dt>{t('Rated capacity')}</dt><dd>{t('{value} L', { value: number.format(fx.capacity) })}</dd></div>
+          <div><dt>{t('Filtration media and performance')}</dt><dd>{t('Coconut-based activated carbon block reduces chlorine taste and odour. A sediment layer captures suspended particles before ultrafiltration.')} {t('The manufacturer’s performance sheet lists reduction claims for specific substances under test conditions.')}</dd></div>
+          <div><dt>{t('Rated flow')}</dt><dd>{t('{value} L/min', { value: number.format(fx.flow) })}</dd></div>
+          <div><dt>{t('Replacement cartridge')}</dt><dd><bdi>{fx.cartridge}</bdi></dd></div>
+          <div><dt>{t('Operating pressure')}</dt><dd><bdi>{'30–125 psi'}</bdi></dd></div>
+          <div><dt>{t('Water temperature')}</dt><dd><bdi>{'4–38 °C'}</bdi></dd></div>
+          <div><dt>{t('System inlet and outlet')}</dt><dd><bdi>3/8″</bdi></dd></div>
+          <div><dt>{t('Filter head valve')}</dt><dd>{t('Automatic water shut-off')}</dd></div>
+        </dl>
+    );
+  }
   const visible = filterProducts(filters);
   const active = filters.range !== 'all' || filters.size !== 'all' || filters.query !== '';
   return <>
@@ -67,7 +83,7 @@ export function ProductCatalogue() {
         <div className="catalogue-grid">
           {visible.map((product, index) => <article className="catalogue-card" key={product.model}>
             <button className="catalogue-visual-button" onClick={() => setDetail(product)} aria-label={t('View details for {model}', { model: product.model })}><ProductVisual product={product} eager={index < 3}/></button>
-            <div className="catalogue-card-copy"><div className="catalogue-card-heading"><h3>{product.size === null ? t(product.model) : product.model}</h3><button onClick={() => setDetail(product)} aria-label={t('View details for {model}', { model: product.model })}><ArrowUpRight size={19}/></button></div><p className="catalogue-card-purpose">{t(product.purpose)}</p><div className="catalogue-card-spec"><Droplets size={15}/><span>{t(product.detail)}</span></div><button className="catalogue-details-link" onClick={() => setDetail(product)}>{t('View details')}<ArrowRight size={15}/></button><ProductEnquiry model={product.model} onEnquire={enquire}/></div>
+            <div className="catalogue-card-copy"><div className="catalogue-card-heading"><h3>{product.size === null ? t(product.model) : product.model}</h3><button onClick={() => setDetail(product)} aria-label={t('View details for {model}', { model: product.model })}><ArrowUpRight size={19}/></button></div><p className="catalogue-card-purpose">{t(product.purpose)}</p><div className="catalogue-card-spec"><Droplets size={15}/><span>{t(product.detail)}</span></div><button className="catalogue-details-link" onClick={() => setDetail(product)}>{t('View details')}<ArrowRight size={15}/></button>{product.name === 'FX' && product.size !== null && renderFxSpecifications(fxSpecifications[product.size])}<ProductEnquiry model={product.model} onEnquire={enquire}/></div>
           </article>)}
         </div>
         {visible.length === 0 && <div className="catalogue-empty"><Search size={28}/><h3>{t('No filters found')}</h3><p>{t('Try another model or clear your filters to see the full collection.')}</p><button className="button primary" onClick={() => updateFilters(defaultFilters)}>{t('View all filters')}<ArrowRight size={18}/></button></div>}
@@ -81,6 +97,7 @@ export function ProductCatalogue() {
       <div className="catalogue-detail-copy"><p className="eyebrow">{detail.name} · {t('Series')}</p><DialogTitle className="catalogue-detail-title">{detail.size === null ? t(detail.model) : detail.model}</DialogTitle><DialogDescription className="catalogue-detail-description">{t(detail.description)}</DialogDescription>
         {detail.size !== null && <fieldset className="catalogue-detail-sizes"><legend>{t('Cartridge size')}</legend><div>{sizes.map(size => <button key={size} aria-pressed={detail.size === size} onClick={() => setDetail(products.find(product => product.name === detail.name && product.size === size) ?? detail)}>{size}″</button>)}</div></fieldset>}
         <dl className="catalogue-detail-specs"><div><dt>{t('Filtration')}</dt><dd>{t(detail.detail)}</dd></div><div><dt>{t('Everyday use')}</dt><dd>{t(detail.purpose)}</dd></div></dl>
+        {renderFxSpecifications(fx)}
         {detail === platinumWasser ? <>
           <section aria-label={t('Six filtration stages')} className="catalogue-filtration-stages">
             <h3>{t('Six filtration stages')}</h3>

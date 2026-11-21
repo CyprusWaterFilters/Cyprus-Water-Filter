@@ -1,5 +1,5 @@
 export const ranges = [
-  { name: 'FX', label: 'Commercial-grade fine filtration, made for home.', description: 'A commercial-grade range adapted for residential use, combining carbon filtration with a fine membrane. We’ll help confirm the right size and connection for your home.', detail: '0.1 μm nominal filtration', purpose: 'Everyday drinking & cooking', tone: 'blue' },
+  { name: 'FX', label: 'Commercial-grade fine filtration, made for home.', description: 'A commercial-grade range adapted for residential use, combining carbon filtration with a fine membrane. We’ll help confirm the right size and connection for your home.', detail: '0.1 μm nominal ultrafiltration (UF)', purpose: 'Everyday drinking & cooking', tone: 'blue' },
   { name: 'HF2', label: 'Commercial-grade carbon filtration at home.', description: 'Commercial-grade carbon filtration selected for residential use, reducing chlorine taste and odour with sizes to suit different households.', detail: '0.5 μm nominal filtration', purpose: 'Taste & odour reduction', tone: 'mint' },
   { name: 'HF2-S', label: 'Commercial-grade filtration with added scale care.', description: 'A commercial-grade range for residential use that pairs carbon filtration with scale inhibition. Ask us to confirm the right fit for your water and appliances.', detail: 'Filtration with scale inhibition', purpose: 'Water & appliance care', tone: 'lilac' },
 ];
@@ -11,6 +11,12 @@ export const productImage = (range: string, size: number) => {
   return undefined;
 };
 
+// Microfilter FX Filter System technical sheet, product specifications and operation.
+export const fxSpecifications: Partial<Record<number, { capacity: number; flow: number; cartridge: string }>> = {
+  10: { capacity: 30000, flow: 5.68, cartridge: 'FX-10R' },
+  15: { capacity: 60567, flow: 9.46, cartridge: 'FX-15R' },
+  17: { capacity: 71922, flow: 9.46, cartridge: 'FX-17R' },
+};
 export const sizes = [10, 15, 17];
 export const platinumWasser = {
   name: 'Platinum Wasser',
