@@ -147,7 +147,10 @@ fx && <dl className="catalogue-detail-specs">
                 <img className="block h-full w-full" src="/images/three-stage-plus.svg" alt="" width={850} height={850} loading="lazy"/>
                 <div aria-hidden="true" dir="ltr" className="absolute inset-x-[9.75%] top-[59%] grid grid-cols-3 place-items-center gap-1 text-xs font-semibold text-green-950">
                   {['5 µm', '1 µm', model].map(label => (
-                    <span key={label} className="whitespace-nowrap rounded-full bg-white px-2 py-1 shadow-sm ring-1 ring-green-900/20">{label}</span>
+                    <span key={label} className="whitespace-nowrap rounded-2xl bg-white px-2 py-1 text-center shadow-sm ring-1 ring-green-900/20">
+                      {label}
+                      {label === 'D-250' && <small className="block text-[0.625rem]">{`${number.format(minMicrons)}–${number.format(maxMicrons)} µm`}</small>}
+                    </span>
                   ))}
                 </div>
               </div>
