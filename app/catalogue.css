@@ -129,3 +129,8 @@
 
 .catalogue-visual.platinum-wasser { background: #fff; }
 .catalogue-visual.platinum-wasser img { object-fit: contain; padding: 1rem; }
+
+.catalogue-filtration-stages h3 { font-weight: 650; }
+.catalogue-filtration-stages ol { list-style: decimal; padding-inline-start: 1.5rem; margin-block: .75rem; }
+.catalogue-filtration-stages li + li { margin-top: .625rem; }
+.catalogue-filtration-stages a { text-decoration: underline; }

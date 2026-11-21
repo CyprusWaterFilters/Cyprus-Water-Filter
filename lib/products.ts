@@ -14,12 +14,20 @@ export const productImage = (range: string, size: number) => {
 export const sizes = [10, 15, 17];
 export const platinumWasser = {
   name: 'Platinum Wasser',
-  model: 'Platinum Wasser RO with Booster Pump',
+  model: 'Platinum Wasser Ultra 6 Booster',
   size: null,
   tone: 'platinum-wasser',
   image: '/images/platinum-wasser.webp',
+  stages: [
+    { label: '10-inch polypropylene sediment prefilter', description: 'Traps larger suspended particles such as sand, rust and sediment.' },
+    { label: 'Activated carbon block prefilter', description: 'Reduces chlorine before the water reaches the membrane.' },
+    { label: '10-inch fine polypropylene sediment prefilter', description: 'Captures finer suspended particles before reverse osmosis.' },
+    { label: 'ECO reverse osmosis membrane', description: 'Reduces dissolved salts and other dissolved substances in the water.' },
+    { label: 'Granular activated carbon post-filter', description: 'Improves the taste and odour of the filtered water.' },
+    { label: 'Dolomite mineral post-filter', description: 'Adds minerals back to the water after reverse osmosis.' },
+  ],
   description: 'An under-sink reverse osmosis system with an electric booster pump that raises the pressure supplied to the membrane.',
-  detail: 'Reverse osmosis with electric booster pump',
+  detail: 'Six-stage reverse osmosis with electric booster pump',
   purpose: 'Drinking and cooking water',
 };
 export const products = [
