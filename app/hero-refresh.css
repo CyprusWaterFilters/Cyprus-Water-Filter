@@ -48,7 +48,7 @@
 .water-hero-kicker > span { width: .375rem; height: .375rem; border-radius: 50%; background: #1854e6; flex-shrink: 0; }
 .water-hero h1 {
   margin: 0;
-  color: #075b3d;
+  color: #09734a;
   font-size: clamp(3.8rem, 7.6vw, 8rem);
   font-weight: 720;
   letter-spacing: -.065em;
@@ -58,13 +58,13 @@
 }
 @supports ((background-clip: text) or (-webkit-background-clip: text)) {
   .water-hero h1 {
-    background-image: linear-gradient(180deg, #076448 7%, #269e70 31%, #8be4b7 44%, #148054 49%, #075336 73%, #1d9164 100%);
+    background-image: linear-gradient(180deg, #d0ffeb 1%, #73ecc1 13%, #26b582 29%, #b2fadd 43%, #48d9a1 47%, #149367 66%, #086247 83%, #32bc88 98%);
     background-size: 100% 1.04em;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    -webkit-text-stroke: 1px #075337a6;
-    filter: drop-shadow(0 2px 0 #e3fff1b3) drop-shadow(0 5px 8px #08442c2e);
+    -webkit-text-stroke: 1px #087954cc;
+    filter: drop-shadow(0 -1px 0 #f1fff9e6) drop-shadow(0 2px 0 #c8ffebcc) drop-shadow(0 5px 7px #075c4140);
   }
 }
 @media (forced-colors: active) {
