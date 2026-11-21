@@ -53,6 +53,7 @@ fx && <dl className="catalogue-detail-specs">
           <div><dt>{t('Operating pressure')}</dt><dd><bdi>{'30–125 psi'}</bdi></dd></div>
           <div><dt>{t('Water temperature')}</dt><dd><bdi>{'4–38 °C'}</bdi></dd></div>
           <div><dt>{t('System inlet and outlet')}</dt><dd><bdi>3/8″</bdi></dd></div>
+          <div><dt>{t('Filter head valve')}</dt><dd>{t('Automatic water shut-off')}</dd></div>
         </dl>
     );
   }
