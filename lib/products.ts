@@ -18,11 +18,11 @@ export const fxSpecifications: Partial<Record<number, { capacity: number; flow: 
   15: { capacity: 60567, flow: 9.46, cartridge: 'FX-15R' },
   17: { capacity: 71922, flow: 9.46, cartridge: 'FX-17R' },
 };
-// NSF-listed capacities converted from US gallons. The HF2-15 label rounds to 79,493 L.
+// Microfilter HF2 System catalogue ratings (fluux.co.kr/92).
 export const hf2Specifications: typeof fxSpecifications = {
-  10: { capacity: 45425, flow: 7.57, cartridge: 'HF2-10R' },
-  15: { capacity: 79493, flow: 7.57, cartridge: 'HF2-15R' },
-  17: { capacity: 98421, flow: 7.57, cartridge: 'HF2-17R' },
+  10: { capacity: 37854, flow: 3.8, cartridge: 'HF2-10R' },
+  15: { capacity: 64352, flow: 5.3, cartridge: 'HF2-15R' },
+  17: { capacity: 79494, flow: 6.4, cartridge: 'HF2-17R' },
 };
 export const sizes = [10, 15, 17];
 export const platinumWasser = {

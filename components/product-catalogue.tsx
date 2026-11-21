@@ -61,12 +61,13 @@ fx && <dl className="catalogue-detail-specs">
     const specs = hf2Specifications[size];
     if (!specs) return null;
     return <dl className="catalogue-detail-specs">
-      <div><dt>{t('Rated capacity')}</dt><dd>{t('{value} L', { value: number.format(specs.capacity) })}</dd></div>
-      <div><dt>{t('Rated flow')}</dt><dd>{t('{value} L/min', { value: number.format(specs.flow) })}</dd></div>
+      <div><dt>{t('HF2 catalogue capacity')}</dt><dd>{t('{value} L', { value: number.format(specs.capacity) })}</dd></div>
+      <div><dt>{t('HF2 catalogue flow')}</dt><dd>{t('{value} L/min', { value: number.format(specs.flow) })}</dd></div>
       <div><dt>{t('Replacement cartridge')}</dt><dd><bdi>{specs.cartridge}</bdi></dd></div>
       <div><dt>{t('Operating pressure')}</dt><dd><bdi>{'30–125 psi'}</bdi></dd></div>
       <div><dt>{t('Water temperature')}</dt><dd><bdi>{'4–38 °C'}</bdi></dd></div>
       <div><dt>{t('System inlet and outlet')}</dt><dd><bdi>3/8″</bdi></dd></div>
+      <div><dt>{t('Filtration media and performance')}</dt><dd>{t('Activated carbon reduces chlorine taste and odour, suspended particles and turbidity. Scale inhibition is available as an option.')}</dd></div>
     </dl>;
   }
   const visible = filterProducts(filters);
