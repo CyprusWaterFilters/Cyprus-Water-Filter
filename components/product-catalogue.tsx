@@ -13,6 +13,11 @@ import { Dialog, DialogContent, DialogTitle, DialogDescription } from './ui/dial
 import { ranges, catalogueRanges, platinumWasser, sizes, products, productImage, hf2Specifications, hf2sSpecifications, fxSpecifications, type Product } from '@/lib/products';
 import { defaultFilters, isStandaloneRange, readFilters, filterProducts, type CatalogueFilters } from '@/lib/catalogue';
 
+const threeStagePlusVariants = [
+  { variant: 1, model: 'D-250', price: 210, maintenance: 100, minMicrons: 0.01, maxMicrons: 0.1, photo: 'three-stage-plus-cartridges.svg' },
+  { variant: 2, model: 'D-230', price: 190, maintenance: 80, minMicrons: 1, maxMicrons: 1, photo: 'three-stage-plus-d230-cartridges.svg' },
+];
+
 function ProductVisual({ product, eager = false }: { product: Product; eager?: boolean }) {
   const { t } = useLanguage();
   if (product.size === null) return <div className="catalogue-visual platinum-wasser"><img src={product.image} alt={t(product.model)} width={700} height={700} loading={eager ? 'eager' : 'lazy'}/></div>;
@@ -132,32 +137,32 @@ fx && <dl className="catalogue-detail-specs">
           <h2 id="three-stage-plus-title">{t('Three Stage Plus Filters')}</h2>
         </div>
         <div className="catalogue-grid">
-          {[1, 2].map(variant => (
+          {threeStagePlusVariants.map(({ variant, model, price, maintenance, minMicrons, maxMicrons, photo }) => (
             <article className="catalogue-card" key={variant}>
-              {variant === 1 && <div className="mx-3 my-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <p className="text-lg font-semibold">{t('{price} with installation', { price: euro.format(210) })}</p>
-                <p className="text-sm font-medium">{t('Annual maintenance {price}', { price: euro.format(100) })}</p>
-              </div>}
+              <div className="mx-3 my-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                <p className="text-lg font-semibold">{t('{price} with installation', { price: euro.format(price) })}</p>
+                <p className="text-sm font-medium">{t('Annual maintenance {price}', { price: euro.format(maintenance) })}</p>
+              </div>
               <div className="relative aspect-square overflow-hidden rounded-xl">
                 <img className="block h-full w-full" src="/images/three-stage-plus.svg" alt="" width={850} height={850} loading="lazy"/>
-                {variant === 1 && <div aria-hidden="true" dir="ltr" className="absolute inset-x-[9.75%] top-[59%] grid grid-cols-3 place-items-center gap-1 text-xs font-semibold text-green-950">
-                  {['5 µm', '1 µm', 'D-250'].map(label => (
+                <div aria-hidden="true" dir="ltr" className="absolute inset-x-[9.75%] top-[59%] grid grid-cols-3 place-items-center gap-1 text-xs font-semibold text-green-950">
+                  {['5 µm', '1 µm', model].map(label => (
                     <span key={label} className="whitespace-nowrap rounded-full bg-white px-2 py-1 shadow-sm ring-1 ring-green-900/20">{label}</span>
                   ))}
-                </div>}
+                </div>
               </div>
-              {variant === 1 && <img className="mx-auto block w-[80.5%]" src="/images/three-stage-plus-cartridges.svg" alt="" width={540} height={220} loading="lazy"/>}
+              <img className="mx-auto block w-[80.5%]" src={`/images/${photo}`} alt="" width={540} height={220} loading="lazy"/>
               <div className="catalogue-card-copy">
                 <div className="catalogue-card-heading"><h3>{`Three Stage Plus ${variant}`}</h3></div>
-                {variant === 1 && <ol className="mt-3 list-decimal space-y-1 ps-5">
+                <ol className="mt-3 list-decimal space-y-1 ps-5">
                   <li><bdi>{'Sediment MX D-105 · 5 µm'}</bdi></li>
                   <li><bdi>{'Sediment MX D-100 · 1 µm'}</bdi></li>
-                  <li><bdi>{'Pure Aqua D-250'}</bdi> · {t('Activated carbon block filter')} · <bdi>{`${number.format(0.01)}–${number.format(0.1)} µm`}</bdi> · {t('{value} L/min', { value: number.format(4) })} · {t('Recommended replacement: 12 months or {capacity}', { capacity: t('{value} L', { value: number.format(40000) }) })}</li>
-                </ol>}
-                {variant === 1 && <figure className="mt-3 flex items-center gap-3">
+                  <li><bdi>{`Pure Aqua ${model}`}</bdi> · {t('Activated carbon block filter')}{model === 'D-230' && <> · {t('Filtration with scale inhibition')}</>} · <bdi>{minMicrons === maxMicrons ? `${number.format(minMicrons)} µm` : `${number.format(minMicrons)}–${number.format(maxMicrons)} µm`}</bdi> · {t('{value} L/min', { value: number.format(4) })} · {t('Recommended replacement: 12 months or {capacity}', { capacity: t('{value} L', { value: number.format(40000) }) })}</li>
+                </ol>
+                <figure className="mt-3 flex items-center gap-3">
                   <img className="size-20 shrink-0 rounded-lg object-contain" src="/images/water-leak-detector.svg" alt="" width={320} height={320} loading="lazy"/>
                   <figcaption className="text-sm font-medium">{t('Installation includes a leak detector with water shut-off.')}</figcaption>
-                </figure>}
+                </figure>
               </div>
             </article>
           ))}
