@@ -86,7 +86,6 @@ export function ProductCatalogue() {
           <section aria-label={t('Six filtration stages')} className="catalogue-filtration-stages">
             <h3>{t('Six filtration stages')}</h3>
             <ol>{detail.stages.map(stage => <li key={stage.label}><strong>{t(stage.label)}</strong><p>{t(stage.description)}</p></li>)}</ol>
-            <a href="https://www.platinumwasser.de/en/products/140-ultra6-booster-4260582019029.html">{t('Platinum Wasser product specifications')}</a>
           </section>
           <dl className="catalogue-detail-specs"><div><dt>{t('Installation')}</dt><dd>{t('Uses a separate storage tank and drinking-water tap. Requires a cold-water feed, drain connection and power outlet.')}</dd></div></dl>
           <p className="catalogue-detail-note">{t('Ask us about replacement filters and the space needed under your sink.')}</p>
