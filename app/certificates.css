@@ -107,3 +107,9 @@
 @media (prefers-reduced-motion: reduce) {
   .certificate-document, .certificate-document img, .certificate-source-links a, .certificate-trust-intro svg { transition: none; }
 }
+
+.collection > .certificate-trust {
+  padding: clamp(1.5rem, 4vw, 3rem);
+  margin-block-start: 1.5rem;
+  border-radius: 1.25rem;
+}
