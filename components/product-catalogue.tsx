@@ -10,7 +10,7 @@ import { ProductEnquiry } from './product-enquiry';
 import { EnquiryDialog } from './enquiry-dialog';
 import { ScrollEntrances } from './scroll-entrances';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from './ui/dialog';
-import { ranges, catalogueRanges, sizes, products, productImage, type Product } from '@/lib/products';
+import { ranges, catalogueRanges, platinumWasser, sizes, products, productImage, type Product } from '@/lib/products';
 import { defaultFilters, isStandaloneRange, readFilters, filterProducts, type CatalogueFilters } from '@/lib/catalogue';
 
 function ProductVisual({ product, eager = false }: { product: Product; eager?: boolean }) {
@@ -82,10 +82,10 @@ export function ProductCatalogue() {
       <div className="catalogue-detail-copy"><p className="eyebrow">{detail.name} · {t('Series')}</p><DialogTitle className="catalogue-detail-title">{detail.size === null ? t(detail.model) : detail.model}</DialogTitle><DialogDescription className="catalogue-detail-description">{t(detail.description)}</DialogDescription>
         {detail.size !== null && <fieldset className="catalogue-detail-sizes"><legend>{t('Cartridge size')}</legend><div>{sizes.map(size => <button key={size} aria-pressed={detail.size === size} onClick={() => setDetail(products.find(product => product.name === detail.name && product.size === size) ?? detail)}>{size}″</button>)}</div></fieldset>}
         <dl className="catalogue-detail-specs"><div><dt>{t('Filtration')}</dt><dd>{t(detail.detail)}</dd></div><div><dt>{t('Everyday use')}</dt><dd>{t(detail.purpose)}</dd></div></dl>
-        {detail.size === null && 'stages' in detail ? <>
+        {detail === platinumWasser ? <>
           <section aria-label={t('Six filtration stages')} className="catalogue-filtration-stages">
             <h3>{t('Six filtration stages')}</h3>
-            <ol>{detail.stages.map(stage => <li key={stage.label}><strong>{t(stage.label)}</strong><p>{t(stage.description)}</p></li>)}</ol>
+            <ol>{platinumWasser.stages.map(stage => <li key={stage.label}><strong>{t(stage.label)}</strong><p>{t(stage.description)}</p></li>)}</ol>
           </section>
           <dl className="catalogue-detail-specs"><div><dt>{t('Installation')}</dt><dd>{t('Uses a separate storage tank and drinking-water tap. Requires a cold-water feed, drain connection and power outlet.')}</dd></div></dl>
           <p className="catalogue-detail-note">{t('Ask us about replacement filters and the space needed under your sink.')}</p>
