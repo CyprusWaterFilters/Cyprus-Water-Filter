@@ -1,7 +1,7 @@
 export const ranges = [
   { name: 'FX', label: 'Commercial-grade fine filtration, made for home.', description: 'A commercial-grade range adapted for residential use, combining carbon filtration with a fine membrane. We’ll help confirm the right size and connection for your home.', detail: '0.1 μm nominal ultrafiltration (UF)', purpose: 'Everyday drinking & cooking', tone: 'blue' },
   { name: 'HF2', label: 'Commercial-grade carbon filtration at home.', description: 'Commercial-grade carbon filtration selected for residential use, reducing chlorine taste and odour with sizes to suit different households.', detail: '0.5 μm nominal filtration', purpose: 'Taste & odour reduction', tone: 'mint' },
-  { name: 'HF2-S', label: 'Commercial-grade filtration with added scale care.', description: 'A commercial-grade range for residential use that pairs carbon filtration with scale inhibition. Ask us to confirm the right fit for your water and appliances.', detail: 'Filtration with scale inhibition', purpose: 'Water & appliance care', tone: 'lilac' },
+  { name: 'HF2-S', label: 'Professional filtration for coffee and ice machines.', description: 'The red FLUUX HF2-S cartridges combine 0.5 μm sediment filtration and activated carbon block with polyphosphate to help inhibit limescale buildup.', detail: '0.5 μm sediment filtration with scale inhibition', purpose: 'Commercial coffee and ice machines', tone: 'red' },
 ];
 export const modelName = (range: string, size: number) => range === 'HF2-S' ? `HF2-${size}S` : `${range}-${size}`;
 export const productImage = (range: string, size: number) => {
@@ -23,6 +23,12 @@ export const hf2Specifications: typeof fxSpecifications = {
   10: { capacity: 37854, flow: 3.8, cartridge: 'HF2-10R' },
   15: { capacity: 64352, flow: 5.3, cartridge: 'HF2-15R' },
   17: { capacity: 79494, flow: 6.4, cartridge: 'HF2-17R' },
+};
+// Microfilter FLUUX HF2-S system ratings (kr.fluux.co.kr/92).
+export const hf2sSpecifications: typeof hf2Specifications = {
+  10: { capacity: 37854, flow: 3.8, cartridge: 'HF2-10SR' },
+  15: { capacity: 64352, flow: 5.3, cartridge: 'HF2-15SR' },
+  17: { capacity: 79494, flow: 6.4, cartridge: 'HF2-17SR' },
 };
 export const sizes = [10, 15, 17];
 export const platinumWasser = {

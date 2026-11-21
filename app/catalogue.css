@@ -48,8 +48,17 @@
 .catalogue-visual-button { width: 100%; display: block; border: 0; background: none; padding: 0; border-radius: 1.125rem; }
 .catalogue-visual { position: relative; overflow: hidden; border-radius: 1.125rem; height: auto; aspect-ratio: 1122 / 1402; background: #c4e7fa; }
 .catalogue-visual.mint { background: #e0f0ec; }
-.catalogue-visual.lilac { background: #e9e9f7; }
+.catalogue-visual.red { background: #f8e6e4; }
 .catalogue-visual img { width: 100%; height: 100%; object-fit: cover; transition: transform 600ms cubic-bezier(.22,1,.36,1); }
+.catalogue-visual img.catalogue-hf2s-head {
+  position: absolute;
+  top: 29%;
+  right: 7%;
+  width: 23%;
+  height: auto;
+  border-radius: .5rem;
+  object-fit: contain;
+}
 .catalogue-range-tag { position: absolute; z-index: 1; top: 1rem; left: 1rem; font-size: .75rem; letter-spacing: .07em; color: #416479; }
 .catalogue-size-tag { position: absolute; z-index: 1; top: .875rem; right: .875rem; width: 2.25rem; height: 2.25rem; display: grid; place-items: center; border-radius: 50%; background: #ffffffaa; font-size: .8125rem; }
 .catalogue-type-product { display: flex; align-items: center; justify-content: center; flex-direction: column; height: 100%; gap: .5rem; padding: 3.5rem 1.25rem 1.5rem; }
@@ -134,3 +143,11 @@
 .catalogue-filtration-stages ol { list-style: decimal; padding-inline-start: 1.5rem; margin-block: .75rem; }
 .catalogue-filtration-stages li + li { margin-top: .625rem; }
 .catalogue-filtration-stages a { text-decoration: underline; }
+
+.catalogue-hf2s-applications { margin: 0 0 1.5rem; }
+.catalogue-hf2s-applications h3 { font-size: 1.5rem; font-weight: 700; }
+.catalogue-hf2s-applications p { margin: .375rem 0 1rem; }
+.catalogue-hf2s-applications > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(.75rem, 3vw, 1.5rem); }
+.catalogue-hf2s-applications figure { margin: 0; overflow: hidden; border-radius: 1rem; background: #f8e6e4; }
+.catalogue-hf2s-applications img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
+.catalogue-hf2s-applications figcaption { padding: .75rem 1rem; font-weight: 600; }
