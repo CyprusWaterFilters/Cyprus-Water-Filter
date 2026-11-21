@@ -41,7 +41,8 @@ export default function Home() {
         </section>
         <div className="benefit-strip" id="why"><span><GlassWater/> {t("Commercial-grade filtration at your tap")}</span><span><Leaf/> {t("Sized for your household")}</span><span><MessageCircle/> {t("Local guidance from selection to fit")}</span></div>
         <section id="collection" className="collection section">
-          <div className="section-heading"><div><p className="eyebrow">{t("COMMERCIAL-GRADE. HOME-READY.")}</p><h2>{t("Serious filtration.")} <em>{t("Made personal.")}</em></h2></div><p>{t("Three commercial-grade ranges.")}<br/>{t("One professionally matched fit.")}</p></div>
+          <h2>Microfilter FLUUX</h2>
+          <CertificateTrust/>
           <Tabs defaultValue="FX" className="range-tabs">
             <TabsList className="range-list" aria-label={t("Filter ranges")}>{ranges.map(range => <TabsTrigger className="range-trigger" key={range.name} value={range.name}>{range.name} <span>{t("Series")}</span></TabsTrigger>)}</TabsList>
             {ranges.map(range => <TabsContent key={range.name} value={range.name} className="range-panel">
@@ -58,7 +59,6 @@ export default function Home() {
           </Tabs>
           <div className="collection-browse"><a className="button primary" href={`/products?lang=${language}`}>{t("View all filters")} <ArrowUpRight size={18}/></a></div><div className="collection-foot"><p>{t("Not sure which one? Tell us a little about your home.")}</p><button className="text-link" onClick={() => enquire(t("choosing the right water filter"))}>{t("Help me choose")} <ArrowUpRight size={17}/></button></div>
         </section>
-        <CertificateTrust/>
         <section className="statement"><p className="eyebrow">{t("BUILT FOR MORE. BROUGHT HOME.")}</p><h2>{t("Bring commercial-grade")}<br/><em>{t("filtration home.")}</em></h2><p>{t("Professional capability, made simple for everyday residential use.")}</p><a className="button white" href="#collection">{t("Explore the range")} <ArrowUpRight size={20}/></a><span className="statement-word" aria-hidden="true">{t("upgrade.")}</span></section>
         <SupportSections onEnquire={enquire}/>
         <section className="contact"><p className="eyebrow">{t("A COMMERCIAL STANDARD FOR YOUR HOME.")}</p><h2>{t("Commercial grade.")}<br/>{t("Chosen for")} <em>{t("your home.")}</em></h2><button className="button white" onClick={() => enquire(t("a commercial-grade water filter for my home"))}><MessageCircle size={21}/> {t("Find my system on WhatsApp")} <ArrowUpRight size={20}/></button><p>{t("Tell us about your home. We’ll help match the right system.")}</p></section>
