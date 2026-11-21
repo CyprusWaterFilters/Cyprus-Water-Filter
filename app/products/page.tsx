@@ -3,6 +3,6 @@ import { ProductCatalogue } from '@/components/product-catalogue';
 
 export const metadata: Metadata = {
   title: 'Our filters | Homewater',
-  description: 'Browse all nine FX, HF2 and HF2-S water filters. Compare ranges and sizes, then ask us about your chosen model.',
+  description: 'Compare FX, HF2 and HF2-S cartridge filters and the Platinum Wasser reverse osmosis system with booster pump.',
 };
 export default function ProductsPage() { return <ProductCatalogue/>; }
