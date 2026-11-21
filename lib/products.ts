@@ -12,5 +12,19 @@ export const productImage = (range: string, size: number) => {
 };
 
 export const sizes = [10, 15, 17];
-export const products = ranges.flatMap(range => sizes.map(size => ({ ...range, size, model: modelName(range.name, size) })));
+export const platinumWasser = {
+  name: 'Platinum Wasser',
+  model: 'Platinum Wasser RO with Booster Pump',
+  size: null,
+  tone: 'platinum-wasser',
+  image: '/images/platinum-wasser.jpg',
+  description: 'An under-sink reverse osmosis system with an electric booster pump that raises the pressure supplied to the membrane.',
+  detail: 'Reverse osmosis with electric booster pump',
+  purpose: 'Drinking and cooking water',
+};
+export const products = [
+  ...ranges.flatMap(range => sizes.map(size => ({ ...range, size, model: modelName(range.name, size) }))),
+  platinumWasser,
+];
+export const catalogueRanges = [...ranges.map(range => range.name), platinumWasser.name];
 export type Product = (typeof products)[number];

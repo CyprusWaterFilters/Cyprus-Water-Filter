@@ -1278,5 +1278,57 @@
   "Official NSF listings": [
     "Επίσημες καταχωρίσεις NSF",
     "Официальный реестр NSF"
+  ],
+  "Platinum Wasser RO with Booster Pump": [
+    "Platinum Wasser αντίστροφης όσμωσης με αντλία",
+    "Platinum Wasser: обратный осмос с насосом"
+  ],
+  "An under-sink reverse osmosis system with an electric booster pump that raises the pressure supplied to the membrane.": [
+    "Σύστημα αντίστροφης όσμωσης κάτω από τον νεροχύτη, με ηλεκτρική αντλία που αυξάνει την πίεση του νερού προς τη μεμβράνη.",
+    "Система обратного осмоса под мойку с электрическим насосом, повышающим давление воды на входе в мембрану."
+  ],
+  "Reverse osmosis with electric booster pump": [
+    "Αντίστροφη όσμωση με ηλεκτρική αντλία ενίσχυσης πίεσης",
+    "Обратный осмос с электрическим насосом повышения давления"
+  ],
+  "Drinking and cooking water": [
+    "Νερό για πόση και μαγείρεμα",
+    "Вода для питья и приготовления пищи"
+  ],
+  "Platinum Wasser reverse osmosis system with booster pump": [
+    "Σύστημα αντίστροφης όσμωσης Platinum Wasser με αντλία",
+    "Система обратного осмоса Platinum Wasser с насосом"
+  ],
+  "Showing {count} of {total} filters": [
+    "Εμφανίζονται {count} από {total} φίλτρα",
+    "Показано {count} из {total} фильтров"
+  ],
+  "Filtration stages": [
+    "Στάδια φίλτρανσης",
+    "Ступени фильтрации"
+  ],
+  "Three prefilters, a reverse osmosis membrane and a carbon post-filter.": [
+    "Τρία προφίλτρα, μεμβράνη αντίστροφης όσμωσης και τελικό φίλτρο άνθρακα.",
+    "Три предварительных фильтра, мембрана обратного осмоса и угольный постфильтр."
+  ],
+  "Installation": [
+    "Εγκατάσταση",
+    "Установка"
+  ],
+  "Uses a separate storage tank and drinking-water tap. Requires a cold-water feed, drain connection and power outlet.": [
+    "Χρησιμοποιεί ξεχωριστή δεξαμενή και βρύση πόσιμου νερού. Απαιτεί παροχή κρύου νερού, σύνδεση στην αποχέτευση και πρίζα.",
+    "Использует отдельный накопительный бак и кран питьевой воды. Требуются подача холодной воды, подключение к сливу и розетка."
+  ],
+  "Ask us to confirm the exact model, membrane capacity and space needed under your sink.": [
+    "Ρωτήστε μας για το ακριβές μοντέλο, την παροχή της μεμβράνης και τον απαιτούμενο χώρο κάτω από τον νεροχύτη.",
+    "Уточните у нас точную модель, производительность мембраны и необходимое место под мойкой."
+  ],
+  "3 cartridge ranges and reverse osmosis": [
+    "3 σειρές φίλτρων και αντίστροφη όσμωση",
+    "3 серии картриджных фильтров и обратный осмос"
+  ],
+  "Compare cartridge filtration and pumped reverse osmosis systems for your home.": [
+    "Συγκρίνετε τα συστήματα φίλτρανσης με φυσίγγια και αντίστροφης όσμωσης με αντλία για το σπίτι σας.",
+    "Сравните картриджные системы и системы обратного осмоса с насосом для вашего дома."
   ]
 }
