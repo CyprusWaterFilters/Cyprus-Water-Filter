@@ -15,7 +15,7 @@ import { defaultFilters, readFilters, filterProducts, type CatalogueFilters } fr
 
 function ProductVisual({ product, eager = false }: { product: Product; eager?: boolean }) {
   const { t } = useLanguage();
-  if (product.size === null) return <div className="catalogue-visual platinum-wasser"><img src={product.image} alt={t('Platinum Wasser reverse osmosis system with booster pump')} width={498} height={498} loading={eager ? 'eager' : 'lazy'}/></div>;
+  if (product.size === null) return <div className="catalogue-visual platinum-wasser"><img src={product.image} alt={t('Platinum Wasser reverse osmosis system with booster pump')} width={700} height={700} loading={eager ? 'eager' : 'lazy'}/></div>;
   return <div className={`catalogue-visual ${product.tone}`}>
     <span className="catalogue-range-tag">{product.name}</span><span className="catalogue-size-tag">{product.size}″</span>
     {productImage(product.name, product.size) ? <img src={productImage(product.name, product.size)} alt={t('FLUUX {model} water filter cartridge', { model: product.model })} width={1122} height={1402} loading={eager ? 'eager' : 'lazy'}/> : <div className="catalogue-type-product"><span>FLUUX</span><strong>{product.name}</strong><span>{product.size} {t('inches')}</span><p>{t(product.purpose)}</p></div>}

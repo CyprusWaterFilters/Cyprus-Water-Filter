@@ -17,7 +17,7 @@ export const platinumWasser = {
   model: 'Platinum Wasser RO with Booster Pump',
   size: null,
   tone: 'platinum-wasser',
-  image: '/images/platinum-wasser.jpg',
+  image: '/images/platinum-wasser.webp',
   description: 'An under-sink reverse osmosis system with an electric booster pump that raises the pressure supplied to the membrane.',
   detail: 'Reverse osmosis with electric booster pump',
   purpose: 'Drinking and cooking water',
