@@ -82,7 +82,7 @@ export function ProductCatalogue() {
       <div className="catalogue-detail-copy"><p className="eyebrow">{detail.name} · {t('Series')}</p><DialogTitle className="catalogue-detail-title">{detail.size === null ? t(detail.model) : detail.model}</DialogTitle><DialogDescription className="catalogue-detail-description">{t(detail.description)}</DialogDescription>
         {detail.size !== null && <fieldset className="catalogue-detail-sizes"><legend>{t('Cartridge size')}</legend><div>{sizes.map(size => <button key={size} aria-pressed={detail.size === size} onClick={() => setDetail(products.find(product => product.name === detail.name && product.size === size) ?? detail)}>{size}″</button>)}</div></fieldset>}
         <dl className="catalogue-detail-specs"><div><dt>{t('Filtration')}</dt><dd>{t(detail.detail)}</dd></div><div><dt>{t('Everyday use')}</dt><dd>{t(detail.purpose)}</dd></div></dl>
-        {'stages' in detail ? <>
+        {detail.size === null && 'stages' in detail ? <>
           <section aria-label={t('Six filtration stages')} className="catalogue-filtration-stages">
             <h3>{t('Six filtration stages')}</h3>
             <ol>{detail.stages.map(stage => <li key={stage.label}><strong>{t(stage.label)}</strong><p>{t(stage.description)}</p></li>)}</ol>
