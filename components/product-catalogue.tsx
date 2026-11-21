@@ -19,6 +19,7 @@ function ProductVisual({ product, eager = false }: { product: Product; eager?: b
   return <div className={`catalogue-visual ${product.tone}`}>
     <span className="catalogue-range-tag">{product.name}</span><span className="catalogue-size-tag">{product.size}″</span>
     {productImage(product.name, product.size) ? <img src={productImage(product.name, product.size)} alt={t('FLUUX {model} water filter cartridge', { model: product.model })} width={1122} height={1402} loading={eager ? 'eager' : 'lazy'}/> : <div className="catalogue-type-product"><span>FLUUX</span><strong>{product.name}</strong><span>{product.size} {t('inches')}</span><p>{t(product.purpose)}</p></div>}
+    {product.name === 'HF2-S' && <img className="catalogue-hf2s-head" src="/images/hf2s-filter-head.webp" alt={t('FLUUX filter head')} width={320} height={320} loading={eager ? 'eager' : 'lazy'}/>}
   </div>;
 }
 
@@ -76,6 +77,8 @@ fx && <dl className="catalogue-detail-specs">
     return <dl className="catalogue-detail-specs">
       <div><dt>{t('Rated capacity')}</dt><dd>{t('{value} L', { value: number.format(specs.capacity) })}</dd></div>
       <div><dt>{t('Rated flow')}</dt><dd>{t('{value} L/min', { value: number.format(specs.flow) })}</dd></div>
+      <div><dt>{t('Filter head connections')}</dt><dd>{t('3/8″ connection, with a 1/4″ inlet option')}</dd></div>
+      <div><dt>{t('Filter head valve')}</dt><dd>{t('Automatic water shut-off')}</dd></div>
       {full && <>
         <div><dt>{t('Replacement cartridge')}</dt><dd><bdi>{specs.cartridge}</bdi></dd></div>
         <div><dt>{t('Filtration media and performance')}</dt><dd>{t('Mechanical filtration captures sediment, activated carbon block reduces chlorine taste and odour, and polyphosphate helps limit scale deposits in equipment.')}</dd></div>
