@@ -34,7 +34,7 @@ export default function Home() {
           <div className="water-hero-content">
             <p className="water-hero-kicker"><span aria-hidden="true"/> {t("COMMERCIAL-GRADE WATER, AT HOME.")}</p>
             <h1 id="hero-title"><span>{t("Commercial filtration.")}</span><span>{t("Made for")} <em>{t("home.")}</em></span></h1>
-            <p className="water-hero-copy">{t("Built for demanding settings.")}<br className="water-hero-copy-break"/> {t("Professionally matched to everyday life at home.")}</p>
+            <p className="water-hero-copy">{t("Built for demanding settings.")}<br className="water-hero-copy-break"/> {t("Professionally matched to everyday life at home and businesses")}</p>
             <a className="water-hero-cta" href="#collection"><span>{t("Explore the systems")}</span><span className="water-hero-cta-icon" aria-hidden="true"><ArrowUpRight size={23}/></span></a>
             <p className="water-hero-reassurance"><Check size={15} aria-hidden="true"/> {t("Commercial-grade systems. Local guidance.")}</p>
           </div>
