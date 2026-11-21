@@ -138,16 +138,18 @@ fx && <dl className="catalogue-detail-specs">
               <div className="relative aspect-square overflow-hidden rounded-xl">
                 <img className="block h-full w-full" src="/images/three-stage-plus.svg" alt="" width={850} height={850} loading="lazy"/>
                 {variant === 1 && <div aria-hidden="true" dir="ltr" className="absolute inset-x-[9.75%] top-[59%] grid grid-cols-3 place-items-center gap-1 text-xs font-semibold text-green-950">
-                  {['5 µm', '1 µm', 'UF'].map(label => (
+                  {['5 µm', '1 µm', 'D-250'].map(label => (
                     <span key={label} className="whitespace-nowrap rounded-full bg-white px-2 py-1 shadow-sm ring-1 ring-green-900/20">{label}</span>
                   ))}
                 </div>}
               </div>
+              {variant === 1 && <img className="mx-auto block w-[80.5%]" src="/images/three-stage-plus-cartridges.svg" alt="" width={540} height={220} loading="lazy"/>}
               <div className="catalogue-card-copy">
                 <div className="catalogue-card-heading"><h3>{`Three Stage Plus ${variant}`}</h3></div>
                 {variant === 1 && <ol className="mt-3 list-decimal space-y-1 ps-5">
-                  {[5, 1].map(microns => <li key={microns}><bdi>{`Sediment MX · ${microns} µm`}</bdi></li>)}
-                  <li><bdi>{'Pure Aqua'}</bdi> · {t('UF ultrafiltration filter')} · {t('{value} L', { value: number.format(40000) })}</li>
+                  <li><bdi>{'Sediment MX D-105 · 5 µm'}</bdi></li>
+                  <li><bdi>{'Sediment MX D-100 · 1 µm'}</bdi></li>
+                  <li><bdi>{'Pure Aqua D-250'}</bdi> · {t('Activated carbon block filter')} · <bdi>{`${number.format(0.01)}–${number.format(0.1)} µm`}</bdi> · {t('{value} L/min', { value: number.format(4) })} · {t('Recommended replacement: 12 months or {capacity}', { capacity: t('{value} L', { value: number.format(40000) }) })}</li>
                 </ol>}
               </div>
             </article>
