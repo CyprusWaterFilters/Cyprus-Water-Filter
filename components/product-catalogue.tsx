@@ -87,8 +87,8 @@ export function ProductCatalogue() {
           <div><dt>{t('Rated capacity')}</dt><dd>{t('{value} L', { value: number.format(fx.capacity) })}</dd></div>
           <div><dt>{t('Rated flow')}</dt><dd>{t('{value} L/min', { value: number.format(fx.flow) })}</dd></div>
           <div><dt>{t('Replacement cartridge')}</dt><dd><bdi>{fx.cartridge}</bdi></dd></div>
-          <div><dt>{t('Operating pressure')}</dt><dd><bdi>30–125 psi</bdi></dd></div>
-          <div><dt>{t('Water temperature')}</dt><dd><bdi>4–38 °C</bdi></dd></div>
+          <div><dt>{t('Operating pressure')}</dt><dd><bdi>{'30–125 psi'}</bdi></dd></div>
+          <div><dt>{t('Water temperature')}</dt><dd><bdi>{'4–38 °C'}</bdi></dd></div>
           <div><dt>{t('System inlet and outlet')}</dt><dd><bdi>3/8″</bdi></dd></div>
         </dl>}
         {detail === platinumWasser ? <>
