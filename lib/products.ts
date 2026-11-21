@@ -49,17 +49,7 @@ export const platinumWasser = {
   detail: 'Six-stage reverse osmosis with electric booster pump',
   purpose: 'Drinking and cooking water',
 };
-export const threeStageFilter = {
-  name: '3 Stage Filter',
-  model: '3 Stage Filter',
-  size: null,
-  tone: 'platinum-wasser',
-  image: '/images/three-stage-filter.webp',
-  description: 'An under-sink water filtration system with three filter housings and a separate drinking-water tap.',
-  detail: 'Three-stage filtration',
-  purpose: 'Drinking and cooking water',
-};
-export const standaloneSystems = [platinumWasser, threeStageFilter];
+export const standaloneSystems = [platinumWasser];
 export const products = [
   ...ranges.flatMap(range => sizes.map(size => ({ ...range, size, model: modelName(range.name, size) }))),
   ...standaloneSystems,
