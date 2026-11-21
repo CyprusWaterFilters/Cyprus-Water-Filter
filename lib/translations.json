@@ -323,6 +323,10 @@
     "Φίλτρα {range}",
     "Фильтры {range}"
   ],
+  "FLUUX {model} cartridge label": [
+    "Ετικέτα φυσιγγίου FLUUX {model}",
+    "Этикетка картриджа FLUUX {model}"
+  ],
   "FLUUX {model} water filter cartridge": [
     "Ανταλλακτικό φίλτρο νερού FLUUX {model}",
     "Сменный картридж для воды FLUUX {model}"

@@ -134,3 +134,5 @@
 .catalogue-filtration-stages ol { list-style: decimal; padding-inline-start: 1.5rem; margin-block: .75rem; }
 .catalogue-filtration-stages li + li { margin-top: .625rem; }
 .catalogue-filtration-stages a { text-decoration: underline; }
+
+.product-visual.hf2-label-visual img, .catalogue-visual.hf2-label-visual img { object-fit: contain; padding: 2.75rem 1rem 1rem; }
