@@ -91,7 +91,14 @@ fx && <dl className="catalogue-detail-specs">
       </>}
     </dl>;
   }
-  const visible = filterProducts(filters);
+  function renderProductCard(product: Product, index = 0) {
+    return <article className="catalogue-card" key={product.model}>
+      <button className="catalogue-visual-button" onClick={() => setDetail(product)} aria-label={t('View details for {model}', { model: product.model })}><ProductVisual product={product} eager={index < 3}/></button>
+      <div className="catalogue-card-copy"><div className="catalogue-card-heading"><h3>{product.size === null ? t(product.model) : product.model}</h3><button onClick={() => setDetail(product)} aria-label={t('View details for {model}', { model: product.model })}><ArrowUpRight size={19}/></button></div><p className="catalogue-card-purpose">{t(product.purpose)}</p><div className="catalogue-card-spec"><Droplets size={15}/><span>{t(product.detail)}</span></div><button className="catalogue-details-link" onClick={() => setDetail(product)}>{t('View details')}<ArrowRight size={15}/></button>{product.name === 'FX' && product.size !== null && renderFxSpecifications(fxSpecifications[product.size])}{product.name === 'HF2' && product.size !== null && renderHf2Specifications(product.size)}{product.name === 'HF2-S' && product.size !== null && renderHf2sSpecifications(product.size)}<ProductEnquiry model={product.model} onEnquire={enquire}/></div>
+    </article>;
+  }
+  const listedProducts = products.filter(product => product !== platinumWasser);
+  const visible = filterProducts(filters).filter(product => product !== platinumWasser);
   const active = filters.range !== 'all' || filters.size !== 'all' || filters.query !== '';
   return <>
     <ScrollEntrances/>
@@ -108,11 +115,11 @@ fx && <dl className="catalogue-detail-specs">
         <div className="catalogue-browser-heading"><div><p className="eyebrow">{t('COMMERCIAL SYSTEMS FOR THE HOME')}</p><h2 id="browse-title">{t('Choose your')} <em>{t('system.')}</em></h2></div><a href="#catalogue-help">{t('Need help matching your home?')}<ArrowUpRight size={17}/></a></div>
         <div className="catalogue-controls">
           <fieldset className="catalogue-range-controls"><legend>{t('Filter ranges')}</legend><div>
-            <button aria-pressed={filters.range === 'all'} onClick={() => updateFilters({ ...filters, range: 'all' })}>{t('All filters')}<span>{products.length}</span></button>
-            {catalogueRanges.map(range => <button key={range} aria-pressed={filters.range === range} onClick={() => updateFilters({ ...filters, range, size: isStandaloneRange(range) ? 'all' : filters.size })}>{t(range)}<span>{products.filter(product => product.name === range).length}</span></button>)}
+            <button aria-pressed={filters.range === 'all'} onClick={() => updateFilters({ ...filters, range: 'all' })}>{t('All filters')}<span>{listedProducts.length}</span></button>
+            {catalogueRanges.filter(range => range !== platinumWasser.name).map(range => <button key={range} aria-pressed={filters.range === range} onClick={() => updateFilters({ ...filters, range, size: isStandaloneRange(range) ? 'all' : filters.size })}>{t(range)}<span>{products.filter(product => product.name === range).length}</span></button>)}
           </div></fieldset>
           <label className="catalogue-search"><Search size={18} aria-hidden="true"/><span className="sr-only">{t('Search by model')}</span><input type="search" maxLength={80} value={filters.query} placeholder={t('Search by model')} onChange={event => updateFilters({ ...filters, query: event.target.value })}/>{filters.query && <button aria-label={t('Clear search')} onClick={() => updateFilters({ ...filters, query: '' })}><X size={16}/></button>}</label>
-          <div className="catalogue-size-row"><fieldset className="catalogue-size-controls" disabled={isStandaloneRange(filters.range)}><legend><SlidersHorizontal size={16} aria-hidden="true"/>{t('Cartridge size')}</legend><div><button aria-pressed={filters.size === 'all'} onClick={() => updateFilters({ ...filters, size: 'all' })}>{t('All sizes')}</button>{sizes.map(size => <button key={size} aria-pressed={filters.size === String(size)} onClick={() => updateFilters({ ...filters, size: String(size) })}>{size}″</button>)}</div></fieldset><p role="status" aria-live="polite">{t('Showing {count} of {total} filters', { count: visible.length, total: products.length })}</p>{active && <button className="catalogue-reset" onClick={() => updateFilters(defaultFilters)}>{t('Reset filters')}<X size={14}/></button>}</div>
+          <div className="catalogue-size-row"><fieldset className="catalogue-size-controls" disabled={isStandaloneRange(filters.range)}><legend><SlidersHorizontal size={16} aria-hidden="true"/>{t('Cartridge size')}</legend><div><button aria-pressed={filters.size === 'all'} onClick={() => updateFilters({ ...filters, size: 'all' })}>{t('All sizes')}</button>{sizes.map(size => <button key={size} aria-pressed={filters.size === String(size)} onClick={() => updateFilters({ ...filters, size: String(size) })}>{size}″</button>)}</div></fieldset><p role="status" aria-live="polite">{t('Showing {count} of {total} filters', { count: visible.length, total: listedProducts.length })}</p>{active && <button className="catalogue-reset" onClick={() => updateFilters(defaultFilters)}>{t('Reset filters')}<X size={14}/></button>}</div>
         </div>
         {visible.some(product => product.name === 'HF2-S') && (filters.range === 'HF2-S' || visible.every(product => product.name === 'HF2-S')) &&
           <section className="catalogue-hf2s-applications" aria-labelledby="hf2s-title">
@@ -125,10 +132,7 @@ fx && <dl className="catalogue-detail-specs">
           </section>
         }
         <div className="catalogue-grid">
-          {visible.map((product, index) => <article className="catalogue-card" key={product.model}>
-            <button className="catalogue-visual-button" onClick={() => setDetail(product)} aria-label={t('View details for {model}', { model: product.model })}><ProductVisual product={product} eager={index < 3}/></button>
-            <div className="catalogue-card-copy"><div className="catalogue-card-heading"><h3>{product.size === null ? t(product.model) : product.model}</h3><button onClick={() => setDetail(product)} aria-label={t('View details for {model}', { model: product.model })}><ArrowUpRight size={19}/></button></div><p className="catalogue-card-purpose">{t(product.purpose)}</p><div className="catalogue-card-spec"><Droplets size={15}/><span>{t(product.detail)}</span></div><button className="catalogue-details-link" onClick={() => setDetail(product)}>{t('View details')}<ArrowRight size={15}/></button>{product.name === 'FX' && product.size !== null && renderFxSpecifications(fxSpecifications[product.size])}{product.name === 'HF2' && product.size !== null && renderHf2Specifications(product.size)}{product.name === 'HF2-S' && product.size !== null && renderHf2sSpecifications(product.size)}<ProductEnquiry model={product.model} onEnquire={enquire}/></div>
-          </article>)}
+          {visible.map(renderProductCard)}
         </div>
         {visible.length === 0 && <div className="catalogue-empty"><Search size={28}/><h3>{t('No filters found')}</h3><p>{t('Try another model or clear your filters to see the full collection.')}</p><button className="button primary" onClick={() => updateFilters(defaultFilters)}>{t('View all filters')}<ArrowRight size={18}/></button></div>}
       </section>
