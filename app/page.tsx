@@ -41,7 +41,7 @@ export default function Home() {
         </section>
         <div className="benefit-strip" id="why"><span><GlassWater/> {t("Commercial-grade filtration at your tap")}</span><span><Leaf/> {t("Sized for your household")}</span><span><MessageCircle/> {t("Local guidance from selection to fit")}</span></div>
         <section id="collection" className="collection section">
-          <h2>{"Microfilter FLUUX"}</h2>
+          <h2><img src="/images/microfilter-fluux.webp" alt="Microfilter FLUUX" width={768} height={444} style={{ width: 'min(100%, 24rem)', height: 'auto', borderRadius: '.75rem' }}/></h2>
           <CertificateTrust/>
           <Tabs defaultValue="FX" className="range-tabs">
             <TabsList className="range-list" aria-label={t("Filter ranges")}>{ranges.map(range => <TabsTrigger className="range-trigger" key={range.name} value={range.name}>{range.name} <span>{t("Series")}</span></TabsTrigger>)}</TabsList>
