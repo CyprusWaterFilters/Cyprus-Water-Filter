@@ -65,6 +65,8 @@ fx && <dl className="catalogue-detail-specs">
       <div><dt>{t('Rated flow')}</dt><dd>{t('{value} L/min', { value: number.format(specs.flow) })}</dd></div>
       <div><dt>{t('Replacement cartridge')}</dt><dd><bdi>{specs.cartridge}</bdi></dd></div>
       <div><dt>{t('Filtration media and performance')}</dt><dd>{t('Activated carbon reduces chlorine taste and odour. The cartridge also reduces suspended particles and uses polyphosphate to help limit scale buildup.')}</dd></div>
+      <div><dt>{t('System inlet and outlet')}</dt><dd><bdi>3/8″</bdi></dd></div>
+      <div><dt>{t('Filter head valve')}</dt><dd>{t('Automatic water shut-off')}</dd></div>
       <div><dd>{t('Capacity and flow shown are the manufacturer’s catalogue ratings.')}</dd></div>
     </dl>;
   }
