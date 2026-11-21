@@ -67,7 +67,7 @@ fx && <dl className="catalogue-detail-specs">
       <div><dt>{t('Operating pressure')}</dt><dd><bdi>{'30–125 psi'}</bdi></dd></div>
       <div><dt>{t('Water temperature')}</dt><dd><bdi>{'4–38 °C'}</bdi></dd></div>
       <div><dt>{t('Filter head connections')}</dt><dd>{t('3/8″ connection, with a 1/4″ inlet option')}</dd></div>
-      <div><dt>{t('Filtration media and performance')}</dt><dd>{t('Activated carbon reduces chlorine taste and odour, suspended particles and turbidity. The version we supply includes scale inhibition to help limit limescale buildup.')}</dd></div>
+      <div><dt>{t('Filtration media and performance')}</dt><dd>{t('Activated carbon reduces chlorine taste and odour. The built-in sediment filter captures suspended particles. The version we supply includes scale inhibition to help limit limescale buildup.')}</dd></div>
     </dl>;
   }
   const visible = filterProducts(filters);
