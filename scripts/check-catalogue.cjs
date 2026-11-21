@@ -9,13 +9,13 @@ function load(file, dependencies = {}) {
 }
 const data = load('lib/products.ts');
 const { filterProducts, readFilters, defaultFilters } = load('lib/catalogue.ts', { './products': data });
-assert.equal(data.products.length, 10);
-assert.equal(new Set(data.products.map(product => product.model)).size, 10);
+assert.equal(data.products.length, 11);
+assert.equal(new Set(data.products.map(product => product.model)).size, 11);
 assert.equal(data.modelName('HF2-S', 17), 'HF2-17S');
 for (const range of ['all', 'FX', 'HF2', 'HF2-S']) for (const size of ['all', '10', '15', '17']) {
   const filters = readFilters(new URLSearchParams({ range, size }));
   const found = filterProducts(filters);
-  assert.equal(found.length, (range === 'all' ? 3 : 1) * (size === 'all' ? 3 : 1) + Number(range === 'all' && size === 'all'));
+  assert.equal(found.length, (range === 'all' ? 3 : 1) * (size === 'all' ? 3 : 1) + (range === 'all' && size === 'all' ? data.standaloneSystems.length : 0));
   found.forEach(product => { assert.ok(range === 'all' || product.name === range); assert.ok(size === 'all' || String(product.size) === size); });
 }
 assert.deepEqual(readFilters(new URLSearchParams('range=unknown&size=22')), defaultFilters);
@@ -23,8 +23,9 @@ assert.equal(filterProducts({ ...defaultFilters, query: ' fx 15 ' })[0].model, '
 assert.equal(filterProducts({ ...defaultFilters, query: 'HF2-17S' })[0].name, 'HF2-S');
 assert.equal(filterProducts({ ...defaultFilters, range: 'FX', query: 'HF2' }).length, 0);
 assert.equal(filterProducts({ ...defaultFilters, query: 'not-a-filter' }).length, 0);
-assert.equal(filterProducts(defaultFilters).length, 10);
+assert.equal(filterProducts(defaultFilters).length, 11);
 assert.deepEqual(filterProducts(readFilters(new URLSearchParams({ range: 'Platinum Wasser' }))), [data.platinumWasser]);
 assert.deepEqual(filterProducts({ ...defaultFilters, query: 'platinum wasser' }), [data.platinumWasser]);
+assert.deepEqual(filterProducts(readFilters(new URLSearchParams({ range: '3 Stage Filter', size: '10' }))), [data.threeStageFilter]);
 assert.equal(readFilters(new URLSearchParams({ q: 'x'.repeat(200) })).query.length, 80);
 console.log('Verified all 16 range/size combinations, model search, URL validation, empty results and reset.');
