@@ -135,7 +135,7 @@ fx && <dl className="catalogue-detail-specs">
           {[1, 2].map(variant => (
             <article className="catalogue-card" key={variant}>
               {variant === 1 && <div className="mx-3 my-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <p className="text-xl font-semibold"><bdi>{euro.format(210)}</bdi></p>
+                <p className="text-lg font-semibold">{t('{price} with installation', { price: euro.format(210) })}</p>
                 <p className="text-sm font-medium">{t('Annual maintenance {price}', { price: euro.format(100) })}</p>
               </div>}
               <div className="relative aspect-square overflow-hidden rounded-xl">
@@ -154,6 +154,7 @@ fx && <dl className="catalogue-detail-specs">
                   <li><bdi>{'Sediment MX D-100 · 1 µm'}</bdi></li>
                   <li><bdi>{'Pure Aqua D-250'}</bdi> · {t('Activated carbon block filter')} · <bdi>{`${number.format(0.01)}–${number.format(0.1)} µm`}</bdi> · {t('{value} L/min', { value: number.format(4) })} · {t('Recommended replacement: 12 months or {capacity}', { capacity: t('{value} L', { value: number.format(40000) }) })}</li>
                 </ol>}
+                {variant === 1 && <p className="mt-3 text-sm font-medium">{t('Installation includes a water leak detector.')}</p>}
               </div>
             </article>
           ))}
