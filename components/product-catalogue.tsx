@@ -44,6 +44,7 @@ export function ProductCatalogue() {
   function enquire(subject: string) { setDetail(null); window.location.assign(enquiryUrl(t(enquiryMessage, { subject: t(subject) }))); }
   const fx = detail?.name === 'FX' && detail.size !== null ? fxSpecifications[detail.size] : undefined;
   const number = new Intl.NumberFormat(language);
+  const euro = new Intl.NumberFormat(language, { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
   function renderFxSpecifications(fx: (typeof fxSpecifications)[number]) {
     return (
 fx && <dl className="catalogue-detail-specs">
@@ -133,11 +134,17 @@ fx && <dl className="catalogue-detail-specs">
         <div className="catalogue-grid">
           {[1, 2].map(variant => (
             <article className="catalogue-card" key={variant}>
+              {variant === 1 && <p className="mx-3 my-2 text-xl font-semibold" dir="ltr">{euro.format(210)}</p>}
               <div className="catalogue-visual platinum-wasser">
                 <img src="/images/three-stage-plus.svg" alt="" width={850} height={850} loading="lazy"/>
               </div>
               <div className="catalogue-card-copy">
                 <div className="catalogue-card-heading"><h3>{`Three Stage Plus ${variant}`}</h3></div>
+                {variant === 1 && <ul className="mt-3 list-disc space-y-1 ps-5">
+                  <li><bdi>Sediment MX · 1 µm</bdi></li>
+                  <li><bdi>Sediment MX · 5 µm</bdi></li>
+                  <li><bdi>D 250</bdi> · {t('UF ultrafiltration filter')}</li>
+                </ul>}
               </div>
             </article>
           ))}
