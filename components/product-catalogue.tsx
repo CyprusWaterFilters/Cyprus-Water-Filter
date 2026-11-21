@@ -141,8 +141,8 @@ fx && <dl className="catalogue-detail-specs">
               <div className="catalogue-card-copy">
                 <div className="catalogue-card-heading"><h3>{`Three Stage Plus ${variant}`}</h3></div>
                 {variant === 1 && <ul className="mt-3 list-disc space-y-1 ps-5">
-                  {[1, 5].map(microns => <li key={microns}><bdi>{`Sediment MX · ${microns} µm`}</bdi></li>)}
-                  <li><bdi>{'Pure Aqua'}</bdi> · {t('UF ultrafiltration filter')}</li>
+                  {[5, 1].map(microns => <li key={microns}><bdi>{`Sediment MX · ${microns} µm`}</bdi></li>)}
+                  <li><bdi>{'Pure Aqua'}</bdi> · {t('UF ultrafiltration filter')} · {t('{value} L', { value: number.format(40000) })}</li>
                 </ul>}
               </div>
             </article>
