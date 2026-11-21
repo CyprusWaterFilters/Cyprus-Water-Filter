@@ -134,7 +134,10 @@ fx && <dl className="catalogue-detail-specs">
         <div className="catalogue-grid">
           {[1, 2].map(variant => (
             <article className="catalogue-card" key={variant}>
-              {variant === 1 && <p className="mx-3 my-2 text-xl font-semibold" dir="ltr">{euro.format(210)}</p>}
+              {variant === 1 && <div className="mx-3 my-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                <p className="text-xl font-semibold"><bdi>{euro.format(210)}</bdi></p>
+                <p className="text-sm font-medium">{t('Annual maintenance {price}', { price: euro.format(100) })}</p>
+              </div>}
               <div className="relative aspect-square overflow-hidden rounded-xl">
                 <img className="block h-full w-full" src="/images/three-stage-plus.svg" alt="" width={850} height={850} loading="lazy"/>
                 {variant === 1 && <div aria-hidden="true" dir="ltr" className="absolute inset-x-[9.75%] top-[59%] grid grid-cols-3 place-items-center gap-1 text-xs font-semibold text-green-950">
