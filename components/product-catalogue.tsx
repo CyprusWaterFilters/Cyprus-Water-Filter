@@ -135,15 +135,20 @@ fx && <dl className="catalogue-detail-specs">
           {[1, 2].map(variant => (
             <article className="catalogue-card" key={variant}>
               {variant === 1 && <p className="mx-3 my-2 text-xl font-semibold" dir="ltr">{euro.format(210)}</p>}
-              <div className="catalogue-visual platinum-wasser">
-                <img src="/images/three-stage-plus.svg" alt="" width={850} height={850} loading="lazy"/>
+              <div className="relative aspect-square overflow-hidden rounded-xl">
+                <img className="block h-full w-full" src="/images/three-stage-plus.svg" alt="" width={850} height={850} loading="lazy"/>
+                {variant === 1 && <div aria-hidden="true" dir="ltr" className="absolute inset-x-[9.75%] top-[59%] grid grid-cols-3 place-items-center gap-1 text-xs font-semibold text-green-950">
+                  {['5 µm', '1 µm', 'UF'].map(label => (
+                    <span key={label} className="whitespace-nowrap rounded-full bg-white px-2 py-1 shadow-sm ring-1 ring-green-900/20">{label}</span>
+                  ))}
+                </div>}
               </div>
               <div className="catalogue-card-copy">
                 <div className="catalogue-card-heading"><h3>{`Three Stage Plus ${variant}`}</h3></div>
-                {variant === 1 && <ul className="mt-3 list-disc space-y-1 ps-5">
+                {variant === 1 && <ol className="mt-3 list-decimal space-y-1 ps-5">
                   {[5, 1].map(microns => <li key={microns}><bdi>{`Sediment MX · ${microns} µm`}</bdi></li>)}
                   <li><bdi>{'Pure Aqua'}</bdi> · {t('UF ultrafiltration filter')} · {t('{value} L', { value: number.format(40000) })}</li>
-                </ul>}
+                </ol>}
               </div>
             </article>
           ))}
