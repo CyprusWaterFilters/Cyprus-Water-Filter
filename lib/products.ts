@@ -7,6 +7,7 @@ export const modelName = (range: string, size: number) => range === 'HF2-S' ? `H
 export const productImage = (range: string, size: number) => {
   if (![10, 15, 17].includes(size)) return undefined;
   if (range === 'FX') return `/images/fx-${size}-with-head.webp`;
+  if (range === 'HF2') return `/images/hf2-${size}-white.webp`;
   if (range === 'HF2-S') return `/images/hf2-s-${size}.png`;
   return undefined;
 };
@@ -16,6 +17,12 @@ export const fxSpecifications: Partial<Record<number, { capacity: number; flow: 
   10: { capacity: 30000, flow: 5.68, cartridge: 'FX-10R' },
   15: { capacity: 60567, flow: 9.46, cartridge: 'FX-15R' },
   17: { capacity: 71922, flow: 9.46, cartridge: 'FX-17R' },
+};
+// NSF-listed capacities converted from US gallons. The HF2-15 label rounds to 79,493 L.
+export const hf2Specifications: typeof fxSpecifications = {
+  10: { capacity: 45425, flow: 7.57, cartridge: 'HF2-10R' },
+  15: { capacity: 79493, flow: 7.57, cartridge: 'HF2-15R' },
+  17: { capacity: 98421, flow: 7.57, cartridge: 'HF2-17R' },
 };
 export const sizes = [10, 15, 17];
 export const platinumWasser = {

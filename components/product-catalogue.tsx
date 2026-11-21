@@ -10,7 +10,7 @@ import { SiteFooter } from './site-footer';
 import { ProductEnquiry } from './product-enquiry';
 import { ScrollEntrances } from './scroll-entrances';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from './ui/dialog';
-import { ranges, catalogueRanges, platinumWasser, sizes, products, productImage, fxSpecifications, type Product } from '@/lib/products';
+import { ranges, catalogueRanges, platinumWasser, sizes, products, productImage, hf2Specifications, fxSpecifications, type Product } from '@/lib/products';
 import { defaultFilters, isStandaloneRange, readFilters, filterProducts, type CatalogueFilters } from '@/lib/catalogue';
 
 function ProductVisual({ product, eager = false }: { product: Product; eager?: boolean }) {
@@ -57,6 +57,18 @@ fx && <dl className="catalogue-detail-specs">
         </dl>
     );
   }
+  function renderHf2Specifications(size: number) {
+    const specs = hf2Specifications[size];
+    if (!specs) return null;
+    return <dl className="catalogue-detail-specs">
+      <div><dt>{t('Rated capacity')}</dt><dd>{t('{value} L', { value: number.format(specs.capacity) })}</dd></div>
+      <div><dt>{t('Rated flow')}</dt><dd>{t('{value} L/min', { value: number.format(specs.flow) })}</dd></div>
+      <div><dt>{t('Replacement cartridge')}</dt><dd><bdi>{specs.cartridge}</bdi></dd></div>
+      <div><dt>{t('Operating pressure')}</dt><dd><bdi>{'30–125 psi'}</bdi></dd></div>
+      <div><dt>{t('Water temperature')}</dt><dd><bdi>{'4–38 °C'}</bdi></dd></div>
+      <div><dt>{t('System inlet and outlet')}</dt><dd><bdi>3/8″</bdi></dd></div>
+    </dl>;
+  }
   const visible = filterProducts(filters);
   const active = filters.range !== 'all' || filters.size !== 'all' || filters.query !== '';
   return <>
@@ -83,7 +95,7 @@ fx && <dl className="catalogue-detail-specs">
         <div className="catalogue-grid">
           {visible.map((product, index) => <article className="catalogue-card" key={product.model}>
             <button className="catalogue-visual-button" onClick={() => setDetail(product)} aria-label={t('View details for {model}', { model: product.model })}><ProductVisual product={product} eager={index < 3}/></button>
-            <div className="catalogue-card-copy"><div className="catalogue-card-heading"><h3>{product.size === null ? t(product.model) : product.model}</h3><button onClick={() => setDetail(product)} aria-label={t('View details for {model}', { model: product.model })}><ArrowUpRight size={19}/></button></div><p className="catalogue-card-purpose">{t(product.purpose)}</p><div className="catalogue-card-spec"><Droplets size={15}/><span>{t(product.detail)}</span></div><button className="catalogue-details-link" onClick={() => setDetail(product)}>{t('View details')}<ArrowRight size={15}/></button>{product.name === 'FX' && product.size !== null && renderFxSpecifications(fxSpecifications[product.size])}<ProductEnquiry model={product.model} onEnquire={enquire}/></div>
+            <div className="catalogue-card-copy"><div className="catalogue-card-heading"><h3>{product.size === null ? t(product.model) : product.model}</h3><button onClick={() => setDetail(product)} aria-label={t('View details for {model}', { model: product.model })}><ArrowUpRight size={19}/></button></div><p className="catalogue-card-purpose">{t(product.purpose)}</p><div className="catalogue-card-spec"><Droplets size={15}/><span>{t(product.detail)}</span></div><button className="catalogue-details-link" onClick={() => setDetail(product)}>{t('View details')}<ArrowRight size={15}/></button>{product.name === 'FX' && product.size !== null && renderFxSpecifications(fxSpecifications[product.size])}{product.name === 'HF2' && product.size !== null && renderHf2Specifications(product.size)}<ProductEnquiry model={product.model} onEnquire={enquire}/></div>
           </article>)}
         </div>
         {visible.length === 0 && <div className="catalogue-empty"><Search size={28}/><h3>{t('No filters found')}</h3><p>{t('Try another model or clear your filters to see the full collection.')}</p><button className="button primary" onClick={() => updateFilters(defaultFilters)}>{t('View all filters')}<ArrowRight size={18}/></button></div>}
@@ -98,6 +110,7 @@ fx && <dl className="catalogue-detail-specs">
         {detail.size !== null && <fieldset className="catalogue-detail-sizes"><legend>{t('Cartridge size')}</legend><div>{sizes.map(size => <button key={size} aria-pressed={detail.size === size} onClick={() => setDetail(products.find(product => product.name === detail.name && product.size === size) ?? detail)}>{size}″</button>)}</div></fieldset>}
         <dl className="catalogue-detail-specs"><div><dt>{t('Filtration')}</dt><dd>{t(detail.detail)}</dd></div><div><dt>{t('Everyday use')}</dt><dd>{t(detail.purpose)}</dd></div></dl>
         {renderFxSpecifications(fx)}
+        {detail.name === 'HF2' && detail.size !== null && renderHf2Specifications(detail.size)}
         {detail === platinumWasser ? <>
           <section aria-label={t('Six filtration stages')} className="catalogue-filtration-stages">
             <h3>{t('Six filtration stages')}</h3>
