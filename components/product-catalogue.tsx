@@ -154,7 +154,10 @@ fx && <dl className="catalogue-detail-specs">
                   <li><bdi>{'Sediment MX D-100 · 1 µm'}</bdi></li>
                   <li><bdi>{'Pure Aqua D-250'}</bdi> · {t('Activated carbon block filter')} · <bdi>{`${number.format(0.01)}–${number.format(0.1)} µm`}</bdi> · {t('{value} L/min', { value: number.format(4) })} · {t('Recommended replacement: 12 months or {capacity}', { capacity: t('{value} L', { value: number.format(40000) }) })}</li>
                 </ol>}
-                {variant === 1 && <p className="mt-3 text-sm font-medium">{t('Installation includes a water leak detector.')}</p>}
+                {variant === 1 && <figure className="mt-3 flex items-center gap-3">
+                  <img className="size-20 shrink-0 rounded-lg object-contain" src="/images/water-leak-detector.svg" alt="" width={320} height={320} loading="lazy"/>
+                  <figcaption className="text-sm font-medium">{t('Installation includes a leak detector with water shut-off.')}</figcaption>
+                </figure>}
               </div>
             </article>
           ))}
