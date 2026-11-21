@@ -11,6 +11,12 @@ export const productImage = (range: string, size: number) => {
   return undefined;
 };
 
+// Microfilter FX Filter System technical sheet, product specifications and operation.
+export const fxSpecifications: Partial<Record<number, { capacity: number; flow: number; cartridge: string }>> = {
+  10: { capacity: 30000, flow: 5.68, cartridge: 'FX-10R' },
+  15: { capacity: 60567, flow: 9.46, cartridge: 'FX-15R' },
+  17: { capacity: 71922, flow: 9.46, cartridge: 'FX-17R' },
+};
 export const sizes = [10, 15, 17];
 export const platinumWasser = {
   name: 'Platinum Wasser',

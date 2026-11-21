@@ -10,7 +10,7 @@ import { SiteFooter } from './site-footer';
 import { ProductEnquiry } from './product-enquiry';
 import { ScrollEntrances } from './scroll-entrances';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from './ui/dialog';
-import { ranges, catalogueRanges, platinumWasser, sizes, products, productImage, type Product } from '@/lib/products';
+import { ranges, catalogueRanges, platinumWasser, sizes, products, productImage, fxSpecifications, type Product } from '@/lib/products';
 import { defaultFilters, isStandaloneRange, readFilters, filterProducts, type CatalogueFilters } from '@/lib/catalogue';
 
 function ProductVisual({ product, eager = false }: { product: Product; eager?: boolean }) {
@@ -41,6 +41,8 @@ export function ProductCatalogue() {
     window.history.replaceState({}, '', url);
   }
   function enquire(subject: string) { setDetail(null); window.location.assign(enquiryUrl(t(enquiryMessage, { subject: t(subject) }))); }
+  const fx = detail?.name === 'FX' && detail.size !== null ? fxSpecifications[detail.size] : undefined;
+  const number = new Intl.NumberFormat(language);
   const visible = filterProducts(filters);
   const active = filters.range !== 'all' || filters.size !== 'all' || filters.query !== '';
   return <>
@@ -81,6 +83,14 @@ export function ProductCatalogue() {
       <div className="catalogue-detail-copy"><p className="eyebrow">{detail.name} · {t('Series')}</p><DialogTitle className="catalogue-detail-title">{detail.size === null ? t(detail.model) : detail.model}</DialogTitle><DialogDescription className="catalogue-detail-description">{t(detail.description)}</DialogDescription>
         {detail.size !== null && <fieldset className="catalogue-detail-sizes"><legend>{t('Cartridge size')}</legend><div>{sizes.map(size => <button key={size} aria-pressed={detail.size === size} onClick={() => setDetail(products.find(product => product.name === detail.name && product.size === size) ?? detail)}>{size}″</button>)}</div></fieldset>}
         <dl className="catalogue-detail-specs"><div><dt>{t('Filtration')}</dt><dd>{t(detail.detail)}</dd></div><div><dt>{t('Everyday use')}</dt><dd>{t(detail.purpose)}</dd></div></dl>
+        {fx && <dl className="catalogue-detail-specs">
+          <div><dt>{t('Rated capacity')}</dt><dd>{t('{value} L', { value: number.format(fx.capacity) })}</dd></div>
+          <div><dt>{t('Rated flow')}</dt><dd>{t('{value} L/min', { value: number.format(fx.flow) })}</dd></div>
+          <div><dt>{t('Replacement cartridge')}</dt><dd><bdi>{fx.cartridge}</bdi></dd></div>
+          <div><dt>{t('Operating pressure')}</dt><dd><bdi>30–125 psi</bdi></dd></div>
+          <div><dt>{t('Water temperature')}</dt><dd><bdi>4–38 °C</bdi></dd></div>
+          <div><dt>{t('System inlet and outlet')}</dt><dd><bdi>3/8″</bdi></dd></div>
+        </dl>}
         {detail === platinumWasser ? <>
           <section aria-label={t('Six filtration stages')} className="catalogue-filtration-stages">
             <h3>{t('Six filtration stages')}</h3>
