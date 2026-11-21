@@ -10,12 +10,12 @@ import { ProductEnquiry } from './product-enquiry';
 import { EnquiryDialog } from './enquiry-dialog';
 import { ScrollEntrances } from './scroll-entrances';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from './ui/dialog';
-import { ranges, catalogueRanges, platinumWasser, sizes, products, productImage, type Product } from '@/lib/products';
-import { defaultFilters, readFilters, filterProducts, type CatalogueFilters } from '@/lib/catalogue';
+import { ranges, catalogueRanges, sizes, products, productImage, type Product } from '@/lib/products';
+import { defaultFilters, isStandaloneRange, readFilters, filterProducts, type CatalogueFilters } from '@/lib/catalogue';
 
 function ProductVisual({ product, eager = false }: { product: Product; eager?: boolean }) {
   const { t } = useLanguage();
-  if (product.size === null) return <div className="catalogue-visual platinum-wasser"><img src={product.image} alt={t('Platinum Wasser reverse osmosis system with booster pump')} width={700} height={700} loading={eager ? 'eager' : 'lazy'}/></div>;
+  if (product.size === null) return <div className="catalogue-visual platinum-wasser"><img src={product.image} alt={t(product.model)} width={700} height={700} loading={eager ? 'eager' : 'lazy'}/></div>;
   return <div className={`catalogue-visual ${product.tone}`}>
     <span className="catalogue-range-tag">{product.name}</span><span className="catalogue-size-tag">{product.size}″</span>
     {productImage(product.name, product.size) ? <img src={productImage(product.name, product.size)} alt={t('FLUUX {model} water filter cartridge', { model: product.model })} width={1122} height={1402} loading={eager ? 'eager' : 'lazy'}/> : <div className="catalogue-type-product"><span>FLUUX</span><strong>{product.name}</strong><span>{product.size} {t('inches')}</span><p>{t(product.purpose)}</p></div>}
@@ -60,10 +60,10 @@ export function ProductCatalogue() {
         <div className="catalogue-controls">
           <fieldset className="catalogue-range-controls"><legend>{t('Filter ranges')}</legend><div>
             <button aria-pressed={filters.range === 'all'} onClick={() => updateFilters({ ...filters, range: 'all' })}>{t('All filters')}<span>{products.length}</span></button>
-            {catalogueRanges.map(range => <button key={range} aria-pressed={filters.range === range} onClick={() => updateFilters({ ...filters, range, size: range === platinumWasser.name ? 'all' : filters.size })}>{range}<span>{products.filter(product => product.name === range).length}</span></button>)}
+            {catalogueRanges.map(range => <button key={range} aria-pressed={filters.range === range} onClick={() => updateFilters({ ...filters, range, size: isStandaloneRange(range) ? 'all' : filters.size })}>{t(range)}<span>{products.filter(product => product.name === range).length}</span></button>)}
           </div></fieldset>
           <label className="catalogue-search"><Search size={18} aria-hidden="true"/><span className="sr-only">{t('Search by model')}</span><input type="search" maxLength={80} value={filters.query} placeholder={t('Search by model')} onChange={event => updateFilters({ ...filters, query: event.target.value })}/>{filters.query && <button aria-label={t('Clear search')} onClick={() => updateFilters({ ...filters, query: '' })}><X size={16}/></button>}</label>
-          <div className="catalogue-size-row"><fieldset className="catalogue-size-controls" disabled={filters.range === platinumWasser.name}><legend><SlidersHorizontal size={16} aria-hidden="true"/>{t('Cartridge size')}</legend><div><button aria-pressed={filters.size === 'all'} onClick={() => updateFilters({ ...filters, size: 'all' })}>{t('All sizes')}</button>{sizes.map(size => <button key={size} aria-pressed={filters.size === String(size)} onClick={() => updateFilters({ ...filters, size: String(size) })}>{size}″</button>)}</div></fieldset><p role="status" aria-live="polite">{t('Showing {count} of {total} filters', { count: visible.length, total: products.length })}</p>{active && <button className="catalogue-reset" onClick={() => updateFilters(defaultFilters)}>{t('Reset filters')}<X size={14}/></button>}</div>
+          <div className="catalogue-size-row"><fieldset className="catalogue-size-controls" disabled={isStandaloneRange(filters.range)}><legend><SlidersHorizontal size={16} aria-hidden="true"/>{t('Cartridge size')}</legend><div><button aria-pressed={filters.size === 'all'} onClick={() => updateFilters({ ...filters, size: 'all' })}>{t('All sizes')}</button>{sizes.map(size => <button key={size} aria-pressed={filters.size === String(size)} onClick={() => updateFilters({ ...filters, size: String(size) })}>{size}″</button>)}</div></fieldset><p role="status" aria-live="polite">{t('Showing {count} of {total} filters', { count: visible.length, total: products.length })}</p>{active && <button className="catalogue-reset" onClick={() => updateFilters(defaultFilters)}>{t('Reset filters')}<X size={14}/></button>}</div>
         </div>
         <div className="catalogue-grid">
           {visible.map((product, index) => <article className="catalogue-card" key={product.model}>
@@ -82,14 +82,14 @@ export function ProductCatalogue() {
       <div className="catalogue-detail-copy"><p className="eyebrow">{detail.name} · {t('Series')}</p><DialogTitle className="catalogue-detail-title">{detail.size === null ? t(detail.model) : detail.model}</DialogTitle><DialogDescription className="catalogue-detail-description">{t(detail.description)}</DialogDescription>
         {detail.size !== null && <fieldset className="catalogue-detail-sizes"><legend>{t('Cartridge size')}</legend><div>{sizes.map(size => <button key={size} aria-pressed={detail.size === size} onClick={() => setDetail(products.find(product => product.name === detail.name && product.size === size) ?? detail)}>{size}″</button>)}</div></fieldset>}
         <dl className="catalogue-detail-specs"><div><dt>{t('Filtration')}</dt><dd>{t(detail.detail)}</dd></div><div><dt>{t('Everyday use')}</dt><dd>{t(detail.purpose)}</dd></div></dl>
-        {detail.size === null ? <>
+        {'stages' in detail ? <>
           <section aria-label={t('Six filtration stages')} className="catalogue-filtration-stages">
             <h3>{t('Six filtration stages')}</h3>
             <ol>{detail.stages.map(stage => <li key={stage.label}><strong>{t(stage.label)}</strong><p>{t(stage.description)}</p></li>)}</ol>
           </section>
           <dl className="catalogue-detail-specs"><div><dt>{t('Installation')}</dt><dd>{t('Uses a separate storage tank and drinking-water tap. Requires a cold-water feed, drain connection and power outlet.')}</dd></div></dl>
           <p className="catalogue-detail-note">{t('Ask us about replacement filters and the space needed under your sink.')}</p>
-        </> : <p className="catalogue-detail-note">{t('Size alone does not confirm compatibility. Ask us to check the connection and the right model for your home.')}</p>}
+        </> : detail.size !== null && <p className="catalogue-detail-note">{t('Size alone does not confirm compatibility. Ask us to check the connection and the right model for your home.')}</p>}
         <ProductEnquiry model={detail.model} onEnquire={enquire}/>
       </div>
     </>}</DialogContent></Dialog>
