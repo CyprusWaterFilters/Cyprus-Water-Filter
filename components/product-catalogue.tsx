@@ -44,6 +44,7 @@ export function ProductCatalogue() {
   function enquire(subject: string) { setDetail(null); window.location.assign(enquiryUrl(t(enquiryMessage, { subject: t(subject) }))); }
   const fx = detail?.name === 'FX' && detail.size !== null ? fxSpecifications[detail.size] : undefined;
   const number = new Intl.NumberFormat(language);
+  const euro = new Intl.NumberFormat(language, { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
   function renderFxSpecifications(fx: (typeof fxSpecifications)[number]) {
     return (
 fx && <dl className="catalogue-detail-specs">
@@ -125,6 +126,42 @@ fx && <dl className="catalogue-detail-specs">
           </article>)}
         </div>
         {visible.length === 0 && <div className="catalogue-empty"><Search size={28}/><h3>{t('No filters found')}</h3><p>{t('Try another model or clear your filters to see the full collection.')}</p><button className="button primary" onClick={() => updateFilters(defaultFilters)}>{t('View all filters')}<ArrowRight size={18}/></button></div>}
+      </section>
+      <section className="catalogue-browser" id="three-stage-plus" aria-labelledby="three-stage-plus-title">
+        <div className="catalogue-browser-heading">
+          <h2 id="three-stage-plus-title">{t('Three Stage Plus Filters')}</h2>
+        </div>
+        <div className="catalogue-grid">
+          {[1, 2].map(variant => (
+            <article className="catalogue-card" key={variant}>
+              {variant === 1 && <div className="mx-3 my-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                <p className="text-lg font-semibold">{t('{price} with installation', { price: euro.format(210) })}</p>
+                <p className="text-sm font-medium">{t('Annual maintenance {price}', { price: euro.format(100) })}</p>
+              </div>}
+              <div className="relative aspect-square overflow-hidden rounded-xl">
+                <img className="block h-full w-full" src="/images/three-stage-plus.svg" alt="" width={850} height={850} loading="lazy"/>
+                {variant === 1 && <div aria-hidden="true" dir="ltr" className="absolute inset-x-[9.75%] top-[59%] grid grid-cols-3 place-items-center gap-1 text-xs font-semibold text-green-950">
+                  {['5 µm', '1 µm', 'D-250'].map(label => (
+                    <span key={label} className="whitespace-nowrap rounded-full bg-white px-2 py-1 shadow-sm ring-1 ring-green-900/20">{label}</span>
+                  ))}
+                </div>}
+              </div>
+              {variant === 1 && <img className="mx-auto block w-[80.5%]" src="/images/three-stage-plus-cartridges.svg" alt="" width={540} height={220} loading="lazy"/>}
+              <div className="catalogue-card-copy">
+                <div className="catalogue-card-heading"><h3>{`Three Stage Plus ${variant}`}</h3></div>
+                {variant === 1 && <ol className="mt-3 list-decimal space-y-1 ps-5">
+                  <li><bdi>{'Sediment MX D-105 · 5 µm'}</bdi></li>
+                  <li><bdi>{'Sediment MX D-100 · 1 µm'}</bdi></li>
+                  <li><bdi>{'Pure Aqua D-250'}</bdi> · {t('Activated carbon block filter')} · <bdi>{`${number.format(0.01)}–${number.format(0.1)} µm`}</bdi> · {t('{value} L/min', { value: number.format(4) })} · {t('Recommended replacement: 12 months or {capacity}', { capacity: t('{value} L', { value: number.format(40000) }) })}</li>
+                </ol>}
+                {variant === 1 && <figure className="mt-3 flex items-center gap-3">
+                  <img className="size-20 shrink-0 rounded-lg object-contain" src="/images/water-leak-detector.svg" alt="" width={320} height={320} loading="lazy"/>
+                  <figcaption className="text-sm font-medium">{t('Installation includes a leak detector with water shut-off.')}</figcaption>
+                </figure>}
+              </div>
+            </article>
+          ))}
+        </div>
       </section>
       <section className="catalogue-help" id="catalogue-help"><div><p className="eyebrow">{t('COMMERCIAL CAPABILITY. THE RIGHT HOME FIT.')}</p><h2>{t('Your water. Your home.')}<br/><em>{t('Your system.')}</em></h2><p>{t('Tell us about your water, available space and current setup. We’ll translate the commercial specifications into a clear residential recommendation.')}</p><button className="button white" onClick={() => enquire(t('choosing a commercial-grade water filter for my home'))}><MessageCircle size={20}/>{t('Match my home')}<ArrowUpRight size={18}/></button></div><div className="catalogue-range-guide">{ranges.map(range => <div key={range.name}><span>{range.name}</span><p>{t(range.purpose)}</p></div>)}<p className="catalogue-fit-note">{t('We’ll confirm price, compatibility and fitting options before you decide.')}</p></div></section>
     </main>
