@@ -127,6 +127,9 @@ fx && <dl className="catalogue-detail-specs">
   const visible = filterProducts(filters);
   const cartridges = visible.filter(product => product.size !== null);
   const reverseOsmosisSystems = visible.filter(product => product.size === null);
+  const reverseOsmosisModel = t('Reverse osmosis system');
+  const showReverseOsmosisSystem = filters.range === 'all' && filters.size === 'all'
+    && [reverseOsmosisModel, 'Reverse osmosis system'].some(model => model.toLowerCase().includes(filters.query.trim().toLowerCase()));
   const active = filters.range !== 'all' || filters.size !== 'all' || filters.query !== '';
   return <>
     <ScrollEntrances/>
@@ -198,12 +201,23 @@ fx && <dl className="catalogue-detail-specs">
           ))}
         </div>
       </section>
-      {reverseOsmosisSystems.length > 0 && (
+      {(showReverseOsmosisSystem || reverseOsmosisSystems.length > 0) && (
         <section className="catalogue-browser" id="reverse-osmosis" aria-labelledby="reverse-osmosis-title">
           <div className="catalogue-browser-heading">
             <h2 id="reverse-osmosis-title">{t('Reverse osmosis water filters')}</h2>
           </div>
-          <div className="catalogue-grid">{reverseOsmosisSystems.map(renderProductCard)}</div>
+          {showReverseOsmosisSystem && <article className="catalogue-card mb-6">
+            <div className="bg-white p-3 sm:p-5">
+              <img className="mx-auto block h-auto w-full max-w-lg" src="/images/reverse-osmosis-system.webp" alt={reverseOsmosisModel} width={768} height={1024} loading="lazy"/>
+            </div>
+            <div className="catalogue-card-copy">
+              <div className="catalogue-card-heading"><h3>{reverseOsmosisModel}</h3></div>
+              <p className="text-lg font-semibold">{t('{price} with installation', { price: euro.format(380) })}</p>
+              <p className="text-sm font-medium">{t('Annual maintenance {price}', { price: euro.format(100) })}</p>
+              <ProductEnquiry model={reverseOsmosisModel} onEnquire={enquire}/>
+            </div>
+          </article>}
+          {reverseOsmosisSystems.length > 0 && <div className="catalogue-grid">{reverseOsmosisSystems.map(renderProductCard)}</div>}
         </section>
       )}
       <section className="catalogue-help" id="catalogue-help"><div><p className="eyebrow">{t('COMMERCIAL CAPABILITY. THE RIGHT HOME FIT.')}</p><h2>{t('Your water. Your home.')}<br/><em>{t('Your system.')}</em></h2><p>{t('Tell us about your water, available space and current setup. We’ll translate the commercial specifications into a clear residential recommendation.')}</p><button className="button white" onClick={() => enquire(t('choosing a commercial-grade water filter for my home'))}><MessageCircle size={20}/>{t('Match my home')}<ArrowUpRight size={18}/></button></div><div className="catalogue-range-guide">{ranges.map(range => <div key={range.name}><span>{range.name}</span><p>{t(range.purpose)}</p></div>)}<p className="catalogue-fit-note">{t('We’ll confirm price, compatibility and fitting options before you decide.')}</p></div></section>
