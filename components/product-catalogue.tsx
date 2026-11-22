@@ -113,8 +113,16 @@ fx && <dl className="catalogue-detail-specs">
   }
 
   function renderProductCard(product: Product, index: number) {
+    const installationPhoto = product.model === 'FX-10' ? 'fx-10-installation.webp'
+      : product.model === 'HF2-10' ? 'hf2-10-installation.webp' : null;
     return <article className="catalogue-card" key={product.model}>
             <button className="catalogue-visual-button" onClick={() => setDetail(product)} aria-label={t('View details for {model}', { model: product.model })}><ProductVisual product={product} eager={index < 3}/></button>
+            {installationPhoto && <img
+              className="block aspect-[3/4] w-full bg-white object-contain"
+              src={`/images/${installationPhoto}`}
+              alt={t('{model} installation under the sink', { model: product.model })}
+              loading="lazy"
+            />}
             <div className="catalogue-card-copy"><div className="catalogue-card-heading"><h3>{product.size === null ? t(product.model) : product.model}</h3><button onClick={() => setDetail(product)} aria-label={t('View details for {model}', { model: product.model })}><ArrowUpRight size={19}/></button></div><p className="catalogue-card-purpose">{t(product.purpose)}</p><div className="catalogue-card-spec"><Droplets size={15}/><span>{t(product.detail)}</span></div><button className="catalogue-details-link" onClick={() => setDetail(product)}>{t('View details')}<ArrowRight size={15}/></button>{product.size === null && <>
             {renderPlatinumStages('h4')}
             <dl className="catalogue-detail-specs">
