@@ -91,10 +91,15 @@ fx && <dl className="catalogue-detail-specs">
       </>}
     </dl>;
   }
+  const platinumCapacity = t('{gpd} (up to {litres} L/day)', {
+    gpd: platinumWasser.capacity,
+    litres: number.format(platinumWasser.litresPerDay),
+  });
   function renderProductCard(product: Product, index: number) {
     return <article className="catalogue-card" key={product.model}>
             <button className="catalogue-visual-button" onClick={() => setDetail(product)} aria-label={t('View details for {model}', { model: product.model })}><ProductVisual product={product} eager={index < 3}/></button>
             <div className="catalogue-card-copy"><div className="catalogue-card-heading"><h3>{product.size === null ? t(product.model) : product.model}</h3><button onClick={() => setDetail(product)} aria-label={t('View details for {model}', { model: product.model })}><ArrowUpRight size={19}/></button></div><p className="catalogue-card-purpose">{t(product.purpose)}</p><div className="catalogue-card-spec"><Droplets size={15}/><span>{t(product.detail)}</span></div><button className="catalogue-details-link" onClick={() => setDetail(product)}>{t('View details')}<ArrowRight size={15}/></button>{product.size === null && <dl className="catalogue-detail-specs">
+              <div><dt>{t('Rated daily production')}</dt><dd><bdi>{platinumCapacity}</bdi></dd></div>
               <div><dt>{t('Model code')}</dt><dd><bdi>{product.modelCode}</bdi></dd></div>
               <div><dt>{t('Sediment prefilters')}</dt><dd><bdi>{'5 µm + 1 µm'}</bdi></dd></div>
               <div><dt>{t('Post-filtration')}</dt><dd>{t('Activated carbon and remineralisation')}</dd></div>
@@ -199,9 +204,15 @@ fx && <dl className="catalogue-detail-specs">
           <p className="catalogue-detail-note"><a href="https://kr.fluux.co.kr/92">{t('Microfilter FLUUX specifications')}</a></p>
         </>}
         {detail === platinumWasser ? <>
+          <dl className="catalogue-detail-specs">
+            <div><dt>{t('Rated daily production')}</dt><dd><bdi>{platinumCapacity}</bdi></dd></div>
+            {platinumWasser.specifications.map(spec => (
+              <div key={spec.label}><dt>{t(spec.label)}</dt><dd><bdi>{spec.value}</bdi></dd></div>
+            ))}
+          </dl>
           <section aria-label={t('Six filtration stages')} className="catalogue-filtration-stages">
             <h3>{t('Six filtration stages')}</h3>
-            <ol>{platinumWasser.stages.map(stage => <li key={stage.label}><strong>{t(stage.label)}{stage.rating && <> · <bdi>{stage.rating}</bdi></>}</strong><p>{t(stage.description)}</p></li>)}</ol>
+            <ol>{platinumWasser.stages.map(stage => <li key={stage.label}><strong>{t(stage.label)}{stage.rating && <> · <bdi>{stage.rating}</bdi></>}{stage.label === 'ECO reverse osmosis membrane' && <> · <bdi>{platinumWasser.capacity}</bdi></>}</strong><p>{t(stage.description)}</p></li>)}</ol>
           </section>
           <dl className="catalogue-detail-specs"><div><dt>{t('Installation')}</dt><dd>{t('Uses a separate storage tank and drinking-water tap. Requires a cold-water feed, drain connection and power outlet.')}</dd></div></dl>
           <p className="catalogue-detail-note"><a href={platinumWasser.specificationsUrl}>{t('Platinum Wasser product specifications')}</a></p>
