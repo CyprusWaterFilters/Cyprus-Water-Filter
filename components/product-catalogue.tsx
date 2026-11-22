@@ -136,6 +136,9 @@ fx && <dl className="catalogue-detail-specs">
   const ux6Model = 'Pure Water Filters UX6 600G';
   const showUx6 = filters.range === 'all' && filters.size === 'all'
     && [ux6Model, '520696401707'].some(term => term.toLowerCase().includes(filters.query.trim().toLowerCase()));
+  const crossModel = 'Ecosoft CROSS 90';
+  const showCross = filters.range === 'all' && filters.size === 'all'
+    && [crossModel, 'CROSS90', 'MO3600PECO'].some(term => term.toLowerCase().includes(filters.query.trim().toLowerCase()));
   const active = filters.range !== 'all' || filters.size !== 'all' || filters.query !== '';
   return <>
     <ScrollEntrances/>
@@ -207,7 +210,7 @@ fx && <dl className="catalogue-detail-specs">
           ))}
         </div>
       </section>
-      {(showReverseOsmosisSystem || showEcosoft || showUx6 || reverseOsmosisSystems.length > 0) && (
+      {(showReverseOsmosisSystem || showEcosoft || showUx6 || showCross || reverseOsmosisSystems.length > 0) && (
         <section className="catalogue-browser" id="reverse-osmosis" aria-labelledby="reverse-osmosis-title">
           <div className="catalogue-browser-heading">
             <h2 id="reverse-osmosis-title">{t('Reverse osmosis water filters')}</h2>
@@ -277,6 +280,25 @@ fx && <dl className="catalogue-detail-specs">
                 <div><dt>{t('Dimensions')}</dt><dd><bdi>{t('13 × 39.7 × 37.6 cm')}</bdi></dd></div>
               </dl>
               <ProductEnquiry model={ux6Model} onEnquire={enquire}/>
+            </div>
+          </article>}
+          {showCross && <article className="catalogue-card mt-6" id="ecosoft-cross-90">
+            <div className="bg-white p-3 sm:p-5">
+              <img className="mx-auto block h-auto w-full max-w-lg" src="/images/ecosoft-cross-90.webp" alt={crossModel} width={850} height={850} loading="lazy"/>
+            </div>
+            <div className="catalogue-card-copy">
+              <div className="catalogue-card-heading"><h3>{crossModel}</h3></div>
+              <p className="catalogue-card-purpose">{t('Tankless under-sink reverse osmosis with direct flow')}</p>
+              <ul className="list-disc space-y-1 ps-5 text-sm">
+                <li>{t('Maximum flow of 90 litres per hour (1.5 litres per minute)')}</li>
+                <li>{t('Three-stage filtration with a sediment and carbon prefilter, a 600 GPD reverse osmosis membrane and a carbon postfilter')}</li>
+                <li>{t('Built-in pump and automatic membrane flushing')}</li>
+                <li>{t('Smart tap, water quality and filter replacement indicators, and leak protection')}</li>
+              </ul>
+              <dl className="catalogue-detail-specs">
+                <div><dt>{t('Model code')}</dt><dd><bdi>MO3600PECO</bdi></dd></div>
+              </dl>
+              <ProductEnquiry model={crossModel} onEnquire={enquire}/>
             </div>
           </article>}
         </section>
