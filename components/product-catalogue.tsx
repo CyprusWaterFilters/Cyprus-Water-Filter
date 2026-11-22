@@ -18,6 +18,40 @@ const threeStagePlusVariants = [
   { variant: 2, model: 'D-230', price: 190, maintenance: 80, minMicrons: 1, maxMicrons: 1, photo: 'three-stage-plus-d230-cartridges.svg' },
 ];
 
+const krausenSystems = [
+  {
+    id: 'krausen-pro-800',
+    model: 'Krausen Pro Series 800 GPD · 10″ Big Blue',
+    terms: '800 GPD Big Blue 800G-3213',
+    flow: '1.6–2.1 L/min',
+    membranes: '1 × 800 GPD (800G-3213)',
+    dimensions: '450 × 200 × 600 mm',
+    stages: [
+      '10″ Big Blue sediment filter, 5 μm',
+      '10″ Big Blue coconut carbon block, 10 μm',
+      'Reverse osmosis membrane',
+      'Coconut-shell activated carbon postfilter',
+    ],
+    source: 'https://www.neowater.com.cy/product-page/krausen-pro-series-800gpd-10-big-blue-r-o-water-system',
+  },
+  {
+    id: 'krausen-new-line',
+    model: 'Krausen New Line 800 / 1600 GPD',
+    terms: '800 GPD 1600 GPD 3113-800-S',
+    flow: '800 GPD ≈ 2 L/min · 1600 GPD ≈ 4 L/min',
+    membranes: '1 × 800 GPD / 2 × 800 GPD (KRAUSEN-3113-800-S)',
+    dimensions: null,
+    stages: [
+      '10″ polypropylene sediment filter, 5 μm',
+      '10″ polypropylene sediment filter, 1 μm',
+      '10″ activated carbon prefilter',
+      'Reverse osmosis membrane',
+      'Activated carbon postfilter',
+    ],
+    source: 'https://www.neowater.com.cy/product-page/krausen-800-1600-gpd-direct-flow-water-system-smart-controller-leak-detector',
+  },
+];
+
 function ProductVisual({ product, eager = false }: { product: Product; eager?: boolean }) {
   const { t } = useLanguage();
   if (product.size === null) return <div className="catalogue-visual platinum-wasser">
@@ -148,6 +182,14 @@ fx && <dl className="catalogue-detail-specs">
   const crossCode = 'MO3600PECO';
   const showCross = filters.range === 'all' && filters.size === 'all'
     && [crossModel, 'CROSS90', crossCode].some(term => term.toLowerCase().includes(filters.query.trim().toLowerCase()));
+  const searchTerm = filters.query.trim().toLowerCase().replace(/[\s-]/g, '');
+  const visibleKrausen = filters.range === 'all' && filters.size === 'all'
+    ? krausenSystems.filter(({ model, terms }) => `${model} ${terms}`.toLowerCase().replace(/[\s-]/g, '').includes(searchTerm))
+    : [];
+  const otherOsmosisCards = [showReverseOsmosisSystem, showEcosoft, showUx6, showCross];
+  const visibleCount = visible.length + visibleKrausen.length + otherOsmosisCards.filter(Boolean).length;
+  const totalCount = products.length + krausenSystems.length + otherOsmosisCards.length;
+  const hasOtherOsmosis = otherOsmosisCards.some(Boolean);
   const active = filters.range !== 'all' || filters.size !== 'all' || filters.query !== '';
   return <>
     <ScrollEntrances/>
@@ -164,11 +206,11 @@ fx && <dl className="catalogue-detail-specs">
         <div className="catalogue-browser-heading"><div><p className="eyebrow">{t('COMMERCIAL SYSTEMS FOR THE HOME')}</p><h2 id="browse-title">{t('Choose your')} <em>{t('system.')}</em></h2></div><a href="#catalogue-help">{t('Need help matching your home?')}<ArrowUpRight size={17}/></a></div>
         <div className="catalogue-controls">
           <fieldset className="catalogue-range-controls"><legend>{t('Filter ranges')}</legend><div>
-            <button aria-pressed={filters.range === 'all'} onClick={() => updateFilters({ ...filters, range: 'all' })}>{t('All filters')}<span>{products.length}</span></button>
+            <button aria-pressed={filters.range === 'all'} onClick={() => updateFilters({ ...filters, range: 'all' })}>{t('All filters')}<span>{totalCount}</span></button>
             {catalogueRanges.map(range => <button key={range} aria-pressed={filters.range === range} onClick={() => updateFilters({ ...filters, range, size: isStandaloneRange(range) ? 'all' : filters.size })}>{t(range)}<span>{products.filter(product => product.name === range).length}</span></button>)}
           </div></fieldset>
           <label className="catalogue-search"><Search size={18} aria-hidden="true"/><span className="sr-only">{t('Search by model')}</span><input type="search" maxLength={80} value={filters.query} placeholder={t('Search by model')} onChange={event => updateFilters({ ...filters, query: event.target.value })}/>{filters.query && <button aria-label={t('Clear search')} onClick={() => updateFilters({ ...filters, query: '' })}><X size={16}/></button>}</label>
-          <div className="catalogue-size-row"><fieldset className="catalogue-size-controls" disabled={isStandaloneRange(filters.range)}><legend><SlidersHorizontal size={16} aria-hidden="true"/>{t('Cartridge size')}</legend><div><button aria-pressed={filters.size === 'all'} onClick={() => updateFilters({ ...filters, size: 'all' })}>{t('All sizes')}</button>{sizes.map(size => <button key={size} aria-pressed={filters.size === String(size)} onClick={() => updateFilters({ ...filters, size: String(size) })}>{size}″</button>)}</div></fieldset><p role="status" aria-live="polite">{t('Showing {count} of {total} filters', { count: visible.length, total: products.length })}</p>{active && <button className="catalogue-reset" onClick={() => updateFilters(defaultFilters)}>{t('Reset filters')}<X size={14}/></button>}</div>
+          <div className="catalogue-size-row"><fieldset className="catalogue-size-controls" disabled={isStandaloneRange(filters.range)}><legend><SlidersHorizontal size={16} aria-hidden="true"/>{t('Cartridge size')}</legend><div><button aria-pressed={filters.size === 'all'} onClick={() => updateFilters({ ...filters, size: 'all' })}>{t('All sizes')}</button>{sizes.map(size => <button key={size} aria-pressed={filters.size === String(size)} onClick={() => updateFilters({ ...filters, size: String(size) })}>{size}″</button>)}</div></fieldset><p role="status" aria-live="polite">{t('Showing {count} of {total} filters', { count: visibleCount, total: totalCount })}</p>{active && <button className="catalogue-reset" onClick={() => updateFilters(defaultFilters)}>{t('Reset filters')}<X size={14}/></button>}</div>
         </div>
         {visible.some(product => product.name === 'HF2-S') && (filters.range === 'HF2-S' || visible.every(product => product.name === 'HF2-S')) &&
           <section className="catalogue-hf2s-applications" aria-labelledby="hf2s-title">
@@ -181,7 +223,7 @@ fx && <dl className="catalogue-detail-specs">
           </section>
         }
         {cartridges.length > 0 && <div className="catalogue-grid">{cartridges.map(renderProductCard)}</div>}
-        {visible.length === 0 && <div className="catalogue-empty"><Search size={28}/><h3>{t('No filters found')}</h3><p>{t('Try another model or clear your filters to see the full collection.')}</p><button className="button primary" onClick={() => updateFilters(defaultFilters)}>{t('View all filters')}<ArrowRight size={18}/></button></div>}
+        {visibleCount === 0 && <div className="catalogue-empty"><Search size={28}/><h3>{t('No filters found')}</h3><p>{t('Try another model or clear your filters to see the full collection.')}</p><button className="button primary" onClick={() => updateFilters(defaultFilters)}>{t('View all filters')}<ArrowRight size={18}/></button></div>}
       </section>
       <section className="catalogue-browser" id="three-stage-plus" aria-labelledby="three-stage-plus-title">
         <div className="catalogue-browser-heading">
@@ -219,7 +261,7 @@ fx && <dl className="catalogue-detail-specs">
           ))}
         </div>
       </section>
-      {(showReverseOsmosisSystem || showEcosoft || showUx6 || showCross || reverseOsmosisSystems.length > 0) && (
+      {(hasOtherOsmosis || reverseOsmosisSystems.length > 0 || visibleKrausen.length > 0) && (
         <section className="catalogue-browser" id="reverse-osmosis" aria-labelledby="reverse-osmosis-title">
           <div className="catalogue-browser-heading">
             <h2 id="reverse-osmosis-title">{t('Reverse osmosis water filters')}</h2>
@@ -310,6 +352,38 @@ fx && <dl className="catalogue-detail-specs">
               <ProductEnquiry model={crossModel} onEnquire={enquire}/>
             </div>
           </article>}
+          {visibleKrausen.length > 0 && (
+            <section className="mt-10" id="commercial-reverse-osmosis" aria-labelledby="commercial-ro-title">
+              <h3 id="commercial-ro-title" className="text-2xl font-semibold">{t('Commercial reverse osmosis systems')}</h3>
+              <figure className="mt-4 overflow-hidden rounded-2xl bg-white">
+                <img className="block h-auto w-full" src="/images/commercial-coffee-and-ice.webp" alt={t('Commercial espresso machine and ice maker in a coffee shop')} width={1200} height={600} loading="lazy"/>
+                <figcaption className="px-4 py-3">{t('For coffee shops, espresso machines and ice makers.')}</figcaption>
+              </figure>
+              {visibleKrausen.map(system => (
+                <article className="catalogue-card mt-6" id={system.id} key={system.id}>
+                  <div className="bg-white p-3 sm:p-5">
+                    <img className="mx-auto block h-auto w-full max-w-lg" src={`/images/${system.id}.webp`} alt={system.model} width={1080} height={759} loading="lazy"/>
+                  </div>
+                  <div className="catalogue-card-copy">
+                    <div className="catalogue-card-heading"><h4 className="text-2xl font-semibold"><bdi>{system.model}</bdi></h4></div>
+                    <p className="catalogue-card-purpose">{t('Direct-flow reverse osmosis with booster pump and no storage tank')}</p>
+                    <dl className="catalogue-detail-specs">
+                      <div><dt>{t('Filtered water flow')}</dt><dd><bdi>{system.flow}</bdi></dd></div>
+                      <div><dt>{t('Reverse osmosis membrane')}</dt><dd><bdi>{system.membranes}</bdi></dd></div>
+                      {system.dimensions && <div><dt>{t('Dimensions')}</dt><dd><bdi>{system.dimensions}</bdi></dd></div>}
+                    </dl>
+                    <p className="font-semibold">{t('Filtration stages')} · {system.stages.length}</p>
+                    <ol className="list-decimal space-y-1 ps-5 text-sm">
+                      {system.stages.map(stage => <li key={stage}>{t(stage)}</li>)}
+                    </ol>
+                    <p>{t('Smart controller with filter-change indicator, flow monitoring, automatic membrane flushing and leak detection.')}</p>
+                    <p className="catalogue-detail-note"><a href={system.source}>{t('NeoWater technical specifications')}</a></p>
+                    <ProductEnquiry model={system.model} onEnquire={enquire} commercial/>
+                  </div>
+                </article>
+              ))}
+            </section>
+          )}
         </section>
       )}
       <section className="catalogue-help" id="catalogue-help"><div><p className="eyebrow">{t('COMMERCIAL CAPABILITY. THE RIGHT HOME FIT.')}</p><h2>{t('Your water. Your home.')}<br/><em>{t('Your system.')}</em></h2><p>{t('Tell us about your water, available space and current setup. We’ll translate the commercial specifications into a clear residential recommendation.')}</p><button className="button white" onClick={() => enquire(t('choosing a commercial-grade water filter for my home'))}><MessageCircle size={20}/>{t('Match my home')}<ArrowUpRight size={18}/></button></div><div className="catalogue-range-guide">{ranges.map(range => <div key={range.name}><span>{range.name}</span><p>{t(range.purpose)}</p></div>)}<p className="catalogue-fit-note">{t('We’ll confirm price, compatibility and fitting options before you decide.')}</p></div></section>
