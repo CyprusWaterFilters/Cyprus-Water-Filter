@@ -137,8 +137,9 @@ fx && <dl className="catalogue-detail-specs">
   const showUx6 = filters.range === 'all' && filters.size === 'all'
     && [ux6Model, '520696401707'].some(term => term.toLowerCase().includes(filters.query.trim().toLowerCase()));
   const crossModel = 'Ecosoft CROSS 90';
+  const crossCode = 'MO3600PECO';
   const showCross = filters.range === 'all' && filters.size === 'all'
-    && [crossModel, 'CROSS90', 'MO3600PECO'].some(term => term.toLowerCase().includes(filters.query.trim().toLowerCase()));
+    && [crossModel, 'CROSS90', crossCode].some(term => term.toLowerCase().includes(filters.query.trim().toLowerCase()));
   const active = filters.range !== 'all' || filters.size !== 'all' || filters.query !== '';
   return <>
     <ScrollEntrances/>
@@ -296,7 +297,7 @@ fx && <dl className="catalogue-detail-specs">
                 <li>{t('Smart tap, water quality and filter replacement indicators, and leak protection')}</li>
               </ul>
               <dl className="catalogue-detail-specs">
-                <div><dt>{t('Model code')}</dt><dd><bdi>MO3600PECO</bdi></dd></div>
+                <div><dt>{t('Model code')}</dt><dd><bdi>{crossCode}</bdi></dd></div>
               </dl>
               <ProductEnquiry model={crossModel} onEnquire={enquire}/>
             </div>
