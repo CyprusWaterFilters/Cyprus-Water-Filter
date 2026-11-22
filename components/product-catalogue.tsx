@@ -206,7 +206,8 @@ fx && <dl className="catalogue-detail-specs">
           <div className="catalogue-browser-heading">
             <h2 id="reverse-osmosis-title">{t('Reverse osmosis water filters')}</h2>
           </div>
-          {showReverseOsmosisSystem && <article className="catalogue-card mb-6">
+          {reverseOsmosisSystems.length > 0 && <div className="catalogue-grid">{reverseOsmosisSystems.map(renderProductCard)}</div>}
+          {showReverseOsmosisSystem && <article className="catalogue-card mt-6">
             <div className="bg-white p-3 sm:p-5">
               <img className="mx-auto block h-auto w-full max-w-lg" src="/images/reverse-osmosis-system.webp" alt={reverseOsmosisModel} width={768} height={1024} loading="lazy"/>
             </div>
@@ -217,7 +218,6 @@ fx && <dl className="catalogue-detail-specs">
               <ProductEnquiry model={reverseOsmosisModel} onEnquire={enquire}/>
             </div>
           </article>}
-          {reverseOsmosisSystems.length > 0 && <div className="catalogue-grid">{reverseOsmosisSystems.map(renderProductCard)}</div>}
         </section>
       )}
       <section className="catalogue-help" id="catalogue-help"><div><p className="eyebrow">{t('COMMERCIAL CAPABILITY. THE RIGHT HOME FIT.')}</p><h2>{t('Your water. Your home.')}<br/><em>{t('Your system.')}</em></h2><p>{t('Tell us about your water, available space and current setup. We’ll translate the commercial specifications into a clear residential recommendation.')}</p><button className="button white" onClick={() => enquire(t('choosing a commercial-grade water filter for my home'))}><MessageCircle size={20}/>{t('Match my home')}<ArrowUpRight size={18}/></button></div><div className="catalogue-range-guide">{ranges.map(range => <div key={range.name}><span>{range.name}</span><p>{t(range.purpose)}</p></div>)}<p className="catalogue-fit-note">{t('We’ll confirm price, compatibility and fitting options before you decide.')}</p></div></section>
