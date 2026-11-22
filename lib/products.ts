@@ -31,6 +31,7 @@ export const hf2sSpecifications: typeof hf2Specifications = {
   17: { capacity: 79494, flow: 6.4, cartridge: 'HF2-17SR' },
 };
 export const sizes = [10, 15, 17];
+const platinumMembraneCapacity = '75 GPD';
 export const platinumWasser = {
   name: 'Platinum Wasser',
   model: 'Platinum Wasser Ultra 6 Booster',
@@ -39,7 +40,7 @@ export const platinumWasser = {
   image: '/images/platinum-wasser.webp',
   modelCode: 'PLAT-F-ULTRA6B',
   specificationsUrl: 'https://www.platinumwasser.de/en/products/140-ultra6-booster-4260582019029.html',
-  capacity: '75 GPD',
+  capacity: platinumMembraneCapacity,
   litresPerDay: 284,
   specifications: [
     { label: 'Membrane salt rejection', value: '95%' },
@@ -55,9 +56,9 @@ export const platinumWasser = {
     { label: '10-inch polypropylene sediment prefilter', rating: '5 µm', description: 'Traps larger suspended particles such as sand, rust and sediment.' },
     { label: 'Activated carbon block prefilter', rating: '10″', description: 'Reduces chlorine and some organic compounds before the water reaches the membrane.' },
     { label: '10-inch fine polypropylene sediment prefilter', rating: '1 µm', description: 'Captures finer suspended particles before reverse osmosis.' },
-    { label: 'ECO reverse osmosis membrane', description: 'Reduces dissolved salts and other dissolved substances in the water.' },
-    { label: 'Granular activated carbon post-filter', description: 'Improves the taste and odour of the filtered water.' },
-    { label: 'Dolomite mineral post-filter', description: 'Adds minerals back to the water after reverse osmosis.' },
+    { label: 'ECO reverse osmosis membrane', rating: platinumMembraneCapacity, description: 'Reduces dissolved salts and other dissolved substances in the water.' },
+    { label: 'Granular activated carbon post-filter', description: 'Improves the taste and odour of the water before it reaches the drinking-water tap.' },
+    { label: 'Dolomite mineral post-filter', description: 'Adds minerals back to the filtered water to improve its taste.' },
   ],
   description: 'An under-sink reverse osmosis system with an electric booster pump that raises the pressure supplied to the membrane when the incoming water pressure is low.',
   detail: 'Six-stage reverse osmosis with electric booster pump',
