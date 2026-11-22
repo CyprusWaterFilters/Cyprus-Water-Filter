@@ -130,6 +130,9 @@ fx && <dl className="catalogue-detail-specs">
   const reverseOsmosisModel = t('Reverse osmosis system');
   const showReverseOsmosisSystem = filters.range === 'all' && filters.size === 'all'
     && [reverseOsmosisModel, 'Reverse osmosis system'].some(model => model.toLowerCase().includes(filters.query.trim().toLowerCase()));
+  const ecosoftModel = 'Ecosoft Standard Pro';
+  const showEcosoft = filters.range === 'all' && filters.size === 'all'
+    && ecosoftModel.toLowerCase().includes(filters.query.trim().toLowerCase());
   const active = filters.range !== 'all' || filters.size !== 'all' || filters.query !== '';
   return <>
     <ScrollEntrances/>
@@ -201,7 +204,7 @@ fx && <dl className="catalogue-detail-specs">
           ))}
         </div>
       </section>
-      {(showReverseOsmosisSystem || reverseOsmosisSystems.length > 0) && (
+      {(showReverseOsmosisSystem || showEcosoft || reverseOsmosisSystems.length > 0) && (
         <section className="catalogue-browser" id="reverse-osmosis" aria-labelledby="reverse-osmosis-title">
           <div className="catalogue-browser-heading">
             <h2 id="reverse-osmosis-title">{t('Reverse osmosis water filters')}</h2>
@@ -229,6 +232,26 @@ fx && <dl className="catalogue-detail-specs">
                 <li>{t('Complete installation kit with tap')}</li>
               </ul>
               <ProductEnquiry model={reverseOsmosisModel} onEnquire={enquire}/>
+            </div>
+          </article>}
+          {showEcosoft && <article className="catalogue-card mt-6" id="ecosoft-standard-pro">
+            <div className="bg-white p-3 sm:p-5">
+              <img className="mx-auto block h-auto w-full max-w-lg" src="/images/ecosoft-standard-pro.webp" alt={ecosoftModel} width={1000} height={1000} loading="lazy"/>
+            </div>
+            <div className="catalogue-card-copy">
+              <div className="catalogue-card-heading"><h3>{ecosoftModel}</h3></div>
+              <p className="text-lg font-semibold">{t('{price} with installation', { price: euro.format(490) })}</p>
+              <p className="text-sm font-medium">{t('Annual maintenance {price}', { price: euro.format(100) })}</p>
+              <p className="catalogue-card-purpose">{t('Six-stage reverse osmosis system with pump and remineralisation filter')}</p>
+              <ol className="list-decimal space-y-1 ps-5 text-sm">
+                <li>{t('Polypropylene sediment prefilter, 5 µm')}</li>
+                <li>{t('Granular coconut-shell activated carbon prefilter')}</li>
+                <li>{t('Polypropylene sediment prefilter, 1 µm')}</li>
+                <li>{t('Reverse osmosis membrane')}</li>
+                <li>{t('Coconut-shell activated carbon postfilter')}</li>
+                <li>{t('Remineralisation filter')}</li>
+              </ol>
+              <ProductEnquiry model={ecosoftModel} onEnquire={enquire}/>
             </div>
           </article>}
         </section>
