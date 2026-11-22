@@ -21,8 +21,8 @@ const threeStagePlusVariants = [
 function ProductVisual({ product, eager = false }: { product: Product; eager?: boolean }) {
   const { t } = useLanguage();
   if (product.size === null) return <div className="catalogue-visual platinum-wasser">
+    <span className="catalogue-origin-label" lang="en" dir="ltr">{'Made in Germany'}</span>
     <img src={product.image} alt={t(product.model)} width={1121} height={1403} loading={eager ? 'eager' : 'lazy'}/>
-    <span className="catalogue-range-tag" lang="en" dir="ltr">{'Made in Germany'}</span>
   </div>;
   return <div className={`catalogue-visual ${product.tone}`}>
     <span className="catalogue-range-tag">{product.name}</span><span className="catalogue-size-tag">{product.size}″</span>

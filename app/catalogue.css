@@ -136,8 +136,27 @@
   .catalogue-grid .filter-whatsapp-arrow, .catalogue-grid .filter-whatsapp-note { display: none; }
 }
 
-.catalogue-visual.platinum-wasser { background: #fff; }
-.catalogue-visual.platinum-wasser img { object-fit: contain; padding: 1rem; }
+.catalogue-visual.platinum-wasser {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  background: #fff;
+}
+.catalogue-origin-label {
+  justify-self: center;
+  margin: .625rem .375rem 0;
+  padding: .25rem .625rem;
+  border-radius: .375rem;
+  background: #edf4f7;
+  color: #173a4d;
+  font-size: clamp(.6875rem, 2.5vw, .875rem);
+  font-weight: 650;
+  text-align: center;
+}
+.catalogue-visual.platinum-wasser img {
+  min-height: 0;
+  object-fit: contain;
+  padding: .375rem 1rem 1rem;
+}
 
 .catalogue-filtration-stages h3 { font-weight: 650; }
 .catalogue-filtration-stages ol { list-style: decimal; padding-inline-start: 1.5rem; margin-block: .75rem; }
