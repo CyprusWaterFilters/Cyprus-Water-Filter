@@ -243,6 +243,14 @@ fx && <dl className="catalogue-detail-specs">
               <p className="text-lg font-semibold">{t('{price} with installation', { price: euro.format(490) })}</p>
               <p className="text-sm font-medium">{t('Annual maintenance {price}', { price: euro.format(100) })}</p>
               <p className="catalogue-card-purpose">{t('Six-stage reverse osmosis system with pump and remineralisation filter')}</p>
+              <ol className="list-decimal space-y-1 ps-5 text-sm">
+                <li>{t('Polypropylene sediment prefilter, 5 µm')}</li>
+                <li>{t('Granular coconut-shell activated carbon prefilter')}</li>
+                <li>{t('Polypropylene sediment prefilter, 1 µm')}</li>
+                <li>{t('Reverse osmosis membrane')}</li>
+                <li>{t('Coconut-shell activated carbon postfilter')}</li>
+                <li>{t('Remineralisation filter')}</li>
+              </ol>
               <ProductEnquiry model={ecosoftModel} onEnquire={enquire}/>
             </div>
           </article>}
