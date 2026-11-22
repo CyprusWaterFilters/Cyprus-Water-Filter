@@ -133,6 +133,9 @@ fx && <dl className="catalogue-detail-specs">
   const ecosoftModel = 'Ecosoft Standard Pro';
   const showEcosoft = filters.range === 'all' && filters.size === 'all'
     && ecosoftModel.toLowerCase().includes(filters.query.trim().toLowerCase());
+  const ux6Model = 'Pure Water Filters UX6 600G';
+  const showUx6 = filters.range === 'all' && filters.size === 'all'
+    && [ux6Model, '520696401707'].some(term => term.toLowerCase().includes(filters.query.trim().toLowerCase()));
   const active = filters.range !== 'all' || filters.size !== 'all' || filters.query !== '';
   return <>
     <ScrollEntrances/>
@@ -204,7 +207,7 @@ fx && <dl className="catalogue-detail-specs">
           ))}
         </div>
       </section>
-      {(showReverseOsmosisSystem || showEcosoft || reverseOsmosisSystems.length > 0) && (
+      {(showReverseOsmosisSystem || showEcosoft || showUx6 || reverseOsmosisSystems.length > 0) && (
         <section className="catalogue-browser" id="reverse-osmosis" aria-labelledby="reverse-osmosis-title">
           <div className="catalogue-browser-heading">
             <h2 id="reverse-osmosis-title">{t('Reverse osmosis water filters')}</h2>
@@ -252,6 +255,27 @@ fx && <dl className="catalogue-detail-specs">
                 <li>{t('Remineralisation filter')}</li>
               </ol>
               <ProductEnquiry model={ecosoftModel} onEnquire={enquire}/>
+            </div>
+          </article>}
+          {showUx6 && <article className="catalogue-card mt-6" id="pure-ux6-600g">
+            <div className="bg-white p-3 sm:p-5">
+              <img className="mx-auto block h-auto w-full max-w-lg" src="/images/pure-ux6-600g.webp" alt={ux6Model} width={750} height={750} loading="lazy"/>
+            </div>
+            <div className="catalogue-card-copy">
+              <div className="catalogue-card-heading"><h3>{ux6Model}</h3></div>
+              <p className="catalogue-card-purpose">{t('Tankless under-sink reverse osmosis with direct flow')}</p>
+              <ul className="list-disc space-y-1 ps-5 text-sm">
+                <li>{t('Five-stage filtration with a 3-in-1 PCF filter and a 600 GPD reverse osmosis membrane')}</li>
+                <li>{t('Maximum flow of 90 litres per hour (1.5 litres per minute)')}</li>
+                <li>{t('1 litre of filtered water per 0.5 litre sent to the drain')}</li>
+                <li>{t('Built-in pump and automatic membrane flushing')}</li>
+                <li>{t('Complete installation kit with tap')}</li>
+              </ul>
+              <dl className="catalogue-detail-specs">
+                <div><dt>{t('Model code')}</dt><dd><bdi>520696401707</bdi></dd></div>
+                <div><dt>{t('Dimensions')}</dt><dd><bdi>{t('13 × 39.7 × 37.6 cm')}</bdi></dd></div>
+              </dl>
+              <ProductEnquiry model={ux6Model} onEnquire={enquire}/>
             </div>
           </article>}
         </section>
