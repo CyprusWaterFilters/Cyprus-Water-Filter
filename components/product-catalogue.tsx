@@ -20,7 +20,10 @@ const threeStagePlusVariants = [
 
 function ProductVisual({ product, eager = false }: { product: Product; eager?: boolean }) {
   const { t } = useLanguage();
-  if (product.size === null) return <div className="catalogue-visual platinum-wasser"><img src={product.image} alt={t(product.model)} width={1121} height={1403} loading={eager ? 'eager' : 'lazy'}/></div>;
+  if (product.size === null) return <div className="catalogue-visual platinum-wasser">
+    <img src={product.image} alt={t(product.model)} width={1121} height={1403} loading={eager ? 'eager' : 'lazy'}/>
+    <span className="catalogue-range-tag" lang="en" dir="ltr">{'Made in Germany'}</span>
+  </div>;
   return <div className={`catalogue-visual ${product.tone}`}>
     <span className="catalogue-range-tag">{product.name}</span><span className="catalogue-size-tag">{product.size}″</span>
     {productImage(product.name, product.size) ? <img src={productImage(product.name, product.size)} alt={t('FLUUX {model} water filter cartridge', { model: product.model })} width={1122} height={1402} loading={eager ? 'eager' : 'lazy'}/> : <div className="catalogue-type-product"><span>FLUUX</span><strong>{product.name}</strong><span>{product.size} {t('inches')}</span><p>{t(product.purpose)}</p></div>}
