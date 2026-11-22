@@ -209,12 +209,25 @@ fx && <dl className="catalogue-detail-specs">
           {reverseOsmosisSystems.length > 0 && <div className="catalogue-grid">{reverseOsmosisSystems.map(renderProductCard)}</div>}
           {showReverseOsmosisSystem && <article className="catalogue-card mt-6">
             <div className="bg-white p-3 sm:p-5">
-              <img className="mx-auto block h-auto w-full max-w-lg" src="/images/reverse-osmosis-system.webp" alt={reverseOsmosisModel} width={768} height={1024} loading="lazy"/>
+              <figure className="mx-auto max-w-lg">
+                <img className="block aspect-[768/880] w-full object-cover object-top" src="/images/reverse-osmosis-system.webp" alt={reverseOsmosisModel} width={768} height={880} loading="lazy"/>
+                <figcaption lang="el" dir="ltr" className="bg-[#0c203f] px-3 py-3 text-center text-base font-bold text-white sm:text-2xl">
+                  <span className="block">€380 με εγκατάσταση</span>
+                  <span className="block">€100 χρονιαία συντήρηση</span>
+                </figcaption>
+              </figure>
             </div>
             <div className="catalogue-card-copy">
               <div className="catalogue-card-heading"><h3>{reverseOsmosisModel}</h3></div>
               <p className="text-lg font-semibold">{t('{price} with installation', { price: euro.format(380) })}</p>
               <p className="text-sm font-medium">{t('Annual maintenance {price}', { price: euro.format(100) })}</p>
+              <p className="catalogue-card-purpose">{t('Five-stage reverse osmosis system with pump')}</p>
+              <ul className="list-disc space-y-1 ps-5 text-sm">
+                <li>{t('75 GPD membrane and 3.0 G storage tank')}</li>
+                <li>{t('Up to 60 L per day, with a 1:3 ratio of filtered water to reject water')}</li>
+                <li>{t('Built-in pressure gauge, solenoid valve and flow restrictor')}</li>
+                <li>{t('Complete installation kit with tap')}</li>
+              </ul>
               <ProductEnquiry model={reverseOsmosisModel} onEnquire={enquire}/>
             </div>
           </article>}
