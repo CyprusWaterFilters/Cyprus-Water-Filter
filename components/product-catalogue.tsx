@@ -20,7 +20,10 @@ const threeStagePlusVariants = [
 
 function ProductVisual({ product, eager = false }: { product: Product; eager?: boolean }) {
   const { t } = useLanguage();
-  if (product.size === null) return <div className="catalogue-visual platinum-wasser"><img src={product.image} alt={t(product.model)} width={1121} height={1403} loading={eager ? 'eager' : 'lazy'}/></div>;
+  if (product.size === null) return <div className="catalogue-visual platinum-wasser">
+    <span className="catalogue-origin-label" lang="en" dir="ltr">{'Made in Germany'}</span>
+    <img src={product.image} alt={t(product.model)} width={1121} height={1403} loading={eager ? 'eager' : 'lazy'}/>
+  </div>;
   return <div className={`catalogue-visual ${product.tone}`}>
     <span className="catalogue-range-tag">{product.name}</span><span className="catalogue-size-tag">{product.size}″</span>
     {productImage(product.name, product.size) ? <img src={productImage(product.name, product.size)} alt={t('FLUUX {model} water filter cartridge', { model: product.model })} width={1122} height={1402} loading={eager ? 'eager' : 'lazy'}/> : <div className="catalogue-type-product"><span>FLUUX</span><strong>{product.name}</strong><span>{product.size} {t('inches')}</span><p>{t(product.purpose)}</p></div>}
@@ -91,10 +94,34 @@ fx && <dl className="catalogue-detail-specs">
       </>}
     </dl>;
   }
+  const platinumCapacity = t('{gpd} (up to {litres} L/day)', {
+    gpd: platinumWasser.capacity,
+    litres: number.format(platinumWasser.litresPerDay),
+  });
+  function renderPlatinumStages(Heading: 'h3' | 'h4' = 'h3') {
+    return <section aria-label={t('Six filtration stages')} className="catalogue-filtration-stages">
+      <Heading className="font-semibold">{t('Six filtration stages')}</Heading>
+      <ol>
+        {platinumWasser.stages.map(stage => (
+          <li key={stage.label}>
+            <strong>{t(stage.label)}{stage.rating && <> · <bdi>{stage.rating}</bdi></>}</strong>
+            <p>{t(stage.description)}</p>
+          </li>
+        ))}
+      </ol>
+    </section>;
+  }
+
   function renderProductCard(product: Product, index: number) {
     return <article className="catalogue-card" key={product.model}>
             <button className="catalogue-visual-button" onClick={() => setDetail(product)} aria-label={t('View details for {model}', { model: product.model })}><ProductVisual product={product} eager={index < 3}/></button>
-            <div className="catalogue-card-copy"><div className="catalogue-card-heading"><h3>{product.size === null ? t(product.model) : product.model}</h3><button onClick={() => setDetail(product)} aria-label={t('View details for {model}', { model: product.model })}><ArrowUpRight size={19}/></button></div><p className="catalogue-card-purpose">{t(product.purpose)}</p><div className="catalogue-card-spec"><Droplets size={15}/><span>{t(product.detail)}</span></div><button className="catalogue-details-link" onClick={() => setDetail(product)}>{t('View details')}<ArrowRight size={15}/></button>{product.name === 'FX' && product.size !== null && renderFxSpecifications(fxSpecifications[product.size])}{product.name === 'HF2' && product.size !== null && renderHf2Specifications(product.size)}{product.name === 'HF2-S' && product.size !== null && renderHf2sSpecifications(product.size)}<ProductEnquiry model={product.model} onEnquire={enquire}/></div>
+            <div className="catalogue-card-copy"><div className="catalogue-card-heading"><h3>{product.size === null ? t(product.model) : product.model}</h3><button onClick={() => setDetail(product)} aria-label={t('View details for {model}', { model: product.model })}><ArrowUpRight size={19}/></button></div><p className="catalogue-card-purpose">{t(product.purpose)}</p><div className="catalogue-card-spec"><Droplets size={15}/><span>{t(product.detail)}</span></div><button className="catalogue-details-link" onClick={() => setDetail(product)}>{t('View details')}<ArrowRight size={15}/></button>{product.size === null && <>
+            {renderPlatinumStages('h4')}
+            <dl className="catalogue-detail-specs">
+              <div><dt>{t('Rated daily production')}</dt><dd><bdi>{platinumCapacity}</bdi></dd></div>
+              <div><dt>{t('Model code')}</dt><dd><bdi>{product.modelCode}</bdi></dd></div>
+              <div><dt>{t('Installation')}</dt><dd>{t('Uses a separate storage tank and drinking-water tap. Requires a cold-water feed, drain connection and power outlet.')}</dd></div>
+            </dl></>}{product.name === 'FX' && product.size !== null && renderFxSpecifications(fxSpecifications[product.size])}{product.name === 'HF2' && product.size !== null && renderHf2Specifications(product.size)}{product.name === 'HF2-S' && product.size !== null && renderHf2sSpecifications(product.size)}<ProductEnquiry model={product.model} onEnquire={enquire}/></div>
           </article>;
   }
   const visible = filterProducts(filters);
@@ -195,12 +222,15 @@ fx && <dl className="catalogue-detail-specs">
           <p className="catalogue-detail-note"><a href="https://kr.fluux.co.kr/92">{t('Microfilter FLUUX specifications')}</a></p>
         </>}
         {detail === platinumWasser ? <>
-          <section aria-label={t('Six filtration stages')} className="catalogue-filtration-stages">
-            <h3>{t('Six filtration stages')}</h3>
-            <ol>{platinumWasser.stages.map(stage => <li key={stage.label}><strong>{t(stage.label)}</strong><p>{t(stage.description)}</p></li>)}</ol>
-          </section>
+          <dl className="catalogue-detail-specs">
+            <div><dt>{t('Rated daily production')}</dt><dd><bdi>{platinumCapacity}</bdi></dd></div>
+            {platinumWasser.specifications.map(spec => (
+              <div key={spec.label}><dt>{t(spec.label)}</dt><dd><bdi>{spec.value}</bdi></dd></div>
+            ))}
+          </dl>
+          {renderPlatinumStages()}
           <dl className="catalogue-detail-specs"><div><dt>{t('Installation')}</dt><dd>{t('Uses a separate storage tank and drinking-water tap. Requires a cold-water feed, drain connection and power outlet.')}</dd></div></dl>
-          <p className="catalogue-detail-note">{t('Ask us about replacement filters and the space needed under your sink.')}</p>
+          <p className="catalogue-detail-note"><a href={platinumWasser.specificationsUrl}>{t('Platinum Wasser product specifications')}</a></p>
         </> : detail.size !== null && detail.name !== 'HF2-S' && <p className="catalogue-detail-note">{t('Size alone does not confirm compatibility. Ask us to check the connection and the right model for your home.')}</p>}
         <ProductEnquiry model={detail.model} onEnquire={enquire}/>
       </div>
