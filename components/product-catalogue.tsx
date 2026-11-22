@@ -186,7 +186,10 @@ fx && <dl className="catalogue-detail-specs">
   const visibleKrausen = filters.range === 'all' && filters.size === 'all'
     ? krausenSystems.filter(({ model, terms }) => `${model} ${terms}`.toLowerCase().replace(/[\s-]/g, '').includes(searchTerm))
     : [];
-  const otherOsmosisCards = [showReverseOsmosisSystem, showEcosoft, showUx6, showCross];
+  const industrialModel = 'Ecosoft MO 36000';
+  const showIndustrial = filters.range === 'all' && filters.size === 'all'
+    && ['ecosoftmo36000', 'industrialreverseosmosis', 'm36vctfwe', '396gph'].some(term => term.includes(searchTerm));
+  const otherOsmosisCards = [showReverseOsmosisSystem, showEcosoft, showUx6, showCross, showIndustrial];
   const visibleCount = visible.length + visibleKrausen.length + otherOsmosisCards.filter(Boolean).length;
   const totalCount = products.length + krausenSystems.length + otherOsmosisCards.length;
   const hasOtherOsmosis = otherOsmosisCards.some(Boolean);
@@ -384,6 +387,26 @@ fx && <dl className="catalogue-detail-specs">
               ))}
             </section>
           )}
+          {showIndustrial && <article className="catalogue-card mt-6" id="ecosoft-mo36000">
+            <div className="bg-white p-3 sm:p-5">
+              <img className="mx-auto block h-auto w-full max-w-lg" src="/images/ecosoft-mo36000.webp" alt={industrialModel} width={1000} height={1000} loading="lazy"/>
+            </div>
+            <div className="catalogue-card-copy">
+              <div className="catalogue-card-heading"><h3><bdi>{industrialModel}</bdi></h3></div>
+              <p className="catalogue-card-purpose">{t('Industrial reverse osmosis system')}</p>
+              <dl className="catalogue-detail-specs">
+                <div><dt>{t('Model code')}</dt><dd><bdi>{'M36VCTFWE'}</bdi></dd></div>
+                <div><dt>{t('Filtered water flow')}</dt><dd><bdi>{t('1,500 L/h (396 US gal/h)')}</bdi></dd></div>
+                <div><dt>{t('Reverse osmosis membrane')}</dt><dd><bdi>{'6 × XLE-4040'}</bdi></dd></div>
+                <div><dt>{t('Power supply')}</dt><dd><bdi>{'230 V / 50 Hz · 1.9 kW'}</bdi></dd></div>
+                <div><dt>{t('Operating pressure')}</dt><dd><bdi>{'8–12 bar'}</bdi></dd></div>
+                <div><dt>{t('Dimensions')}</dt><dd><bdi>{'900 × 620 × 1500 mm'}</bdi></dd></div>
+              </dl>
+              <p className="text-sm">{t('Rated flow at 25 °C and feed water TDS of 1,000 mg/L. Actual output depends on feed water conditions.')}</p>
+              <p className="catalogue-detail-note"><a href="https://ecosoft.ua/upload/iblock/e82/mo36000_tech.pdf">{t('Ecosoft technical datasheet')}</a></p>
+              <ProductEnquiry model={industrialModel} onEnquire={enquire} message={t('Hello! I am interested in the {model} industrial reverse osmosis system for my business.', { model: industrialModel })}/>
+            </div>
+          </article>}
         </section>
       )}
       <section className="catalogue-help" id="catalogue-help"><div><p className="eyebrow">{t('COMMERCIAL CAPABILITY. THE RIGHT HOME FIT.')}</p><h2>{t('Your water. Your home.')}<br/><em>{t('Your system.')}</em></h2><p>{t('Tell us about your water, available space and current setup. We’ll translate the commercial specifications into a clear residential recommendation.')}</p><button className="button white" onClick={() => enquire(t('choosing a commercial-grade water filter for my home'))}><MessageCircle size={20}/>{t('Match my home')}<ArrowUpRight size={18}/></button></div><div className="catalogue-range-guide">{ranges.map(range => <div key={range.name}><span>{range.name}</span><p>{t(range.purpose)}</p></div>)}<p className="catalogue-fit-note">{t('We’ll confirm price, compatibility and fitting options before you decide.')}</p></div></section>
