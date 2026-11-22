@@ -221,7 +221,7 @@ fx && <dl className="catalogue-detail-specs">
               <div className="catalogue-card-heading"><h3>{reverseOsmosisModel}</h3></div>
               <p className="text-lg font-semibold">{t('{price} with installation', { price: euro.format(380) })}</p>
               <p className="text-sm font-medium">{t('Annual maintenance {price}', { price: euro.format(100) })}</p>
-              <p className="catalogue-card-purpose">{t('Five-stage reverse osmosis system with pump')}</p>
+              <p className="catalogue-card-purpose">{t('Six-stage reverse osmosis system with pump and remineralisation filter')}</p>
               <ul className="list-disc space-y-1 ps-5 text-sm">
                 <li>{t('75 GPD membrane and 3.0 G storage tank')}</li>
                 <li>{t('Up to 60 L per day, with a 1:3 ratio of filtered water to reject water')}</li>
