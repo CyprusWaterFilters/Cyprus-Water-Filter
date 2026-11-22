@@ -263,6 +263,7 @@ fx && <dl className="catalogue-detail-specs">
             </div>
             <div className="catalogue-card-copy">
               <div className="catalogue-card-heading"><h3>{ux6Model}</h3></div>
+              <p className="text-lg font-semibold">{t('{price} with installation', { price: euro.format(590) })}</p>
               <p className="catalogue-card-purpose">{t('Tankless under-sink reverse osmosis with direct flow')}</p>
               <ul className="list-disc space-y-1 ps-5 text-sm">
                 <li>{t('Five-stage filtration with a 3-in-1 PCF filter and a 600 GPD reverse osmosis membrane')}</li>
