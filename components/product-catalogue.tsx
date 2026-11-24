@@ -192,6 +192,9 @@ fx && <dl className="catalogue-detail-specs">
   const ecosoftModel = 'Ecosoft Standard Pro';
   const showEcosoft = filters.range === 'all' && filters.size === 'all'
     && ecosoftModel.toLowerCase().includes(filters.query.trim().toLowerCase());
+  const absoluteModel = 'Ecosoft Absolute';
+  const showAbsolute = filters.range === 'all' && filters.size === 'all'
+    && absoluteModel.toLowerCase().includes(filters.query.trim().toLowerCase());
   const ux6Model = 'Pure Water Filters UX6 600G';
   const showUx6 = filters.range === 'all' && filters.size === 'all'
     && [ux6Model, '520696401707'].some(term => term.toLowerCase().includes(filters.query.trim().toLowerCase()));
@@ -206,7 +209,7 @@ fx && <dl className="catalogue-detail-specs">
   const industrialModel = 'Ecosoft MO 36000';
   const showIndustrial = filters.range === 'all' && filters.size === 'all'
     && ['ecosoftmo36000', 'industrialreverseosmosis', 'm36vctfwe', '396gph'].some(term => term.includes(searchTerm));
-  const otherOsmosisCards = [showReverseOsmosisSystem, showEcosoft, showUx6, showCross, showIndustrial];
+  const otherOsmosisCards = [showReverseOsmosisSystem, showEcosoft, showAbsolute, showUx6, showCross, showIndustrial];
   const visibleCount = visible.length + visibleKrausen.length + otherOsmosisCards.filter(Boolean).length;
   const totalCount = products.length + krausenSystems.length + otherOsmosisCards.length;
   const hasOtherOsmosis = otherOsmosisCards.some(Boolean);
@@ -329,6 +332,19 @@ fx && <dl className="catalogue-detail-specs">
                 <li>{t('Remineralisation filter')}</li>
               </ol>
               <ProductEnquiry model={ecosoftModel} onEnquire={enquire}/>
+            </div>
+          </article>}
+          {showAbsolute && <article className="catalogue-card mt-6" id="ecosoft-absolute">
+            <div className="mx-3 my-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <p className="text-lg font-semibold">{t('{price} with installation', { price: euro.format(550) })}</p>
+              <p className="text-sm font-medium">{t('Annual maintenance {price}', { price: euro.format(120) })}</p>
+            </div>
+            <div className="bg-white p-3 sm:p-5">
+              <img className="mx-auto block h-auto w-full max-w-lg" src="/images/ecosoft-absolute.webp" alt={absoluteModel} width={850} height={1200} loading="lazy"/>
+            </div>
+            <div className="catalogue-card-copy">
+              <div className="catalogue-card-heading"><h3>{absoluteModel}</h3></div>
+              <ProductEnquiry model={absoluteModel} onEnquire={enquire}/>
             </div>
           </article>}
           {showUx6 && <article className="catalogue-card mt-6" id="pure-ux6-600g">
