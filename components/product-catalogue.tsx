@@ -327,7 +327,7 @@ fx && <dl className="catalogue-detail-specs">
                 <li>{t('Polypropylene sediment prefilter, 5 µm')}</li>
                 <li>{t('Granular coconut-shell activated carbon prefilter')}</li>
                 <li>{t('Polypropylene sediment prefilter, 1 µm')}</li>
-                <li>{t('Reverse osmosis membrane')}</li>
+                <li>{t('Reverse osmosis membrane')} <bdi>{'Ecosoft 50 GPD'}</bdi></li>
                 <li>{t('Coconut-shell activated carbon postfilter')}</li>
                 <li>{t('Remineralisation filter')}</li>
               </ol>
@@ -349,7 +349,7 @@ fx && <dl className="catalogue-detail-specs">
                 <li>{t('10-inch polypropylene sediment prefilter')}</li>
                 <li>{t('10″ activated carbon prefilter')}</li>
                 <li>{t('10-inch fine polypropylene sediment prefilter')}</li>
-                <li>{t('Reverse osmosis membrane')}</li>
+                <li>{t('Reverse osmosis membrane')} <bdi>{'Ecosoft 75 GPD'}</bdi></li>
                 <li>{t('Coconut-shell activated carbon postfilter')} <bdi>{'(inline)'}</bdi></li>
                 <li>{t('Remineralisation filter')}</li>
               </ol>
