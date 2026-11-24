@@ -147,6 +147,11 @@ fx && <dl className="catalogue-detail-specs">
   }
 
   function renderInstallationPrice(model: string) {
+    if (model === platinumWasser.model) return <>
+      <p className="text-lg font-semibold">{t('{price} with installation', { price: euro.format(550) })}</p>
+      <p className="text-sm font-medium">{t('Annual maintenance {price}', { price: euro.format(120) })}</p>
+    </>;
+
     const amount = model === 'FX-10' ? 240 : model === 'HF2-10' ? 220 : null;
     if (amount === null) return null;
 
