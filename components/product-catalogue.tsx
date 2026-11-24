@@ -344,6 +344,16 @@ fx && <dl className="catalogue-detail-specs">
             </div>
             <div className="catalogue-card-copy">
               <div className="catalogue-card-heading"><h3>{absoluteModel}</h3></div>
+              <p className="catalogue-card-purpose">{t('Six-stage reverse osmosis system with pump and remineralisation filter')}</p>
+              <ol className="list-decimal space-y-1 ps-5 text-sm">
+                <li>{t('10-inch polypropylene sediment prefilter')}</li>
+                <li>{t('10″ activated carbon prefilter')}</li>
+                <li>{t('10-inch fine polypropylene sediment prefilter')}</li>
+                <li>{t('Reverse osmosis membrane')}</li>
+                <li>{t('Coconut-shell activated carbon postfilter')} <bdi>{'(inline)'}</bdi></li>
+                <li>{t('Remineralisation filter')}</li>
+              </ol>
+              <p className="text-sm">{t('Uses a separate storage tank and drinking-water tap. Requires a cold-water feed, drain connection and power outlet.')}</p>
               <ProductEnquiry model={absoluteModel} onEnquire={enquire}/>
             </div>
           </article>}
