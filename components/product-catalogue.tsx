@@ -15,9 +15,21 @@ import { productSlug } from '@/lib/product-routes';
 import { ranges, catalogueRanges, platinumWasser, sizes, products, productImage, hf2Specifications, hf2sSpecifications, fxSpecifications, type Product } from '@/lib/products';
 import { defaultFilters, isStandaloneRange, readFilters, filterProducts, type CatalogueFilters } from '@/lib/catalogue';
 
+const productPrices: Partial<Record<string, { installation: number; maintenance?: number }>> = {
+  'fx-10': { installation: 240 },
+  'hf2-10': { installation: 220 },
+  [productSlug(platinumWasser.model)]: { installation: 550, maintenance: 120 },
+  'three-stage-plus-1': { installation: 210, maintenance: 100 },
+  'three-stage-plus-2': { installation: 190, maintenance: 80 },
+  'reverse-osmosis-system': { installation: 380, maintenance: 100 },
+  'ecosoft-standard-pro': { installation: 490, maintenance: 100 },
+  'ecosoft-absolute': { installation: 550, maintenance: 120 },
+  'pure-ux6-600g': { installation: 590 },
+};
+
 const threeStagePlusVariants = [
-  { variant: 1, model: 'D-250', price: 210, maintenance: 100, minMicrons: 0.01, maxMicrons: 0.1, photo: 'three-stage-plus-cartridges.svg' },
-  { variant: 2, model: 'D-230', price: 190, maintenance: 80, minMicrons: 1, maxMicrons: 1, photo: 'three-stage-plus-d230-cartridges.svg' },
+  { variant: 1, model: 'D-250', minMicrons: 0.01, maxMicrons: 0.1, photo: 'three-stage-plus-cartridges.svg' },
+  { variant: 2, model: 'D-230', minMicrons: 1, maxMicrons: 1, photo: 'three-stage-plus-d230-cartridges.svg' },
 ];
 
 const krausenSystems = [
@@ -149,19 +161,20 @@ fx && <dl className="catalogue-detail-specs">
     </section>;
   }
 
-  function renderInstallationPrice(model: string) {
-    if (model === platinumWasser.model) return <>
-      <p className="text-lg font-semibold">{t('{price} with installation', { price: euro.format(550) })}</p>
-      <p className="text-sm font-medium">{t('Annual maintenance {price}', { price: euro.format(120) })}</p>
+  function renderPrice(id: string, includeMaintenance = false) {
+    const price = productPrices[id];
+    if (!price) return null;
+
+    const formatted = euro.format(price.installation);
+    const installation = language === 'el' && (id === 'fx-10' || id === 'hf2-10')
+      ? `${formatted} με εφαρμογή`
+      : t('{price} with installation', { price: formatted });
+
+    return <>
+      <p className="product-price">{installation}</p>
+      {includeMaintenance && price.maintenance !== undefined &&
+        <p className="text-sm font-medium">{t('Annual maintenance {price}', { price: euro.format(price.maintenance) })}</p>}
     </>;
-
-    const amount = model === 'FX-10' ? 240 : model === 'HF2-10' ? 220 : null;
-    if (amount === null) return null;
-
-    const price = euro.format(amount);
-    return <p className="text-lg font-semibold">{language === 'el'
-      ? `${price} με εφαρμογή`
-      : t('{price} with installation', { price })}</p>;
   }
 
   function productHref(id: string) {
@@ -175,6 +188,7 @@ fx && <dl className="catalogue-detail-specs">
         <div className="product-profile-media">{media}</div>
         <div className="catalogue-card-copy product-profile-copy">
           <h1>{name}</h1>
+          {renderPrice(id, true)}
           {details}
         </div>
       </article>;
@@ -183,7 +197,10 @@ fx && <dl className="catalogue-detail-specs">
     return <article className="catalogue-card product-tile" id={id} key={id}>
       <div className="product-tile-media">{media}</div>
       <div className="product-tile-copy">
-        <h3>{name}</h3>
+        <div className="product-tile-heading">
+          <h3>{name}</h3>
+          {renderPrice(id)}
+        </div>
         <Link className="button primary" href={productHref(id)} aria-label={`${t('Learn more')} · ${name}`}>
           {t('Learn more')}<ArrowRight size={16} aria-hidden="true"/>
         </Link>
@@ -265,7 +282,7 @@ fx && <dl className="catalogue-detail-specs">
           <dl className="catalogue-detail-specs"><div><dt>{t('Installation')}</dt><dd>{t('Uses a separate storage tank and drinking-water tap. Requires a cold-water feed, drain connection and power outlet.')}</dd></div></dl>
           <p className="catalogue-detail-note"><a href={platinumWasser.specificationsUrl}>{t('Platinum Wasser product specifications')}</a></p>
         </> : detail.size !== null && detail.name !== 'HF2-S' && <p className="catalogue-detail-note">{t('Size alone does not confirm compatibility. Ask us to check the connection and the right model for your home.')}</p>}
-        {renderInstallationPrice(detail.model)}
+        {renderPrice(productSlug(detail.model), true)}
         <ProductEnquiry model={detail.model} onEnquire={enquire}/>
       </div>
       </article>}
@@ -307,12 +324,10 @@ fx && <dl className="catalogue-detail-specs">
           <h2 id="three-stage-plus-title">{t('Three Stage Plus Filters')}</h2>
         </div>}
         <div className={slug ? undefined : "catalogue-grid"}>
-          {visibleThreeStage.map(({ variant, model, price, maintenance, minMicrons, maxMicrons, photo }) => (
+          {visibleThreeStage.map(({ variant, model, minMicrons, maxMicrons, photo }) => (
             renderCard(`three-stage-plus-${variant}`, `Three Stage Plus ${variant}`,
               <img src="/images/three-stage-plus.svg" alt={`Three Stage Plus ${variant}`} width={850} height={850} loading={slug ? 'eager' : 'lazy'}/>,
               <>
-              <p className="text-lg font-semibold">{t('{price} with installation', { price: euro.format(price) })}</p>
-                <p className="text-sm font-medium">{t('Annual maintenance {price}', { price: euro.format(maintenance) })}</p>
                 <ol className="mt-3 list-decimal space-y-1 ps-5">
                   <li><bdi>{'Sediment MX D-105 · 5 µm'}</bdi></li>
                   <li><bdi>{'Sediment MX D-100 · 1 µm'}</bdi></li>
@@ -338,8 +353,6 @@ fx && <dl className="catalogue-detail-specs">
           {showReverseOsmosisSystem && renderCard('reverse-osmosis-system', reverseOsmosisModel,
               <img src="/images/reverse-osmosis-system.webp" alt={reverseOsmosisModel} width={768} height={880} loading={slug ? 'eager' : 'lazy'}/>,
               <>
-              <p className="text-lg font-semibold">{t('{price} with installation', { price: euro.format(380) })}</p>
-              <p className="text-sm font-medium">{t('Annual maintenance {price}', { price: euro.format(100) })}</p>
               <p className="catalogue-card-purpose">{t('Six-stage reverse osmosis system with pump and remineralisation filter')}</p>
               <ul className="list-disc space-y-1 ps-5 text-sm">
                 <li>{t('75 GPD membrane and 3.0 G storage tank')}</li>
@@ -352,8 +365,6 @@ fx && <dl className="catalogue-detail-specs">
           {showEcosoft && renderCard('ecosoft-standard-pro', ecosoftModel,
               <img src="/images/ecosoft-standard-pro.webp" alt={ecosoftModel} width={1000} height={1000} loading={slug ? 'eager' : 'lazy'}/>,
               <>
-              <p className="text-lg font-semibold">{t('{price} with installation', { price: euro.format(490) })}</p>
-              <p className="text-sm font-medium">{t('Annual maintenance {price}', { price: euro.format(100) })}</p>
               <p className="catalogue-card-purpose">{t('Six-stage reverse osmosis system with pump and remineralisation filter')}</p>
               <ol className="list-decimal space-y-1 ps-5 text-sm">
                 <li>{t('Polypropylene sediment prefilter, 5 µm')}</li>
@@ -368,8 +379,6 @@ fx && <dl className="catalogue-detail-specs">
           {showAbsolute && renderCard('ecosoft-absolute', absoluteModel,
               <img src="/images/ecosoft-absolute.webp" alt={absoluteModel} width={850} height={1200} loading={slug ? 'eager' : 'lazy'}/>,
               <>
-              <p className="text-lg font-semibold">{t('{price} with installation', { price: euro.format(550) })}</p>
-              <p className="text-sm font-medium">{t('Annual maintenance {price}', { price: euro.format(120) })}</p>
               <p className="catalogue-card-purpose">{t('Six-stage reverse osmosis system with pump and remineralisation filter')}</p>
               <ol className="list-decimal space-y-1 ps-5 text-sm">
                 <li>{t('10-inch polypropylene sediment prefilter')}</li>
@@ -385,7 +394,6 @@ fx && <dl className="catalogue-detail-specs">
           {showUx6 && renderCard('pure-ux6-600g', ux6Model,
               <img src="/images/pure-ux6-600g.webp" alt={ux6Model} width={750} height={750} loading={slug ? 'eager' : 'lazy'}/>,
               <>
-              <p className="text-lg font-semibold">{t('{price} with installation', { price: euro.format(590) })}</p>
               <p className="catalogue-card-purpose">{t('Tankless under-sink reverse osmosis with direct flow')}</p>
               <ul className="list-disc space-y-1 ps-5 text-sm">
                 <li>{t('Five-stage filtration with a 3-in-1 PCF filter and a 600 GPD reverse osmosis membrane')}</li>

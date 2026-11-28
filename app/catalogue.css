@@ -171,21 +171,21 @@
 .catalogue-hf2s-applications img { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
 .catalogue-hf2s-applications figcaption { padding: .75rem 1rem; font-weight: 600; }
 
-.product-tile { min-width: 0; }
+.catalogue-card.product-tile { min-width: 0; padding: 0; overflow: hidden; }
 .product-tile-media {
-  aspect-ratio: 4 / 3;
-  display: grid;
-  place-items: center;
+  aspect-ratio: 4 / 5;
+  position: relative;
   overflow: hidden;
-  border-radius: 1rem;
   background: #fff;
 }
-.product-tile-media > img { width: 100%; height: 100%; min-height: 0; object-fit: contain; padding: .75rem; }
-.product-tile .catalogue-visual { width: 100%; height: 100%; aspect-ratio: auto; }
-.product-tile .catalogue-visual > img:first-of-type { object-fit: contain; }
-.product-tile-copy { display: grid; grid-template-rows: 1fr auto; gap: .75rem; flex: 1; padding: 1rem .5rem .5rem; }
+.product-tile-media > img { width: 100%; height: 100%; min-height: 0; object-fit: contain; padding: clamp(.5rem, 2vw, 1.25rem); }
+.product-tile .catalogue-visual { width: 100%; height: 100%; aspect-ratio: auto; border-radius: 0; }
+.product-tile .catalogue-visual:not(.platinum-wasser) > img:first-of-type { object-fit: cover; }
+.product-tile-copy { display: grid; grid-template-rows: 1fr auto; gap: 1rem; flex: 1; padding: clamp(.75rem, 2vw, 1.375rem); }
 .product-tile-copy h3 { font-size: clamp(1rem, 1.6vw, 1.35rem); font-weight: 650; line-height: 1.25; overflow-wrap: anywhere; }
-.product-tile-copy .button { justify-self: start; min-height: 44px; padding: .625rem .875rem; line-height: 1.2; }
+.product-tile-copy .button { display: flex; width: 100%; justify-content: center; text-align: center; gap: .5rem; min-height: 44px; padding: .625rem .875rem; line-height: 1.2; }
+.product-tile-heading { display: grid; gap: .5rem; align-content: start; }
+.product-price { color: #175842; font-size: clamp(.875rem, 1.6vw, 1.25rem); font-weight: 700; line-height: 1.3; }
 .product-tile-copy .button svg { flex-shrink: 0; }
 .product-commercial { grid-column: 1 / -1; margin-block: 2rem 0; }
 .product-commercial > .catalogue-grid { margin-top: 1.5rem; }
