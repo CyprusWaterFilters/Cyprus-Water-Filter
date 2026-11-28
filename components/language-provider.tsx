@@ -25,6 +25,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.lang = language;
     document.documentElement.dir = language === 'he' || language === 'ar' ? 'rtl' : 'ltr';
     const pathname = window.location.pathname.replace(/\/$/, '');
+    if (pathname.startsWith('/products/')) return;
     const productsPage = pathname === '/products';
     const certificatesPage = pathname === '/certificates';
     const title = certificatesPage ? 'Certificates | Homewater' : productsPage ? 'Commercial-grade filters | Homewater' : 'Homewater | Commercial-grade water filtration for your home';

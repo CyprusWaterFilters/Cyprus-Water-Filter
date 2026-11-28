@@ -3,13 +3,15 @@ import { FloatingWhatsAppButton } from '@/components/floating-whatsapp';
 import { enquiryMessage, enquiryUrl } from '@/lib/business';
 
 import { useEffect, useState } from 'react';
-import { ArrowUpRight, ArrowRight, Search, X, Droplets, SlidersHorizontal, MessageCircle, Check } from 'lucide-react';
+import { ArrowUpRight, ArrowRight, Search, X, SlidersHorizontal, MessageCircle, Check } from 'lucide-react';
 import { useLanguage } from './language-provider';
 import { SiteHeader } from './site-header';
 import { SiteFooter } from './site-footer';
 import { ProductEnquiry } from './product-enquiry';
 import { ScrollEntrances } from './scroll-entrances';
-import { Dialog, DialogContent, DialogTitle, DialogDescription } from './ui/dialog';
+import Link from 'next/link';
+import type { ReactNode } from 'react';
+import { productSlug } from '@/lib/product-routes';
 import { ranges, catalogueRanges, platinumWasser, sizes, products, productImage, hf2Specifications, hf2sSpecifications, fxSpecifications, type Product } from '@/lib/products';
 import { defaultFilters, isStandaloneRange, readFilters, filterProducts, type CatalogueFilters } from '@/lib/catalogue';
 
@@ -65,16 +67,17 @@ function ProductVisual({ product, eager = false }: { product: Product; eager?: b
   </div>;
 }
 
-export function ProductCatalogue() {
+export function ProductCatalogue({ slug }: { slug?: string }) {
   const { t, language } = useLanguage();
   const [filters, setFilters] = useState<CatalogueFilters>(defaultFilters);
-  const [detail, setDetail] = useState<Product | null>(null);
+  const detail = products.find(product => productSlug(product.model) === slug);
   useEffect(() => {
     const read = () => setFilters(readFilters(new URLSearchParams(window.location.search)));
+    if (slug) return;
     read();
     window.addEventListener('popstate', read);
     return () => window.removeEventListener('popstate', read);
-  }, []);
+  }, [slug]);
   function updateFilters(next: CatalogueFilters) {
     setFilters(next);
     const url = new URL(window.location.href);
@@ -83,7 +86,7 @@ export function ProductCatalogue() {
     }
     window.history.replaceState({}, '', url);
   }
-  function enquire(subject: string) { setDetail(null); window.location.assign(enquiryUrl(t(enquiryMessage, { subject: t(subject) }))); }
+  function enquire(subject: string) { window.location.assign(enquiryUrl(t(enquiryMessage, { subject: t(subject) }))); }
   const fx = detail?.name === 'FX' && detail.size !== null ? fxSpecifications[detail.size] : undefined;
   const number = new Intl.NumberFormat(language);
   const euro = new Intl.NumberFormat(language, { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
@@ -161,27 +164,36 @@ fx && <dl className="catalogue-detail-specs">
       : t('{price} with installation', { price })}</p>;
   }
 
+  function productHref(id: string) {
+    return `/products/${id}?lang=${language}`;
+  }
+
+  function renderCard(id: string, name: string, media: ReactNode, details?: ReactNode) {
+    if (slug) {
+      if (slug !== id) return null;
+      return <article className="product-profile" key={id}>
+        <div className="product-profile-media">{media}</div>
+        <div className="catalogue-card-copy product-profile-copy">
+          <h1>{name}</h1>
+          {details}
+        </div>
+      </article>;
+    }
+
+    return <article className="catalogue-card product-tile" id={id} key={id}>
+      <div className="product-tile-media">{media}</div>
+      <div className="product-tile-copy">
+        <h3>{name}</h3>
+        <Link className="button primary" href={productHref(id)} aria-label={`${t('Learn more')} · ${name}`}>
+          {t('Learn more')}<ArrowRight size={16} aria-hidden="true"/>
+        </Link>
+      </div>
+    </article>;
+  }
+
   function renderProductCard(product: Product, index: number) {
-    const installationPhoto = product.model === 'FX-10' ? 'fx-10-installation.webp'
-      : product.model === 'HF2-10' ? 'hf2-10-installation.webp' : null;
-    const installationPrice = renderInstallationPrice(product.model);
-    return <article className="catalogue-card" key={product.model}>
-            {installationPrice && <div className="mx-3 my-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">{installationPrice}</div>}
-            <button className="catalogue-visual-button" onClick={() => setDetail(product)} aria-label={t('View details for {model}', { model: product.model })}><ProductVisual product={product} eager={index < 3}/></button>
-            {installationPhoto && <img
-              className="block aspect-[3/4] w-full bg-white object-contain"
-              src={`/images/${installationPhoto}`}
-              alt={t('{model} installation under the sink', { model: product.model })}
-              loading="lazy"
-            />}
-            <div className="catalogue-card-copy"><div className="catalogue-card-heading"><h3>{product.size === null ? t(product.model) : product.model}</h3><button onClick={() => setDetail(product)} aria-label={t('View details for {model}', { model: product.model })}><ArrowUpRight size={19}/></button></div><p className="catalogue-card-purpose">{t(product.purpose)}</p><div className="catalogue-card-spec"><Droplets size={15}/><span>{t(product.detail)}</span></div><button className="catalogue-details-link" onClick={() => setDetail(product)}>{t('View details')}<ArrowRight size={15}/></button>{product.size === null && <>
-            {renderPlatinumStages('h4')}
-            <dl className="catalogue-detail-specs">
-              <div><dt>{t('Rated daily production')}</dt><dd><bdi>{platinumCapacity}</bdi></dd></div>
-              <div><dt>{t('Model code')}</dt><dd><bdi>{product.modelCode}</bdi></dd></div>
-              <div><dt>{t('Installation')}</dt><dd>{t('Uses a separate storage tank and drinking-water tap. Requires a cold-water feed, drain connection and power outlet.')}</dd></div>
-            </dl></>}{product.name === 'FX' && product.size !== null && renderFxSpecifications(fxSpecifications[product.size])}{product.name === 'HF2' && product.size !== null && renderHf2Specifications(product.size)}{product.name === 'HF2-S' && product.size !== null && renderHf2sSpecifications(product.size)}<ProductEnquiry model={product.model} onEnquire={enquire}/></div>
-          </article>;
+    return renderCard(productSlug(product.model), product.size === null ? t(product.model) : product.model,
+      <ProductVisual product={product} eager={index < 3}/>);
   }
   const visible = filterProducts(filters);
   const cartridges = visible.filter(product => product.size !== null);
@@ -210,14 +222,54 @@ fx && <dl className="catalogue-detail-specs">
   const showIndustrial = filters.range === 'all' && filters.size === 'all'
     && ['ecosoftmo36000', 'industrialreverseosmosis', 'm36vctfwe', '396gph'].some(term => term.includes(searchTerm));
   const otherOsmosisCards = [showReverseOsmosisSystem, showEcosoft, showAbsolute, showUx6, showCross, showIndustrial];
-  const visibleCount = visible.length + visibleKrausen.length + otherOsmosisCards.filter(Boolean).length;
-  const totalCount = products.length + krausenSystems.length + otherOsmosisCards.length;
+  const visibleThreeStage = threeStagePlusVariants.filter(({ variant, model }) =>
+    filters.range === 'all' && filters.size === 'all' &&
+    `Three Stage Plus ${variant} ${model}`.toLowerCase().replace(/[\s-]/g, '').includes(searchTerm));
+  const visibleCount = visibleThreeStage.length + visible.length + visibleKrausen.length + otherOsmosisCards.filter(Boolean).length;
+  const totalCount = threeStagePlusVariants.length + products.length + krausenSystems.length + otherOsmosisCards.length;
   const hasOtherOsmosis = otherOsmosisCards.some(Boolean);
   const active = filters.range !== 'all' || filters.size !== 'all' || filters.query !== '';
   return <>
     <ScrollEntrances/>
     <SiteHeader onEnquire={enquire} productsPage/>
-    <main id="main" className="catalogue-page">
+    <main id="main" className={slug ? "catalogue-page product-page" : "catalogue-page"}>
+      {slug && <nav className="product-back" aria-label={t('Breadcrumb')}>
+        <Link href={`/products?lang=${language}#${slug}`}><ArrowRight className="product-back-arrow" size={18} aria-hidden="true"/>{t('Our filters')}</Link>
+      </nav>}
+      {detail && <article className="product-profile">
+        <div className="product-profile-media">
+          <ProductVisual product={detail} eager/>
+          {(detail.model === 'FX-10' || detail.model === 'HF2-10') && <img
+            src={`/images/${detail.model.toLowerCase()}-installation.webp`}
+            alt={t('{model} installation under the sink', { model: detail.model })}
+            loading="lazy"
+          />}
+        </div>
+      <div className="catalogue-card-copy product-profile-copy"><p className="eyebrow">{detail.name} · {t('Series')}</p><h1>{detail.size === null ? t(detail.model) : detail.model}</h1><p className="catalogue-detail-description">{t(detail.description)}</p>
+        {detail.size !== null && <fieldset className="catalogue-detail-sizes"><legend>{t('Cartridge size')}</legend><div>{sizes.map(size => <Link key={size} aria-current={detail.size === size ? 'page' : undefined} href={productHref(productSlug(products.find(product => product.name === detail.name && product.size === size)?.model ?? detail.model))}>{size}″</Link>)}</div></fieldset>}
+        <dl className="catalogue-detail-specs"><div><dt>{t('Filtration')}</dt><dd>{t(detail.detail)}</dd></div><div><dt>{detail.name === 'HF2-S' ? t('Applications') : t('Everyday use')}</dt><dd>{t(detail.purpose)}</dd></div></dl>
+        {renderFxSpecifications(fx)}
+        {detail.name === 'HF2' && detail.size !== null && renderHf2Specifications(detail.size)}
+        {detail.name === 'HF2-S' && detail.size !== null && <>
+          {renderHf2sSpecifications(detail.size, true)}
+          <p className="catalogue-detail-note"><a href="https://kr.fluux.co.kr/92">{t('Microfilter FLUUX specifications')}</a></p>
+        </>}
+        {detail === platinumWasser ? <>
+          <dl className="catalogue-detail-specs">
+            <div><dt>{t('Rated daily production')}</dt><dd><bdi>{platinumCapacity}</bdi></dd></div>
+            {platinumWasser.specifications.map(spec => (
+              <div key={spec.label}><dt>{t(spec.label)}</dt><dd><bdi>{spec.value}</bdi></dd></div>
+            ))}
+          </dl>
+          {renderPlatinumStages()}
+          <dl className="catalogue-detail-specs"><div><dt>{t('Installation')}</dt><dd>{t('Uses a separate storage tank and drinking-water tap. Requires a cold-water feed, drain connection and power outlet.')}</dd></div></dl>
+          <p className="catalogue-detail-note"><a href={platinumWasser.specificationsUrl}>{t('Platinum Wasser product specifications')}</a></p>
+        </> : detail.size !== null && detail.name !== 'HF2-S' && <p className="catalogue-detail-note">{t('Size alone does not confirm compatibility. Ask us to check the connection and the right model for your home.')}</p>}
+        {renderInstallationPrice(detail.model)}
+        <ProductEnquiry model={detail.model} onEnquire={enquire}/>
+      </div>
+      </article>}
+      {!slug && <>
       <section className="catalogue-hero" aria-labelledby="catalogue-title">
         <div className="catalogue-hero-copy">
           <nav className="catalogue-breadcrumb" aria-label={t('Breadcrumb')}><a href={`/?lang=${language}`}>{t('Home')}</a><span aria-hidden="true">/</span><span>{t('Our filters')}</span></nav>
@@ -248,28 +300,19 @@ fx && <dl className="catalogue-detail-specs">
         {cartridges.length > 0 && <div className="catalogue-grid">{cartridges.map(renderProductCard)}</div>}
         {visibleCount === 0 && <div className="catalogue-empty"><Search size={28}/><h3>{t('No filters found')}</h3><p>{t('Try another model or clear your filters to see the full collection.')}</p><button className="button primary" onClick={() => updateFilters(defaultFilters)}>{t('View all filters')}<ArrowRight size={18}/></button></div>}
       </section>
-      <section className="catalogue-browser" id="three-stage-plus" aria-labelledby="three-stage-plus-title">
-        <div className="catalogue-browser-heading">
+      </>}
+      {!detail && <>
+      {(slug ? slug.startsWith('three-stage-plus-') : visibleThreeStage.length > 0) && <section className={slug ? undefined : 'catalogue-browser'} id="three-stage-plus" aria-labelledby={slug ? undefined : "three-stage-plus-title"}>
+        {!slug && <div className="catalogue-browser-heading">
           <h2 id="three-stage-plus-title">{t('Three Stage Plus Filters')}</h2>
-        </div>
-        <div className="catalogue-grid">
-          {threeStagePlusVariants.map(({ variant, model, price, maintenance, minMicrons, maxMicrons, photo }) => (
-            <article className="catalogue-card" key={variant}>
-              <div className="mx-3 my-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <p className="text-lg font-semibold">{t('{price} with installation', { price: euro.format(price) })}</p>
+        </div>}
+        <div className={slug ? undefined : "catalogue-grid"}>
+          {visibleThreeStage.map(({ variant, model, price, maintenance, minMicrons, maxMicrons, photo }) => (
+            renderCard(`three-stage-plus-${variant}`, `Three Stage Plus ${variant}`,
+              <img src="/images/three-stage-plus.svg" alt={`Three Stage Plus ${variant}`} width={850} height={850} loading={slug ? 'eager' : 'lazy'}/>,
+              <>
+              <p className="text-lg font-semibold">{t('{price} with installation', { price: euro.format(price) })}</p>
                 <p className="text-sm font-medium">{t('Annual maintenance {price}', { price: euro.format(maintenance) })}</p>
-              </div>
-              <div className="relative aspect-square overflow-hidden rounded-xl">
-                <img className="block h-full w-full" src="/images/three-stage-plus.svg" alt="" width={850} height={850} loading="lazy"/>
-                <div aria-hidden="true" dir="ltr" className="absolute inset-x-[9.75%] top-[59%] grid grid-cols-3 place-items-center gap-1 text-xs font-semibold text-green-950">
-                  {['5 µm', '1 µm', model].map(label => (
-                    <span key={label} className="whitespace-nowrap rounded-full bg-white px-2 py-1 shadow-sm ring-1 ring-green-900/20">{label}</span>
-                  ))}
-                </div>
-              </div>
-              <img className="mx-auto block w-[80.5%]" src={`/images/${photo}`} alt="" width={540} height={220} loading="lazy"/>
-              <div className="catalogue-card-copy">
-                <div className="catalogue-card-heading"><h3>{`Three Stage Plus ${variant}`}</h3></div>
                 <ol className="mt-3 list-decimal space-y-1 ps-5">
                   <li><bdi>{'Sediment MX D-105 · 5 µm'}</bdi></li>
                   <li><bdi>{'Sediment MX D-100 · 1 µm'}</bdi></li>
@@ -279,29 +322,22 @@ fx && <dl className="catalogue-detail-specs">
                   <img className="size-20 shrink-0 rounded-lg object-contain" src="/images/water-leak-detector.svg" alt="" width={320} height={320} loading="lazy"/>
                   <figcaption className="text-sm font-medium">{t('Installation includes a leak detector with water shut-off.')}</figcaption>
                 </figure>
-              </div>
-            </article>
+                <img className="product-secondary-image" src={`/images/${photo}`} alt="" width={540} height={220} loading="lazy"/>
+                <ProductEnquiry model={`Three Stage Plus ${variant}`} onEnquire={enquire}/>
+              </>)
           ))}
         </div>
-      </section>
-      {(hasOtherOsmosis || reverseOsmosisSystems.length > 0 || visibleKrausen.length > 0) && (
-        <section className="catalogue-browser" id="reverse-osmosis" aria-labelledby="reverse-osmosis-title">
-          <div className="catalogue-browser-heading">
+      </section>}
+      {(!slug || !slug.startsWith('three-stage-plus-')) && (hasOtherOsmosis || reverseOsmosisSystems.length > 0 || visibleKrausen.length > 0) && (
+        <section className={slug ? undefined : "catalogue-browser"} id="reverse-osmosis" aria-labelledby={slug ? undefined : "reverse-osmosis-title"}>
+          {!slug && <div className="catalogue-browser-heading">
             <h2 id="reverse-osmosis-title">{t('Reverse osmosis water filters')}</h2>
-          </div>
-          {reverseOsmosisSystems.length > 0 && <div className="catalogue-grid">{reverseOsmosisSystems.map(renderProductCard)}</div>}
-          {showReverseOsmosisSystem && <article className="catalogue-card mt-6">
-            <div className="bg-white p-3 sm:p-5">
-              <figure className="mx-auto max-w-lg">
-                <img className="block aspect-[768/880] w-full object-cover object-top" src="/images/reverse-osmosis-system.webp" alt={reverseOsmosisModel} width={768} height={880} loading="lazy"/>
-                <figcaption lang="el" dir="ltr" className="bg-[#0c203f] px-3 py-3 text-center text-base font-bold text-white sm:text-2xl">
-                  <span className="block">€380 με εγκατάσταση</span>
-                  <span className="block">€100 χρονιαία συντήρηση</span>
-                </figcaption>
-              </figure>
-            </div>
-            <div className="catalogue-card-copy">
-              <div className="catalogue-card-heading"><h3>{reverseOsmosisModel}</h3></div>
+          </div>}
+          <div className={slug ? undefined : 'catalogue-grid'}>
+          {!slug && reverseOsmosisSystems.map(renderProductCard)}
+          {showReverseOsmosisSystem && renderCard('reverse-osmosis-system', reverseOsmosisModel,
+              <img src="/images/reverse-osmosis-system.webp" alt={reverseOsmosisModel} width={768} height={880} loading={slug ? 'eager' : 'lazy'}/>,
+              <>
               <p className="text-lg font-semibold">{t('{price} with installation', { price: euro.format(380) })}</p>
               <p className="text-sm font-medium">{t('Annual maintenance {price}', { price: euro.format(100) })}</p>
               <p className="catalogue-card-purpose">{t('Six-stage reverse osmosis system with pump and remineralisation filter')}</p>
@@ -312,14 +348,10 @@ fx && <dl className="catalogue-detail-specs">
                 <li>{t('Complete installation kit with tap')}</li>
               </ul>
               <ProductEnquiry model={reverseOsmosisModel} onEnquire={enquire}/>
-            </div>
-          </article>}
-          {showEcosoft && <article className="catalogue-card mt-6" id="ecosoft-standard-pro">
-            <div className="bg-white p-3 sm:p-5">
-              <img className="mx-auto block h-auto w-full max-w-lg" src="/images/ecosoft-standard-pro.webp" alt={ecosoftModel} width={1000} height={1000} loading="lazy"/>
-            </div>
-            <div className="catalogue-card-copy">
-              <div className="catalogue-card-heading"><h3>{ecosoftModel}</h3></div>
+              </>)}
+          {showEcosoft && renderCard('ecosoft-standard-pro', ecosoftModel,
+              <img src="/images/ecosoft-standard-pro.webp" alt={ecosoftModel} width={1000} height={1000} loading={slug ? 'eager' : 'lazy'}/>,
+              <>
               <p className="text-lg font-semibold">{t('{price} with installation', { price: euro.format(490) })}</p>
               <p className="text-sm font-medium">{t('Annual maintenance {price}', { price: euro.format(100) })}</p>
               <p className="catalogue-card-purpose">{t('Six-stage reverse osmosis system with pump and remineralisation filter')}</p>
@@ -332,18 +364,12 @@ fx && <dl className="catalogue-detail-specs">
                 <li>{t('Remineralisation filter')}</li>
               </ol>
               <ProductEnquiry model={ecosoftModel} onEnquire={enquire}/>
-            </div>
-          </article>}
-          {showAbsolute && <article className="catalogue-card mt-6" id="ecosoft-absolute">
-            <div className="mx-3 my-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              </>)}
+          {showAbsolute && renderCard('ecosoft-absolute', absoluteModel,
+              <img src="/images/ecosoft-absolute.webp" alt={absoluteModel} width={850} height={1200} loading={slug ? 'eager' : 'lazy'}/>,
+              <>
               <p className="text-lg font-semibold">{t('{price} with installation', { price: euro.format(550) })}</p>
               <p className="text-sm font-medium">{t('Annual maintenance {price}', { price: euro.format(120) })}</p>
-            </div>
-            <div className="bg-white p-3 sm:p-5">
-              <img className="mx-auto block h-auto w-full max-w-lg" src="/images/ecosoft-absolute.webp" alt={absoluteModel} width={850} height={1200} loading="lazy"/>
-            </div>
-            <div className="catalogue-card-copy">
-              <div className="catalogue-card-heading"><h3>{absoluteModel}</h3></div>
               <p className="catalogue-card-purpose">{t('Six-stage reverse osmosis system with pump and remineralisation filter')}</p>
               <ol className="list-decimal space-y-1 ps-5 text-sm">
                 <li>{t('10-inch polypropylene sediment prefilter')}</li>
@@ -355,14 +381,10 @@ fx && <dl className="catalogue-detail-specs">
               </ol>
               <p className="text-sm">{t('Uses a separate storage tank and drinking-water tap. Requires a cold-water feed, drain connection and power outlet.')}</p>
               <ProductEnquiry model={absoluteModel} onEnquire={enquire}/>
-            </div>
-          </article>}
-          {showUx6 && <article className="catalogue-card mt-6" id="pure-ux6-600g">
-            <div className="bg-white p-3 sm:p-5">
-              <img className="mx-auto block h-auto w-full max-w-lg" src="/images/pure-ux6-600g.webp" alt={ux6Model} width={750} height={750} loading="lazy"/>
-            </div>
-            <div className="catalogue-card-copy">
-              <div className="catalogue-card-heading"><h3>{ux6Model}</h3></div>
+              </>)}
+          {showUx6 && renderCard('pure-ux6-600g', ux6Model,
+              <img src="/images/pure-ux6-600g.webp" alt={ux6Model} width={750} height={750} loading={slug ? 'eager' : 'lazy'}/>,
+              <>
               <p className="text-lg font-semibold">{t('{price} with installation', { price: euro.format(590) })}</p>
               <p className="catalogue-card-purpose">{t('Tankless under-sink reverse osmosis with direct flow')}</p>
               <ul className="list-disc space-y-1 ps-5 text-sm">
@@ -377,14 +399,10 @@ fx && <dl className="catalogue-detail-specs">
                 <div><dt>{t('Dimensions')}</dt><dd><bdi>{t('13 × 39.7 × 37.6 cm')}</bdi></dd></div>
               </dl>
               <ProductEnquiry model={ux6Model} onEnquire={enquire}/>
-            </div>
-          </article>}
-          {showCross && <article className="catalogue-card mt-6" id="ecosoft-cross-90">
-            <div className="bg-white p-3 sm:p-5">
-              <img className="mx-auto block h-auto w-full max-w-lg" src="/images/ecosoft-cross-90.webp" alt={crossModel} width={850} height={850} loading="lazy"/>
-            </div>
-            <div className="catalogue-card-copy">
-              <div className="catalogue-card-heading"><h3>{crossModel}</h3></div>
+              </>)}
+          {showCross && renderCard('ecosoft-cross-90', crossModel,
+              <img src="/images/ecosoft-cross-90.webp" alt={crossModel} width={850} height={850} loading={slug ? 'eager' : 'lazy'}/>,
+              <>
               <p className="catalogue-card-purpose">{t('Tankless under-sink reverse osmosis with direct flow')}</p>
               <ul className="list-disc space-y-1 ps-5 text-sm">
                 <li>{t('Maximum flow of 90 litres per hour (1.5 litres per minute)')}</li>
@@ -396,22 +414,20 @@ fx && <dl className="catalogue-detail-specs">
                 <div><dt>{t('Model code')}</dt><dd><bdi>{crossCode}</bdi></dd></div>
               </dl>
               <ProductEnquiry model={crossModel} onEnquire={enquire}/>
-            </div>
-          </article>}
-          {visibleKrausen.length > 0 && (
-            <section className="mt-10" id="commercial-reverse-osmosis" aria-labelledby="commercial-ro-title">
+              </>)}
+          {visibleKrausen.length > 0 && (!slug || slug.startsWith('krausen-')) && (
+            <section className={slug ? undefined : "product-commercial"} id="commercial-reverse-osmosis" aria-labelledby={slug ? undefined : "commercial-ro-title"}>
+              {!slug && <>
               <h3 id="commercial-ro-title" className="text-2xl font-semibold">{t('Commercial reverse osmosis systems')}</h3>
               <figure className="mt-4 overflow-hidden rounded-2xl bg-white">
                 <img className="block h-auto w-full" src="/images/commercial-coffee-and-ice.webp" alt={t('Commercial espresso machine and ice maker in a coffee shop')} width={1200} height={600} loading="lazy"/>
                 <figcaption className="px-4 py-3">{t('For coffee shops, espresso machines and ice makers.')}</figcaption>
-              </figure>
+              </figure></>}
+              <div className={slug ? undefined : 'catalogue-grid'}>
               {visibleKrausen.map(system => (
-                <article className="catalogue-card mt-6" id={system.id} key={system.id}>
-                  <div className="bg-white p-3 sm:p-5">
-                    <img className="mx-auto block h-auto w-full max-w-lg" src={`/images/${system.id}.webp`} alt={system.model} width={1080} height={759} loading="lazy"/>
-                  </div>
-                  <div className="catalogue-card-copy">
-                    <div className="catalogue-card-heading"><h4 className="text-2xl font-semibold"><bdi>{system.model}</bdi></h4></div>
+                renderCard(system.id, system.model,
+              <img src={`/images/${system.id}.webp`} alt={system.model} width={1080} height={759} loading={slug ? 'eager' : 'lazy'}/>,
+              <>
                     <p className="catalogue-card-purpose">{t('Direct-flow reverse osmosis with booster pump and no storage tank')}</p>
                     <dl className="catalogue-detail-specs">
                       <div><dt>{t('Filtered water flow')}</dt><dd><bdi>{system.flow}</bdi></dd></div>
@@ -425,17 +441,14 @@ fx && <dl className="catalogue-detail-specs">
                     <p>{t('Smart controller with filter-change indicator, flow monitoring, automatic membrane flushing and leak detection.')}</p>
                     <p className="catalogue-detail-note"><a href={system.source}>{t('NeoWater technical specifications')}</a></p>
                     <ProductEnquiry model={system.model} onEnquire={enquire} commercial/>
-                  </div>
-                </article>
+              </>)
               ))}
+              </div>
             </section>
           )}
-          {showIndustrial && <article className="catalogue-card mt-6" id="ecosoft-mo36000">
-            <div className="bg-white p-3 sm:p-5">
-              <img className="mx-auto block h-auto w-full max-w-lg" src="/images/ecosoft-mo36000.webp" alt={industrialModel} width={1000} height={1000} loading="lazy"/>
-            </div>
-            <div className="catalogue-card-copy">
-              <div className="catalogue-card-heading"><h3><bdi>{industrialModel}</bdi></h3></div>
+          {showIndustrial && renderCard('ecosoft-mo36000', industrialModel,
+              <img src="/images/ecosoft-mo36000.webp" alt={industrialModel} width={1000} height={1000} loading={slug ? 'eager' : 'lazy'}/>,
+              <>
               <p className="catalogue-card-purpose">{t('Industrial reverse osmosis system')}</p>
               <dl className="catalogue-detail-specs">
                 <div><dt>{t('Model code')}</dt><dd><bdi>{'M36VCTFWE'}</bdi></dd></div>
@@ -448,39 +461,14 @@ fx && <dl className="catalogue-detail-specs">
               <p className="text-sm">{t('Rated flow at 25 °C and feed water TDS of 1,000 mg/L. Actual output depends on feed water conditions.')}</p>
               <p className="catalogue-detail-note"><a href="https://ecosoft.ua/upload/iblock/e82/mo36000_tech.pdf">{t('Ecosoft technical datasheet')}</a></p>
               <ProductEnquiry model={industrialModel} onEnquire={enquire} message={t('Hello! I am interested in the {model} industrial reverse osmosis system for my business.', { model: industrialModel })}/>
-            </div>
-          </article>}
+              </>)}
+          </div>
         </section>
       )}
-      <section className="catalogue-help" id="catalogue-help"><div><p className="eyebrow">{t('COMMERCIAL CAPABILITY. THE RIGHT HOME FIT.')}</p><h2>{t('Your water. Your home.')}<br/><em>{t('Your system.')}</em></h2><p>{t('Tell us about your water, available space and current setup. We’ll translate the commercial specifications into a clear residential recommendation.')}</p><button className="button white" onClick={() => enquire(t('choosing a commercial-grade water filter for my home'))}><MessageCircle size={20}/>{t('Match my home')}<ArrowUpRight size={18}/></button></div><div className="catalogue-range-guide">{ranges.map(range => <div key={range.name}><span>{range.name}</span><p>{t(range.purpose)}</p></div>)}<p className="catalogue-fit-note">{t('We’ll confirm price, compatibility and fitting options before you decide.')}</p></div></section>
+      </>}
+      {!slug && <section className="catalogue-help" id="catalogue-help"><div><p className="eyebrow">{t('COMMERCIAL CAPABILITY. THE RIGHT HOME FIT.')}</p><h2>{t('Your water. Your home.')}<br/><em>{t('Your system.')}</em></h2><p>{t('Tell us about your water, available space and current setup. We’ll translate the commercial specifications into a clear residential recommendation.')}</p><button className="button white" onClick={() => enquire(t('choosing a commercial-grade water filter for my home'))}><MessageCircle size={20}/>{t('Match my home')}<ArrowUpRight size={18}/></button></div><div className="catalogue-range-guide">{ranges.map(range => <div key={range.name}><span>{range.name}</span><p>{t(range.purpose)}</p></div>)}<p className="catalogue-fit-note">{t('We’ll confirm price, compatibility and fitting options before you decide.')}</p></div></section>}
     </main>
     <SiteFooter onEnquire={enquire}/>
     <FloatingWhatsAppButton onClick={() => enquire(t('a water filter for my home'))}/>
-    <Dialog open={detail !== null} onOpenChange={open => { if (!open) setDetail(null); }}><DialogContent className="catalogue-detail-dialog">{detail && <>
-      <ProductVisual product={detail} eager/>
-      <div className="catalogue-detail-copy"><p className="eyebrow">{detail.name} · {t('Series')}</p><DialogTitle className="catalogue-detail-title">{detail.size === null ? t(detail.model) : detail.model}</DialogTitle><DialogDescription className="catalogue-detail-description">{t(detail.description)}</DialogDescription>
-        {detail.size !== null && <fieldset className="catalogue-detail-sizes"><legend>{t('Cartridge size')}</legend><div>{sizes.map(size => <button key={size} aria-pressed={detail.size === size} onClick={() => setDetail(products.find(product => product.name === detail.name && product.size === size) ?? detail)}>{size}″</button>)}</div></fieldset>}
-        <dl className="catalogue-detail-specs"><div><dt>{t('Filtration')}</dt><dd>{t(detail.detail)}</dd></div><div><dt>{detail.name === 'HF2-S' ? t('Applications') : t('Everyday use')}</dt><dd>{t(detail.purpose)}</dd></div></dl>
-        {renderFxSpecifications(fx)}
-        {detail.name === 'HF2' && detail.size !== null && renderHf2Specifications(detail.size)}
-        {detail.name === 'HF2-S' && detail.size !== null && <>
-          {renderHf2sSpecifications(detail.size, true)}
-          <p className="catalogue-detail-note"><a href="https://kr.fluux.co.kr/92">{t('Microfilter FLUUX specifications')}</a></p>
-        </>}
-        {detail === platinumWasser ? <>
-          <dl className="catalogue-detail-specs">
-            <div><dt>{t('Rated daily production')}</dt><dd><bdi>{platinumCapacity}</bdi></dd></div>
-            {platinumWasser.specifications.map(spec => (
-              <div key={spec.label}><dt>{t(spec.label)}</dt><dd><bdi>{spec.value}</bdi></dd></div>
-            ))}
-          </dl>
-          {renderPlatinumStages()}
-          <dl className="catalogue-detail-specs"><div><dt>{t('Installation')}</dt><dd>{t('Uses a separate storage tank and drinking-water tap. Requires a cold-water feed, drain connection and power outlet.')}</dd></div></dl>
-          <p className="catalogue-detail-note"><a href={platinumWasser.specificationsUrl}>{t('Platinum Wasser product specifications')}</a></p>
-        </> : detail.size !== null && detail.name !== 'HF2-S' && <p className="catalogue-detail-note">{t('Size alone does not confirm compatibility. Ask us to check the connection and the right model for your home.')}</p>}
-        {renderInstallationPrice(detail.model)}
-        <ProductEnquiry model={detail.model} onEnquire={enquire}/>
-      </div>
-    </>}</DialogContent></Dialog>
   </>;
 }
